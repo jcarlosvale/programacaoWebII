@@ -15,10 +15,10 @@ import java.util.stream.*;
 @Slf4j
 public class CorController {
 
-    private final Map<Integer, CorDto> repository;
+    private final Map<Integer, AlunosDto> repository;
 
     //@GetMapping  comentado para evitar conflito de endpoint com request param abaixo
-    public ResponseEntity<List<CorDto>> getAll() {
+    public ResponseEntity<List<AlunosDto>> getAll() {
         log.info("Listing cores");
         if (repository.isEmpty()) {
             return ResponseEntity.ok(List.of());
@@ -30,7 +30,7 @@ public class CorController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CorDto>> getByPrefix(@RequestParam(value = "prefixo", required = false) final String prefixo) {
+    public ResponseEntity<List<AlunosDto>> getByPrefix(@RequestParam(value = "prefixo", required = false) final String prefixo) {
         log.info("Getting cor with prefix {}", prefixo);
         if(Objects.isNull(prefixo)) return getAll();
         var selectedCores =
@@ -42,7 +42,7 @@ public class CorController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<CorDto> getById(@PathVariable("id") final int id) {
+    public ResponseEntity<AlunosDto> getById(@PathVariable("id") final int id) {
         log.info("Getting cor {}", id);
         var cor = repository.get(id);
         if (Objects.isNull(cor)) {
@@ -57,7 +57,7 @@ public class CorController {
     }
 
     @PostMapping
-    public ResponseEntity<CorDto> save(@RequestBody final CorDto cor) {
+    public ResponseEntity<AlunosDto> save(@RequestBody final AlunosDto cor) {
         if (repository.containsKey(cor.getId())) {
             log.error("Collection contains id {}", cor.getId());
             return ResponseEntity
@@ -74,17 +74,17 @@ public class CorController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<CorDto> update(@PathVariable("id") final int id, @RequestBody final CorDto corDto) {
+    public ResponseEntity<AlunosDto> update(@PathVariable("id") final int id, @RequestBody final AlunosDto alunosDto) {
         log.info("Updating cor {}", id);
-        if (!repository.containsKey(corDto.getId())) {
+        if (!repository.containsKey(alunosDto.getId())) {
             return ResponseEntity
                     .notFound()
                     .build();
         }
         else {
-            repository.put(id, corDto);
+            repository.put(id, alunosDto);
             return ResponseEntity
-                    .ok(corDto);
+                    .ok(alunosDto);
         }
     }
 

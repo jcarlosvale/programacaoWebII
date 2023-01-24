@@ -9,7 +9,7 @@ import java.util.*;
 public class SchoolConfiguration {
 
     @Bean
-    public Map<Integer, CorDto> corRepository() {
+    public Map<Integer, AlunosDto> corRepository() {
         return new HashMap<>();
     }
 }

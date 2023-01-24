@@ -19,7 +19,7 @@ import static org.junit.jupiter.params.provider.Arguments.*;
 class CorControllerTest {
 
     @Autowired
-    private Map<Integer, CorDto> repository;
+    private Map<Integer, AlunosDto> repository;
 
     @Value("${local.server.port}")
     private int port;
@@ -32,10 +32,10 @@ class CorControllerTest {
     @BeforeEach
     void setup() {
         URL = "http://localhost:" + port + "/cores";
-        repository.put(1, CorDto.builder().id(1).descricao("Verde").build());
-        repository.put(2, CorDto.builder().id(2).descricao("Amarelo").build());
-        repository.put(3, CorDto.builder().id(3).descricao("Azul").build());
-        repository.put(4, CorDto.builder().id(4).descricao("Vermelho").build());
+        repository.put(1, AlunosDto.builder().id(1).descricao("Verde").build());
+        repository.put(2, AlunosDto.builder().id(2).descricao("Amarelo").build());
+        repository.put(3, AlunosDto.builder().id(3).descricao("Azul").build());
+        repository.put(4, AlunosDto.builder().id(4).descricao("Vermelho").build());
     }
 
     @AfterEach
@@ -49,7 +49,7 @@ class CorControllerTest {
         var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.getForEntity(URL, CorDto[].class);
+        var response = restTemplate.getForEntity(URL, AlunosDto[].class);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -63,7 +63,7 @@ class CorControllerTest {
         repository.clear();
 
         //WHEN
-        var response = restTemplate.getForEntity(URL, CorDto[].class);
+        var response = restTemplate.getForEntity(URL, AlunosDto[].class);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -79,7 +79,7 @@ class CorControllerTest {
         var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.getForEntity(URL, CorDto[].class, prefix);
+        var response = restTemplate.getForEntity(URL, AlunosDto[].class, prefix);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -104,7 +104,7 @@ class CorControllerTest {
         var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.getForEntity(URL+ "/{id}", CorDto.class, id);
+        var response = restTemplate.getForEntity(URL+ "/{id}", AlunosDto.class, id);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -118,7 +118,7 @@ class CorControllerTest {
         var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.getForEntity(URL+ "/{id}", CorDto.class, 999);
+        var response = restTemplate.getForEntity(URL+ "/{id}", AlunosDto.class, 999);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -129,14 +129,14 @@ class CorControllerTest {
     void save() {
         //GIVEN
         var newDto =
-                CorDto.builder()
+                AlunosDto.builder()
                 .id(9999)
                 .descricao("descricao")
                 .build();
         var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.postForEntity(URL, newDto, CorDto.class);
+        var response = restTemplate.postForEntity(URL, newDto, AlunosDto.class);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -153,7 +153,7 @@ class CorControllerTest {
         var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.postForEntity(URL, dto, CorDto.class);
+        var response = restTemplate.postForEntity(URL, dto, AlunosDto.class);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
@@ -169,7 +169,7 @@ class CorControllerTest {
 
         //WHEN
         var response = restTemplate.exchange(URL+"/{id}", HttpMethod.PUT, new HttpEntity<>(dto),
-                CorDto.class, dto.getId());
+                AlunosDto.class, dto.getId());
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -180,12 +180,12 @@ class CorControllerTest {
     @Test
     void update_NotFound() {
         //GIVEN
-        var request = CorDto.builder().build();
+        var request = AlunosDto.builder().build();
         var initialCounter = repository.size();
 
         //WHEN
         var response = restTemplate.exchange(URL+"/{id}", HttpMethod.PUT,
-                new HttpEntity<>(request), CorDto.class, 999);
+                new HttpEntity<>(request), AlunosDto.class, 999);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);

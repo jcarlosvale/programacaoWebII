@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties
-public class CorDto {
+public class AlunosDto {
 
     private int id;
 
