@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.*;
 import org.springframework.boot.test.web.client.*;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
 
 import java.util.*;
@@ -19,9 +20,10 @@ import static org.junit.jupiter.params.provider.Arguments.*;
 class AlunoControllerTest {
 
     @Autowired
-    private Map<Integer, CorDto> repository;
+    private Map<Integer, AlunoDto> repository;
 
-    @Value("${local.server.port}")
+    //@Value("${local.server.port}")
+    @LocalServerPort
     private int port;
 
     @Autowired
@@ -31,11 +33,11 @@ class AlunoControllerTest {
 
     @BeforeEach
     void setup() {
-        URL = "http://localhost:" + port + "/cores";
-        repository.put(1, CorDto.builder().id(1).descricao("Verde").build());
-        repository.put(2, CorDto.builder().id(2).descricao("Amarelo").build());
-        repository.put(3, CorDto.builder().id(3).descricao("Azul").build());
-        repository.put(4, CorDto.builder().id(4).descricao("Vermelho").build());
+        URL = "http://localhost:" + port + "/";
+        repository.put(1, AlunoDto.builder().id(1).nome("Juscelino").build());
+        repository.put(2, AlunoDto.builder().id(2).nome("Vinicius").build());
+        repository.put(3, AlunoDto.builder().id(3).nome("Eric").build());
+        repository.put(4, AlunoDto.builder().id(4).nome("Julho").build());
     }
 
     @AfterEach
@@ -49,7 +51,7 @@ class AlunoControllerTest {
         var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.getForEntity(URL, CorDto[].class);
+        var response = restTemplate.getForEntity(URL, AlunoDto[].class);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -63,7 +65,7 @@ class AlunoControllerTest {
         repository.clear();
 
         //WHEN
-        var response = restTemplate.getForEntity(URL, CorDto[].class);
+        var response = restTemplate.getForEntity(URL, AlunoDto[].class);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -79,7 +81,7 @@ class AlunoControllerTest {
         var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.getForEntity(URL, CorDto[].class, prefix);
+        var response = restTemplate.getForEntity(URL, AlunoDto[].class, prefix);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -89,9 +91,9 @@ class AlunoControllerTest {
 
     static Stream<Arguments> dataByPrefix() {
         return Stream.of(
-                arguments("Rox", 0),
-                arguments("Azul", 1),
-                arguments("Ver", 2),
+                arguments("Jus", 0),
+                arguments("Vin", 1),
+                arguments("Er", 2),
                 arguments(null, 4)
         );
     }
@@ -104,7 +106,7 @@ class AlunoControllerTest {
         var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.getForEntity(URL+ "/{id}", CorDto.class, id);
+        var response = restTemplate.getForEntity(URL+ "/{id}", AlunoDto.class, id);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -118,7 +120,7 @@ class AlunoControllerTest {
         var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.getForEntity(URL+ "/{id}", CorDto.class, 999);
+        var response = restTemplate.getForEntity(URL+ "/{id}", AlunoDto.class, 999);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -129,14 +131,14 @@ class AlunoControllerTest {
     void save() {
         //GIVEN
         var newDto =
-                CorDto.builder()
+                AlunoDto.builder()
                 .id(9999)
-                .descricao("descricao")
+                .nome("descricao")
                 .build();
         var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.postForEntity(URL, newDto, CorDto.class);
+        var response = restTemplate.postForEntity(URL, newDto, AlunoDto.class);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -153,7 +155,7 @@ class AlunoControllerTest {
         var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.postForEntity(URL, dto, CorDto.class);
+        var response = restTemplate.postForEntity(URL, dto, AlunoDto.class);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
@@ -164,12 +166,12 @@ class AlunoControllerTest {
     void update() {
         //GIVEN
         var dto = repository.values().stream().findFirst().get();
-        dto.setDescricao("nova descricao");
+        dto.setNome("nova descricao");
         var initialCounter = repository.size();
 
         //WHEN
         var response = restTemplate.exchange(URL+"/{id}", HttpMethod.PUT, new HttpEntity<>(dto),
-                CorDto.class, dto.getId());
+        AlunoDto.class, dto.getId());
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -180,12 +182,12 @@ class AlunoControllerTest {
     @Test
     void update_NotFound() {
         //GIVEN
-        var request = CorDto.builder().build();
+        var request = AlunoDto.builder().build();
         var initialCounter = repository.size();
 
         //WHEN
         var response = restTemplate.exchange(URL+"/{id}", HttpMethod.PUT,
-                new HttpEntity<>(request), CorDto.class, 999);
+                new HttpEntity<>(request), AlunoDto.class, 999);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
