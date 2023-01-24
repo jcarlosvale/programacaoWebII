@@ -81,21 +81,21 @@ public class AlunoController {
                     .body(aluno);
         }
     }
-//
-//    @PutMapping(path = "/{id}")
-//    public ResponseEntity<CorDto> update(@PathVariable("id") final int id, @RequestBody final CorDto corDto) {
-//        log.info("Updating cor {}", id);
-//        if (!repository.containsKey(corDto.getId())) {
-//            return ResponseEntity
-//                    .notFound()
-//                    .build();
-//        }
-//        else {
-//            repository.put(id, corDto);
-//            return ResponseEntity
-//                    .ok(corDto);
-//        }
-//    }
+
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<AlunoDto> update(@PathVariable("id") final int id, @RequestBody final AlunoDto aluno) {
+        log.info("Updating aluno por id {}", id);
+        if (!repository.containsKey(aluno.getId())) {
+            return ResponseEntity
+                    .notFound()
+                    .build();
+        }
+        else {
+            repository.put(id, aluno);
+            return ResponseEntity
+                    .ok(aluno);
+        }
+    }
 //
 //    @DeleteMapping(path = "/{id}")
 //    public ResponseEntity<Void> delete(@PathVariable("id") final int id) {
