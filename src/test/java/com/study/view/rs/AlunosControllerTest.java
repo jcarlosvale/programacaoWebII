@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class CorControllerTest {
+class AlunosControllerTest {
 
     @Autowired
     private Map<Integer, AlunosDto> repository;
@@ -31,11 +31,11 @@ class CorControllerTest {
 
     @BeforeEach
     void setup() {
-        URL = "http://localhost:" + port + "/cores";
-        repository.put(1, AlunosDto.builder().id(1).descricao("Verde").build());
-        repository.put(2, AlunosDto.builder().id(2).descricao("Amarelo").build());
-        repository.put(3, AlunosDto.builder().id(3).descricao("Azul").build());
-        repository.put(4, AlunosDto.builder().id(4).descricao("Vermelho").build());
+        URL = "http://localhost:" + port + "/alunos";
+        repository.put(1, AlunosDto.builder().id(1).nome("Miguel").build());
+        repository.put(2, AlunosDto.builder().id(2).nome("Marcio").build());
+        repository.put(3, AlunosDto.builder().id(3).nome("Carla").build());
+        repository.put(4, AlunosDto.builder().id(4).nome("Caroline").build());
     }
 
     @AfterEach
@@ -89,9 +89,9 @@ class CorControllerTest {
 
     static Stream<Arguments> dataByPrefix() {
         return Stream.of(
-                arguments("Rox", 0),
-                arguments("Azul", 1),
-                arguments("Ver", 2),
+                arguments("M", 0),
+                arguments("Ama", 1),
+                arguments("Car", 2),
                 arguments(null, 4)
         );
     }
@@ -131,7 +131,7 @@ class CorControllerTest {
         var newDto =
                 AlunosDto.builder()
                 .id(9999)
-                .descricao("descricao")
+                .nome("nome")
                 .build();
         var initialCounter = repository.size();
 
@@ -164,7 +164,7 @@ class CorControllerTest {
     void update() {
         //GIVEN
         var dto = repository.values().stream().findFirst().get();
-        dto.setDescricao("nova descricao");
+        dto.setNome("novo nome");
         var initialCounter = repository.size();
 
         //WHEN

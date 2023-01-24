@@ -12,6 +12,6 @@ public class AlunosDto {
 
     private int id;
 
-    private String descricao;
+    private String nome;
 
 }

@@ -10,16 +10,16 @@ import java.util.*;
 import java.util.stream.*;
 
 @RestController
-@RequestMapping(path = "/cores")
+@RequestMapping(path = "/alunos")
 @RequiredArgsConstructor
 @Slf4j
-public class CorController {
+public class AlunosController {
 
     private final Map<Integer, AlunosDto> repository;
 
     //@GetMapping  comentado para evitar conflito de endpoint com request param abaixo
     public ResponseEntity<List<AlunosDto>> getAll() {
-        log.info("Listing cores");
+        log.info("Listing alunos");
         if (repository.isEmpty()) {
             return ResponseEntity.ok(List.of());
         }
@@ -35,7 +35,7 @@ public class CorController {
         if(Objects.isNull(prefixo)) return getAll();
         var selectedCores =
                 repository.values().stream()
-                .filter(cor -> cor.getDescricao().startsWith(prefixo))
+                .filter(aluno -> aluno.getNome().startsWith(prefixo))
                 .collect(Collectors.toList());
         return ResponseEntity
                 .ok(selectedCores);
@@ -43,39 +43,39 @@ public class CorController {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<AlunosDto> getById(@PathVariable("id") final int id) {
-        log.info("Getting cor {}", id);
-        var cor = repository.get(id);
-        if (Objects.isNull(cor)) {
+        log.info("Getting aluno {}", id);
+        var aluno = repository.get(id);
+        if (Objects.isNull(aluno)) {
             return ResponseEntity
                     .notFound()
                     .build();
         }
         else {
             return ResponseEntity
-                    .ok(cor);
+                    .ok(aluno);
         }
     }
 
     @PostMapping
-    public ResponseEntity<AlunosDto> save(@RequestBody final AlunosDto cor) {
-        if (repository.containsKey(cor.getId())) {
-            log.error("Collection contains id {}", cor.getId());
+    public ResponseEntity<AlunosDto> save(@RequestBody final AlunosDto aluno) {
+        if (repository.containsKey(aluno.getId())) {
+            log.error("Collection contains id {}", aluno.getId());
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
                     .build();
         }
         else {
-            repository.put(cor.getId(), cor);
-            log.info("Inserted a new color {}", cor);
+            repository.put(aluno.getId(), aluno);
+            log.info("Inserted a new aluno {}", aluno);
             return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(cor);
+                    .body(aluno);
         }
     }
 
     @PutMapping(path = "/{id}")
     public ResponseEntity<AlunosDto> update(@PathVariable("id") final int id, @RequestBody final AlunosDto alunosDto) {
-        log.info("Updating cor {}", id);
+        log.info("Updating aluno {}", id);
         if (!repository.containsKey(alunosDto.getId())) {
             return ResponseEntity
                     .notFound()
@@ -90,9 +90,9 @@ public class CorController {
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") final int id) {
-        log.info("Deleting cor {}", id);
-        var cor = repository.get(id);
-        if (Objects.isNull(cor)) {
+        log.info("Deleting aluno {}", id);
+        var aluno = repository.get(id);
+        if (Objects.isNull(aluno)) {
             return ResponseEntity
                     .notFound()
                     .build();
