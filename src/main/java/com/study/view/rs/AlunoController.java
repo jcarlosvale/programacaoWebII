@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/alunos")
@@ -28,19 +29,19 @@ public class AlunoController {
                     .ok(new ArrayList<>(repository.values()));
         }
     }
-//
-//    @GetMapping
-//    public ResponseEntity<List<CorDto>> getByPrefix(@RequestParam(value = "prefixo", required = false) final String prefixo) {
-//        log.info("Getting cor with prefix {}", prefixo);
-//        if(Objects.isNull(prefixo)) return getAll();
-//        var selectedCores =
-//                repository.values().stream()
-//                        .filter(cor -> cor.getDescricao().startsWith(prefixo))
-//                        .collect(Collectors.toList());
-//        return ResponseEntity
-//                .ok(selectedCores);
-//    }
-//
+
+    @GetMapping(path = "/search")
+    public ResponseEntity<List<AlunoDto>> getByPrefix(@RequestParam(value = "prefixo", required = false) final String prefixo) {
+        log.info("Getting aluno with prefix {}", prefixo);
+        if(Objects.isNull(prefixo)) return getAll();
+        var selectedCores =
+                repository.values().stream()
+                        .filter(cor -> cor.getNome().startsWith(prefixo))
+                        .collect(Collectors.toList());
+        return ResponseEntity
+                .ok(selectedCores);
+    }
+
     @GetMapping(path = "/{id}")
     public ResponseEntity<AlunoDto> getById(@PathVariable("id") final int id) {
         log.info("Getting Aluno por id {}", id);
@@ -96,21 +97,21 @@ public class AlunoController {
                     .ok(aluno);
         }
     }
-//
-//    @DeleteMapping(path = "/{id}")
-//    public ResponseEntity<Void> delete(@PathVariable("id") final int id) {
-//        log.info("Deleting cor {}", id);
-//        var cor = repository.get(id);
-//        if (Objects.isNull(cor)) {
-//            return ResponseEntity
-//                    .notFound()
-//                    .build();
-//        }
-//        else {
-//            repository.remove(id);
-//            return ResponseEntity
-//                    .noContent()
-//                    .build();
-//        }
-//    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") final int id) {
+        log.info("Deleting aluno {}", id);
+        var aluno = repository.get(id);
+        if (Objects.isNull(aluno)) {
+            return ResponseEntity
+                    .notFound()
+                    .build();
+        }
+        else {
+            repository.remove(id);
+            return ResponseEntity
+                    .noContent()
+                    .build();
+        }
+    }
 }
