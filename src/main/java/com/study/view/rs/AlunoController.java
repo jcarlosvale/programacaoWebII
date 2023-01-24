@@ -5,14 +5,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping(path = "/alunos")
@@ -22,17 +17,17 @@ public class AlunoController {
 
     private final Map<Integer, AlunoDto> repository;
 
-//    //@GetMapping  comentado para evitar conflito de endpoint com request param abaixo
-//    public ResponseEntity<List<CorDto>> getAll() {
-//        log.info("Listing cores");
-//        if (repository.isEmpty()) {
-//            return ResponseEntity.ok(List.of());
-//        }
-//        else {
-//            return ResponseEntity
-//                    .ok(new ArrayList<>(repository.values()));
-//        }
-//    }
+    @GetMapping  // comentado para evitar conflito de endpoint com request param abaixo
+    public ResponseEntity<List<AlunoDto>> getAll() {
+        log.info("Listing Alunos");
+        if (repository.isEmpty()) {
+            return ResponseEntity.ok(List.of());
+        }
+        else {
+            return ResponseEntity
+                    .ok(new ArrayList<>(repository.values()));
+        }
+    }
 //
 //    @GetMapping
 //    public ResponseEntity<List<CorDto>> getByPrefix(@RequestParam(value = "prefixo", required = false) final String prefixo) {
