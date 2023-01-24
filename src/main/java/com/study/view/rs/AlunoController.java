@@ -7,10 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -18,10 +15,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class AlunoController {
-    private final Map<Integer, AlunoDto> repository;
+    private final Map<Integer, AlunoDto> repository = new HashMap<>();
 
     @PostMapping
-    public ResponseEntity<AlunoDto> save(@RequestBody final AlunoDto aluno){
+    public ResponseEntity<Void> save(@RequestBody final AlunoDto aluno){
        if(repository.containsKey(aluno.getId())){
            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
        }
@@ -38,7 +35,6 @@ public class AlunoController {
         return ResponseEntity.ok(aluno);
     }
 
-    @GetMapping
     public ResponseEntity<List<AlunoDto>> getAll(){
         if(repository.isEmpty()){
             return ResponseEntity.ok(List.of());
