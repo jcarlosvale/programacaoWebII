@@ -8,10 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /*
@@ -21,14 +18,14 @@ import java.util.stream.Collectors;
 * Rodolfo Araujo
 * */
 @RestController
-@RequestMapping(path = "/aluno")
+@RequestMapping(path = "/alunos")
 @RequiredArgsConstructor
 @Slf4j
 public class AlunoController {
-    private final Map<Integer, AlunoDto> repository;
+    private final Map<Integer, AlunoDto> repository = new HashMap<>();
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody final AlunoDto aluno){
+    public ResponseEntity<Void> save(@RequestBody final AlunoDto aluno){
         if(repository.containsKey(aluno.getId())){
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)

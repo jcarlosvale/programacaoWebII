@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.*;
 import org.springframework.boot.test.web.client.*;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.util.Assert;
 
@@ -19,10 +20,22 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class AlunoControllerTest {
-    @Autowired
-    private AlunoController alunoController;
+class AlunoControllerTest {
 
+    @LocalServerPort
+    private int port;
+
+    @Autowired
+    private TestRestTemplate restTemplate;
+
+    private String url;
+
+    @BeforeEach
+    void setup(){
+        url = "http://localhost:" + port + "/alunos";
+
+    }
+    @Test
     public void testaSaveSucesso(){
         ResponseEntity response = alunoController.save(new AlunoDto(1, "Luiz"));
 
