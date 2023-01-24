@@ -41,21 +41,21 @@ public class AlunoController {
 //                .ok(selectedCores);
 //    }
 //
-//    @GetMapping(path = "/{id}")
-//    public ResponseEntity<CorDto> getById(@PathVariable("id") final int id) {
-//        log.info("Getting cor {}", id);
-//        var cor = repository.get(id);
-//        if (Objects.isNull(cor)) {
-//            return ResponseEntity
-//                    .notFound()
-//                    .build();
-//        }
-//        else {
-//            return ResponseEntity
-//                    .ok(cor);
-//        }
-//    }
-//
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<AlunoDto> getById(@PathVariable("id") final int id) {
+        log.info("Getting Aluno por id {}", id);
+        var aluno = repository.get(id);
+        if (Objects.isNull(aluno)) {
+            return ResponseEntity
+                    .notFound()
+                    .build();
+        }
+        else {
+            return ResponseEntity
+                    .ok(aluno);
+        }
+    }
+
     @PostMapping
     public ResponseEntity<AlunoDto> save(@RequestBody final AlunoDto aluno) {
 
