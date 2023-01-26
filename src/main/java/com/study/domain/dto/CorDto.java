@@ -9,9 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @JsonIgnoreProperties
 public class CorDto {
-
     private int id;
-
     private String descricao;
 
 }

@@ -23,6 +23,18 @@ public class AlunoController {
         return ResponseEntity.ok(new ArrayList<>(repository.values()));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<AlunoDTO> getById(@PathVariable("id") final int id){
+        AlunoDTO aluno = repository.get(id);
+
+        if(!repository.containsKey(aluno.getId())){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } else {
+            log.info("Retornando aluno {}", id);
+            return ResponseEntity.ok(aluno);
+        }
+    }
+
     @PostMapping
     public ResponseEntity<AlunoDTO> save(@RequestBody final AlunoDTO alunoDTO){
         log.info("Salvando aluno {}", alunoDTO);
@@ -35,4 +47,37 @@ public class AlunoController {
         }
     }
 
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<AlunoDTO> update (@PathVariable("id") final int id, @RequestBody final AlunoDTO alunoDTO){
+
+        if (!repository.containsKey(alunoDTO.getId())) {
+            return ResponseEntity
+                    .notFound()
+                    .build();
+        }
+        else {
+            log.info("Updating aluno {}", id);
+            repository.put(id, alunoDTO);
+            return ResponseEntity
+                    .ok(alunoDTO);
+        }
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Void> delete (@PathVariable("id") final int id){
+
+        var aluno = repository.get(id);
+        if (Objects.isNull(aluno)) {
+            return ResponseEntity
+                    .notFound()
+                    .build();
+        }
+        else {
+            log.info("Deleting aluno {}", id);
+            repository.remove(id);
+            return ResponseEntity
+                    .noContent()
+                    .build();
+        }
+    }
 }
