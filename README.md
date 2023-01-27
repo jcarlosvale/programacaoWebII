@@ -1,6 +1,9 @@
 # Programação WEB II
 
-# Getting Started
+## Membros da Equipe
+Rogério Colaço da Silva  
+Bruno Leiva Pires  
+Letícia Cristine Viana  
 
 ### Reference Documentation
 For further reference, please consider the following sections:
