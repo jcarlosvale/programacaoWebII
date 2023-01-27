@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.*;
 @SpringBootApplication
 public class SchoolApiApplication implements CommandLineRunner{
 
-
 	private Owner owner;
 
 	public static void main(String[] args) {
@@ -16,5 +15,6 @@ public class SchoolApiApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 
+		System.out.println("Owner " + owner.getName());
 	}
 }
