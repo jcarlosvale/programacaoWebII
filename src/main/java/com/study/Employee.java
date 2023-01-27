@@ -8,5 +8,5 @@ import lombok.*;
 @NoArgsConstructor
 public class Employee {
 
-    private String nome;
+    private String name;
 }
