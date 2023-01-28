@@ -34,7 +34,7 @@ public class AlunoController {
         if(alunoService.getAll().isEmpty()) {
         	return ResponseEntity.ok(List.of());
         } else {
-        return ResponseEntity.ok(alunoService.getAll());
+        	return ResponseEntity.ok(alunoService.getAll());
         }
     }
 
@@ -52,7 +52,6 @@ public class AlunoController {
 
     @PostMapping
     public ResponseEntity<AlunoDTO> save(@RequestBody final AlunoDTO alunoDTO){
-   	        
         if(alunoDTO.getNome().trim().equals("")){
         	log.error("Nome inválido {}", alunoDTO.getNome());
         	return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -72,20 +71,9 @@ public class AlunoController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> delete (@PathVariable("id") final int id){
+    public ResponseEntity<Void> delete (@PathVariable("id") final int id) throws Exception{
     	log.info("Deletando aluno por id {}", id);
-        var aluno = alunoService.getById(id);
-        if (Objects.isNull(aluno)) {
-            return ResponseEntity
-                    .notFound()
-                    .build();
-        }
-        else {
-            log.info("Deletando aluno por id {}", id);
-            alunoService.delete(id);
-            return ResponseEntity
-                    .noContent()
-                    .build();
-        }
-    }
+        alunoService.delete(id);
+       return ResponseEntity.noContent().build();
+      }
 }

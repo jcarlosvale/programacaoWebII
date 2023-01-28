@@ -34,8 +34,12 @@ public class AlunoService {
 		return aluno;
 	}
 	
-	public void delete(final int id) {
-		repository.remove(id);
+	public void delete(final int id) throws Exception {
+		if(repository.containsKey(id)) {
+			repository.remove(id);
+		} else {
+			throw new Exception("Id não encontrado");
+		}
 	}
 	
 	

@@ -47,18 +47,15 @@ public class CursoController {
         } else {
         	return ResponseEntity.ok(aluno);
         }
-    	
     }
 
     @PostMapping
     public ResponseEntity<CursoDTO> save(@RequestBody final CursoDTO cursoDTO){
-   	        
         if(cursoDTO.getNome().trim().equals("")){
         	log.error("Nome do curso inválido {}", cursoDTO.getNome());
         	return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } else {
         	cursoService.save(cursoDTO);
-        	
         	log.info("Inserindo um novo curso {}", cursoDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(cursoDTO);
         }
@@ -72,20 +69,9 @@ public class CursoController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> delete (@PathVariable("id") final int id){
+    public ResponseEntity<Void> delete (@PathVariable("id") final int id) throws Exception{
     	log.info("Deletando curso por id {}", id);
-        var curso = cursoService.getById(id);
-        if (Objects.isNull(curso)) {
-            return ResponseEntity
-                    .notFound()
-                    .build();
-        }
-        else {
-            log.info("Deletando curso por id {}", id);
-            cursoService.delete(id);
-            return ResponseEntity
-                    .noContent()
-                    .build();
-        }
-    }
+        cursoService.delete(id);
+       return ResponseEntity.noContent().build();
+      }
 }

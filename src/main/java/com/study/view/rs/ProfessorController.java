@@ -47,18 +47,15 @@ public class ProfessorController {
         } else {
         	return ResponseEntity.ok(aluno);
         }
-    	
     }
 
     @PostMapping
     public ResponseEntity<ProfessorDTO> save(@RequestBody final ProfessorDTO professorDTO){
-   	        
         if(professorDTO.getNome().trim().equals("")){
         	log.error("Nome do professor inválido {}", professorDTO.getNome());
         	return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } else {
         	professorService.save(professorDTO);
-        	
         	log.info("Inserindo um novo professor {}", professorDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(professorDTO);
         }
@@ -72,20 +69,9 @@ public class ProfessorController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> delete (@PathVariable("id") final int id){
+    public ResponseEntity<Void> delete (@PathVariable("id") final int id) throws Exception{
     	log.info("Deletando professor por id {}", id);
-        var curso = professorService.getById(id);
-        if (Objects.isNull(curso)) {
-            return ResponseEntity
-                    .notFound()
-                    .build();
-        }
-        else {
-            log.info("Deletando professor por id {}", id);
-            professorService.delete(id);
-            return ResponseEntity
-                    .noContent()
-                    .build();
-        }
-    }
+        professorService.delete(id);
+       return ResponseEntity.noContent().build();
+      }
 }
