@@ -21,7 +21,7 @@ public class ProfessorDto {
 
     
     public String toString(){
-        return "Id..: " + String.valueOf(this.getId()) + " Nome..:" + this.getNome();
+        return "Id..: " + String.valueOf(this.getId()) + "\nNome..:" + this.getNome() + "\nGenero..:" + this.getGenero();
     }
 
 }

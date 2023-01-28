@@ -18,6 +18,4 @@ public class SchoolConfiguration {
         return new HashMap<>();
     }
 
-    @Bean 
-    public Map<Integer, ProfessorDto>
 }
