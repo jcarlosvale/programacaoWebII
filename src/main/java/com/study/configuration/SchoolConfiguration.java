@@ -1,5 +1,6 @@
 package com.study.configuration;
 
+import com.study.*;
 import com.study.domain.dto.*;
 import org.springframework.context.annotation.*;
 
@@ -12,4 +13,10 @@ public class SchoolConfiguration {
     public Map<Integer, CorDto> corRepository() {
         return new HashMap<>();
     }
+
+    @Bean
+    public Employee employee() {
+        return new Employee("Jose");
+    }
+
 }
