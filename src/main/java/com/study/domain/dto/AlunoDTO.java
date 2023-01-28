@@ -15,4 +15,6 @@ public class AlunoDTO {
 
     private int id;
     private String nome;
+    private String matricula;
+    private String sexo;
 }

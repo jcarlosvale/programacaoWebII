@@ -17,5 +17,5 @@ public class CursoDTO {
     private int id;
     private String nome;
     private String descricao;
-    private String duracao;
+    private String cargaHoraria;
 }

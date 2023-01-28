@@ -14,35 +14,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.study.domain.dto.AlunoDTO;
-import com.study.service.AlunoService;
+import com.study.domain.dto.CursoDTO;
+import com.study.service.CursoService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping(path = "/alunos")
+@RequestMapping(path = "/cursos")
 @RequiredArgsConstructor
 @Slf4j
-public class AlunoController {
+public class CursoController {
 
-	private final AlunoService alunoService;
+	private final CursoService cursoService;
 
     @GetMapping
-    public ResponseEntity<List<AlunoDTO>> getAll(){
-        log.info("Retornando todos os alunos");
-        if(alunoService.getAll().isEmpty()) {
+    public ResponseEntity<List<CursoDTO>> getAll(){
+        log.info("Retornando todos os cursos");
+        if(cursoService.getAll().isEmpty()) {
         	return ResponseEntity.ok(List.of());
         } else {
-        return ResponseEntity.ok(alunoService.getAll());
+        return ResponseEntity.ok(cursoService.getAll());
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AlunoDTO> getById(@PathVariable("id") final int id){
-        log.info("Recuperando aluno por id {}", id);
-        var aluno = alunoService.getById(id);
-        if(Objects.isNull(aluno)) {
+    public ResponseEntity<CursoDTO> getById(@PathVariable("id") final int id){
+        log.info("Recuperando o curso por id {}", id);
+        var aluno = cursoService.getById(id);
+        if(Objects.isNull(cursoService)) {
         	return ResponseEntity.notFound().build();
         } else {
         	return ResponseEntity.ok(aluno);
@@ -51,38 +51,38 @@ public class AlunoController {
     }
 
     @PostMapping
-    public ResponseEntity<AlunoDTO> save(@RequestBody final AlunoDTO alunoDTO){
+    public ResponseEntity<CursoDTO> save(@RequestBody final CursoDTO cursoDTO){
    	        
-        if(alunoDTO.getNome().trim().equals("")){
-        	log.error("Nome inválido {}", alunoDTO.getNome());
+        if(cursoDTO.getNome().trim().equals("")){
+        	log.error("Nome do curso inválido {}", cursoDTO.getNome());
         	return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } else {
-        	alunoService.save(alunoDTO);
+        	cursoService.save(cursoDTO);
         	
-        	log.info("Inserindo um novo aluno {}", alunoDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(alunoDTO);
+        	log.info("Inserindo um novo curso {}", cursoDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(cursoDTO);
         }
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<AlunoDTO> update (@PathVariable("id") final int id, @RequestBody final AlunoDTO alunoDTO){
-    	log.info("Atualizando aluno por id {}", id);
-    	alunoService.update(id, alunoDTO);
-    	return ResponseEntity.ok(alunoDTO);
+    public ResponseEntity<CursoDTO> update (@PathVariable("id") final int id, @RequestBody final CursoDTO cursoDTO){
+    	log.info("Atualizando curso por id {}", id);
+    	cursoService.update(id, cursoDTO);
+    	return ResponseEntity.ok(cursoDTO);
     }
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete (@PathVariable("id") final int id){
-    	log.info("Deletando aluno por id {}", id);
-        var aluno = alunoService.getById(id);
-        if (Objects.isNull(aluno)) {
+    	log.info("Deletando curso por id {}", id);
+        var curso = cursoService.getById(id);
+        if (Objects.isNull(curso)) {
             return ResponseEntity
                     .notFound()
                     .build();
         }
         else {
-            log.info("Deletando aluno por id {}", id);
-            alunoService.delete(id);
+            log.info("Deletando curso por id {}", id);
+            cursoService.delete(id);
             return ResponseEntity
                     .noContent()
                     .build();
