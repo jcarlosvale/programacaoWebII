@@ -17,7 +17,7 @@ public class AlunoDto {
 
     private String nome;
 
-    private int matricula;
+    private String matricula;
 
     private String genero;
 
