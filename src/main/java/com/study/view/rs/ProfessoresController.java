@@ -70,7 +70,7 @@ public class ProfessoresController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<ProfessoresDto> update(@PathVariable("id") final int id, @RequestBody final ProfessoresDto professor) {
+    public ResponseEntity<ProfessoresDto> update(@PathVariable("id") final int id, @RequestBody final ProfessoresDto professorDto) {
         log.info("Updating aluno {}", id);
         ProfessoresDto professor = service.getById(id);
 
@@ -78,7 +78,7 @@ public class ProfessoresController {
             return ResponseEntity.notFound().build();
         }
 
-        service.update(id, professor);
+        service.update(id, professorDto);
 
         return ResponseEntity
                     .ok(professor);
