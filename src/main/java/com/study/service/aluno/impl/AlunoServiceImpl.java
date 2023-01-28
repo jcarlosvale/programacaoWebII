@@ -1,7 +1,7 @@
-package com.study.service.alunos.impl;
+package com.study.service.aluno.impl;
 
 import com.study.domain.dto.AlunoDto;
-import com.study.service.alunos.AlunoService;
+import com.study.service.aluno.AlunoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

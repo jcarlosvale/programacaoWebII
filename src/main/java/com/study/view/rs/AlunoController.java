@@ -1,7 +1,7 @@
 package com.study.view.rs;
 
 import com.study.domain.dto.AlunoDto;
-import com.study.service.alunos.AlunoService;
+import com.study.service.aluno.AlunoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

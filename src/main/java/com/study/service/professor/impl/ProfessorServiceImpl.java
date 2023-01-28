@@ -1,7 +1,7 @@
-package com.study.service.impl;
+package com.study.service.professor.impl;
 
 import com.study.domain.dto.ProfessorDto;
-import com.study.service.ProfessorService;
+import com.study.service.professor.ProfessorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

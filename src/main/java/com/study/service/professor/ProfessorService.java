@@ -1,4 +1,4 @@
-package com.study.service;
+package com.study.service.professor;
 
 import com.study.domain.dto.ProfessorDto;
 import org.springframework.http.ResponseEntity;
