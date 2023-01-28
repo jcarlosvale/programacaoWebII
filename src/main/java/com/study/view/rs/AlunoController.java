@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 
-
 @RestController
 @RequestMapping(path = "/alunos")
 @RequiredArgsConstructor
@@ -65,7 +64,7 @@ public class AlunoController {
         }
     }
 
-    @PostMapping
+    @PostMapping(path="/save")
     public ResponseEntity<AlunoDto> save(@RequestBody final AlunoDto aluno) {
         if (repository.containsKey(aluno.getId())) {
             log.error("Coleção contem id {}", aluno.getId());
@@ -74,6 +73,7 @@ public class AlunoController {
                     .build();
         }
         else {
+            log.info(String.valueOf(aluno.getId()));
             repository.put(aluno.getId(), aluno);
             log.info("Inserido novo aluno {}", aluno);
             return ResponseEntity
