@@ -4,6 +4,7 @@
 Rogério Colaço da Silva  
 Bruno Leiva Pires  
 Letícia Cristine Viana  
+Luiz Gustavo Cantrella
 
 ### Reference Documentation
 For further reference, please consider the following sections:
