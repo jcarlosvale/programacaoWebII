@@ -17,11 +17,15 @@ public class ProfessorDto {
 
     private int id;
     private String nome;
-    private String genero;
+    private String titulo;
+    private String sexo;
 
     
     public String toString(){
-        return "Id..: " + String.valueOf(this.getId()) + "\nNome..:" + this.getNome() + "\nGenero..:" + this.getGenero();
+        return  "Id....: " + String.valueOf(this.getId()) + 
+                "\nNome..: " + this.getNome() +
+                "\nTítulo: " + this.getTitulo() +  
+                "\nSexo..: " + this.getSexo();
     }
 
 }

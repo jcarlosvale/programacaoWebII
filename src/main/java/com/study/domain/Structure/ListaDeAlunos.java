@@ -20,10 +20,10 @@ public class ListaDeAlunos {
         this.lstAlunos = lstAlunos;
     }
 
-    public Boolean addNewAluno(Integer id, String nome, Integer idade, String genero){
+    public Boolean addNewAluno(Integer id, String nome, Integer idade, String matricula, String sexo){
 
         this.contator +=1;
-        AlunoDto aluno = new AlunoDto(id, nome, idade, genero);
+        AlunoDto aluno = new AlunoDto(id, nome, idade, matricula, sexo);
         lstAlunos.add(this.contator, aluno);
 
         return true;
