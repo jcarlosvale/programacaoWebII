@@ -1,7 +1,7 @@
 package com.study.view.rs;
 
 import com.study.domain.dto.AlunoDto;
-import com.study.service.AlunoService;
+import com.study.service.alunos.AlunoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,6 @@ import java.util.*;
 @RequiredArgsConstructor
 @Slf4j
 public class AlunoController {
-
 
     private final AlunoService alunoService;
 

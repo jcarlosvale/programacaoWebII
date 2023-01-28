@@ -1,4 +1,4 @@
-package com.study.service;
+package com.study.service.alunos;
 
 
 import com.study.domain.dto.AlunoDto;

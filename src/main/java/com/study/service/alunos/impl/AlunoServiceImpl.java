@@ -1,7 +1,8 @@
-package com.study.service.impl;
+package com.study.service.alunos.impl;
 
 import com.study.domain.dto.AlunoDto;
-import com.study.service.AlunoService;
+import com.study.service.alunos.AlunoService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class AlunoServiceImpl implements AlunoService {
 
     private final Map<Integer, AlunoDto> repository = new HashMap<>();
