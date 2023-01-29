@@ -1,6 +1,7 @@
 package com.study.service;
 
-import com.study.domain.dto.v2.*;
+
+import com.study.dto.v2.*;
 import lombok.extern.slf4j.*;
 import org.springframework.stereotype.*;
 

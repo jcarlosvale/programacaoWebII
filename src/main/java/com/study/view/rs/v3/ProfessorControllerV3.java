@@ -1,6 +1,6 @@
 package com.study.view.rs.v3;
 
-import com.study.domain.dto.v2.*;
+import com.study.dto.v2.*;
 import com.study.service.*;
 import lombok.extern.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
