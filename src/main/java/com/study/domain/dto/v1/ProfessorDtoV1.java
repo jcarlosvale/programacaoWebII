@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties
-public class ProfessorDto {
+public class ProfessorDtoV1 {
 
     private int id;
     private String name;

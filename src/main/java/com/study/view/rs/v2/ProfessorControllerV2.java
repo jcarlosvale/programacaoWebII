@@ -9,36 +9,40 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
+/**
+ * injecting Service
+ */
+
 @RestController
 @RequestMapping("/v2/professores")
 @Slf4j
 public class ProfessorControllerV2 {
 
-    private final ProfessorService service;
+    private final ProfessorServiceV1 service;
 
     @Autowired
-    public ProfessorControllerV2(ProfessorService service) {
+    public ProfessorControllerV2(ProfessorServiceV1 service) {
         this.service = service;
     }
 
     @GetMapping
-    public ResponseEntity<List<ProfessorDto>> listProfessors() {
+    public ResponseEntity<List<ProfessorDtoV1>> listProfessors() {
 
-        final List<ProfessorDto> professorDtoList = service.retrieveAll();
+        final List<ProfessorDtoV1> professorDtoV1List = service.retrieveAll();
 
-        return ResponseEntity.ok(professorDtoList);
+        return ResponseEntity.ok(professorDtoV1List);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProfessorDto> getProfessor(@PathVariable("id") int id) {
+    public ResponseEntity<ProfessorDtoV1> getProfessor(@PathVariable("id") int id) {
 
-        final ProfessorDto professorDto = service.getById(id);
+        final ProfessorDtoV1 professorDtoV1 = service.getById(id);
 
-        return ResponseEntity.ok(professorDto);
+        return ResponseEntity.ok(professorDtoV1);
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveProfessor(@RequestBody final ProfessorDto professor) {
+    public ResponseEntity<Void> saveProfessor(@RequestBody final ProfessorDtoV1 professor) {
 
         service.save(professor);
 
@@ -48,7 +52,7 @@ public class ProfessorControllerV2 {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProfessorDto> updateProfessor(@PathVariable("id") int id, @RequestBody ProfessorDto professor) {
+    public ResponseEntity<ProfessorDtoV1> updateProfessor(@PathVariable("id") int id, @RequestBody ProfessorDtoV1 professor) {
 
         service.update(id, professor);
 
