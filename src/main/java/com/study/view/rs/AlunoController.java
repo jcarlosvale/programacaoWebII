@@ -1,6 +1,6 @@
 package com.study.view.rs;
 
-import com.study.domain.dto.AlunoDto;
+import com.study.dto.AlunoDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

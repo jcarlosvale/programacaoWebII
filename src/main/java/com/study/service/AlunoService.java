@@ -1,6 +1,6 @@
 package com.study.service;
 
-import com.study.domain.dto.AlunoDto;
+import com.study.dto.AlunoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

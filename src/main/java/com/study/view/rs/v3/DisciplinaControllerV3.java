@@ -1,4 +1,4 @@
-package com.study.view.rs.v2;
+package com.study.view.rs.v3;
 
 import com.study.dto.DisciplinaDto;
 import com.study.service.DisciplinaService;
@@ -8,17 +8,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v2/disciplinas")
+@RequestMapping("/v3/disciplinas")
 @Slf4j
-public class DisciplinaControllerV2 {
+public class DisciplinaControllerV3 {
 
     private final DisciplinaService service;
 
     @Autowired
-    public DisciplinaControllerV2(DisciplinaService service) {
+    public DisciplinaControllerV3(DisciplinaService service) {
         this.service = service;
     }
 
@@ -39,7 +40,7 @@ public class DisciplinaControllerV2 {
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveProfessor(@RequestBody final DisciplinaDto disciplina) {
+    public ResponseEntity<Void> saveProfessor(@RequestBody @Valid final DisciplinaDto disciplina) {
 
         service.save(disciplina);
 
@@ -49,7 +50,7 @@ public class DisciplinaControllerV2 {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DisciplinaDto> updateDisciplina(@PathVariable("id") int id, @RequestBody DisciplinaDto disciplina) {
+    public ResponseEntity<DisciplinaDto> updateDisciplina(@PathVariable("id") int id, @RequestBody @Valid DisciplinaDto disciplina) {
 
         service.update(id, disciplina);
 

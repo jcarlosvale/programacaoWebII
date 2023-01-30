@@ -1,6 +1,5 @@
-package com.study.view.rs.v2;
+package com.study.view.rs.v3;
 
-import com.study.dto.AlunoDto;
 import com.study.dto.AlunoDto;
 import com.study.service.AlunoService;
 import lombok.extern.slf4j.Slf4j;
@@ -9,17 +8,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v2/alunos")
+@RequestMapping("/v3/alunos")
 @Slf4j
-public class AlunoControllerV2 {
+public class AlunoControllerV3 {
 
     private final AlunoService service;
 
     @Autowired
-    public AlunoControllerV2(AlunoService service) {
+    public AlunoControllerV3(AlunoService service) {
         this.service = service;
     }
 
@@ -40,7 +40,7 @@ public class AlunoControllerV2 {
     }
 
     @PostMapping
-    public ResponseEntity<Void> savePAluno(@RequestBody final AlunoDto aluno) {
+    public ResponseEntity<Void> savePAluno(@RequestBody @Valid final AlunoDto aluno) {
 
         service.save(aluno);
 
@@ -50,7 +50,7 @@ public class AlunoControllerV2 {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AlunoDto> updateAluno(@PathVariable("id") int id, @RequestBody AlunoDto aluno) {
+    public ResponseEntity<AlunoDto> updateAluno(@PathVariable("id") int id, @RequestBody @Valid AlunoDto aluno) {
 
         service.update(id, aluno);
 
