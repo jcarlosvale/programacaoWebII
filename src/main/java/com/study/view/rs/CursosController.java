@@ -1,8 +1,6 @@
 package com.study.view.rs;
 
-import com.study.domain.dto.AlunosDto;
 import com.study.domain.dto.CursosDto;
-import com.study.domain.service.AlunoService;
 import com.study.domain.service.CursoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,8 +28,7 @@ public class CursosController {
         List<CursosDto> listaDeCursos = service.retrieveAll();
         if (listaDeCursos.isEmpty()) {
             return ResponseEntity.ok(List.of());
-        }
-        else {
+        } else {
             return ResponseEntity
                     .ok(new ArrayList<>(listaDeCursos));
         }
@@ -44,22 +42,20 @@ public class CursosController {
             return ResponseEntity
                     .notFound()
                     .build();
-        }
-        else {
+        } else {
             return ResponseEntity
                     .ok(curso);
         }
     }
 
     @PostMapping
-    public ResponseEntity<CursosDto> save(@RequestBody final CursosDto curso) {
+    public ResponseEntity<CursosDto> save(@RequestBody @Valid final CursosDto curso) {
         if (service.getById(curso.getId()) != null) {
             log.error("Collection contains id {}", curso.getId());
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
                     .build();
-        }
-        else {
+        } else {
             service.save(curso);
             log.info("Inserted a new curso {}", curso);
             return ResponseEntity
@@ -69,7 +65,7 @@ public class CursosController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<CursosDto> update(@PathVariable("id") final int id, @RequestBody final CursosDto cursoDto) {
+    public ResponseEntity<CursosDto> update(@PathVariable("id") final int id, @RequestBody @Valid final CursosDto cursoDto) {
         log.info("Updating aluno {}", id);
         CursosDto curso = service.getById(id);
 
@@ -80,7 +76,7 @@ public class CursosController {
         service.update(id, cursoDto);
 
         return ResponseEntity
-                    .ok(cursoDto);
+                .ok(cursoDto);
 
     }
 
@@ -93,8 +89,7 @@ public class CursosController {
             return ResponseEntity
                     .notFound()
                     .build();
-        }
-        else {
+        } else {
             service.delete(id);
             return ResponseEntity
                     .noContent()

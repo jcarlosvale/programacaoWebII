@@ -1,15 +1,17 @@
 package com.study.view.rs;
 
-import com.study.domain.dto.*;
+import com.study.domain.dto.AlunosDto;
 import com.study.domain.service.AlunoService;
-import lombok.*;
-import lombok.extern.slf4j.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
-import java.util.stream.*;
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping(path = "/alunos")
@@ -27,8 +29,7 @@ public class AlunosController {
         List<AlunosDto> listaDeAlunos = service.retrieveAll();
         if (listaDeAlunos.isEmpty()) {
             return ResponseEntity.ok(List.of());
-        }
-        else {
+        } else {
             return ResponseEntity
                     .ok(new ArrayList<>(listaDeAlunos));
         }
@@ -42,22 +43,20 @@ public class AlunosController {
             return ResponseEntity
                     .notFound()
                     .build();
-        }
-        else {
+        } else {
             return ResponseEntity
                     .ok(aluno);
         }
     }
 
     @PostMapping
-    public ResponseEntity<AlunosDto> save(@RequestBody final AlunosDto aluno) {
+    public ResponseEntity<AlunosDto> save(@RequestBody @Valid final AlunosDto aluno) {
         if (service.getById(aluno.getId()) != null) {
             log.error("Collection contains id {}", aluno.getId());
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
                     .build();
-        }
-        else {
+        } else {
             service.save(aluno);
             log.info("Inserted a new aluno {}", aluno);
             return ResponseEntity
@@ -67,7 +66,7 @@ public class AlunosController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<AlunosDto> update(@PathVariable("id") final int id, @RequestBody final AlunosDto alunosDto) {
+    public ResponseEntity<AlunosDto> update(@PathVariable("id") final int id, @RequestBody @Valid final AlunosDto alunosDto) {
         log.info("Updating aluno {}", id);
         AlunosDto aluno = service.getById(id);
 
@@ -78,7 +77,7 @@ public class AlunosController {
         service.update(id, alunosDto);
 
         return ResponseEntity
-                    .ok(alunosDto);
+                .ok(alunosDto);
 
     }
 
@@ -91,8 +90,7 @@ public class AlunosController {
             return ResponseEntity
                     .notFound()
                     .build();
-        }
-        else {
+        } else {
             service.delete(id);
             return ResponseEntity
                     .noContent()

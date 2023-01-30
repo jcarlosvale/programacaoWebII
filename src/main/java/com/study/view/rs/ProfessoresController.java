@@ -1,8 +1,6 @@
 package com.study.view.rs;
 
-import com.study.domain.dto.AlunosDto;
 import com.study.domain.dto.ProfessoresDto;
-import com.study.domain.service.AlunoService;
 import com.study.domain.service.ProfessorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +21,6 @@ public class ProfessoresController {
 
     private final ProfessorService service;
 
-
     //@GetMapping  comentado para evitar conflito de endpoint com request param abaixo
     public ResponseEntity<List<ProfessoresDto>> getAll() {
         log.info("Listing professores");
@@ -31,8 +28,7 @@ public class ProfessoresController {
         List<ProfessoresDto> ListaDeProfessores = service.retrieveAll();
         if (ListaDeProfessores.isEmpty()) {
             return ResponseEntity.ok(List.of());
-        }
-        else {
+        } else {
             return ResponseEntity
                     .ok(new ArrayList<>(ListaDeProfessores));
         }
@@ -46,8 +42,7 @@ public class ProfessoresController {
             return ResponseEntity
                     .notFound()
                     .build();
-        }
-        else {
+        } else {
             return ResponseEntity
                     .ok(professor);
         }
@@ -60,8 +55,7 @@ public class ProfessoresController {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
                     .build();
-        }
-        else {
+        } else {
             service.save(professor);
             log.info("Inserted a new aluno {}", professor);
             return ResponseEntity
@@ -71,7 +65,7 @@ public class ProfessoresController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<ProfessoresDto> update(@PathVariable("id") final int id, @RequestBody final ProfessoresDto professorDto) {
+    public ResponseEntity<ProfessoresDto> update(@PathVariable("id") final int id, @RequestBody @Valid final ProfessoresDto professorDto) {
         log.info("Updating aluno {}", id);
         ProfessoresDto professor = service.getById(id);
 
@@ -82,7 +76,7 @@ public class ProfessoresController {
         service.update(id, professorDto);
 
         return ResponseEntity
-                    .ok(professor);
+                .ok(professor);
 
     }
 
@@ -95,8 +89,7 @@ public class ProfessoresController {
             return ResponseEntity
                     .notFound()
                     .build();
-        }
-        else {
+        } else {
             service.delete(id);
             return ResponseEntity
                     .noContent()
