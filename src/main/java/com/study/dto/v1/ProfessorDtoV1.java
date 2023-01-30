@@ -1,4 +1,4 @@
-package com.study.domain.dto.v1;
+package com.study.dto.v1;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties
-public class ProfessorDto {
+public class ProfessorDtoV1 {
 
     private int id;
     private String name;

@@ -1,6 +1,6 @@
 package com.study.view.rs.v1;
 
-import com.study.domain.dto.v1.*;
+import com.study.dto.v1.*;
 import lombok.extern.slf4j.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,7 @@ public class ProfessorControllerV1 {
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveProfessor(@RequestBody final ProfessorDto professor) {
+    public ResponseEntity<Void> saveProfessor(@RequestBody final ProfessorDtoV1 professor) {
         log.info("Saving professor - {}", professor);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -31,7 +31,7 @@ public class ProfessorControllerV1 {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProfessorDto> updateProfessor(@PathVariable("id") int id, @RequestBody ProfessorDto professor) {
+    public ResponseEntity<ProfessorDtoV1> updateProfessor(@PathVariable("id") int id, @RequestBody ProfessorDtoV1 professor) {
         log.info("Updating professor id - {}", id);
         return ResponseEntity
                 .ok(professor);

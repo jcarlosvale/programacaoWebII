@@ -1,6 +1,6 @@
 package com.study.view.rs;
 
-import com.study.domain.dto.*;
+import com.study.dto.*;
 import lombok.*;
 import lombok.extern.slf4j.*;
 import org.springframework.http.*;
