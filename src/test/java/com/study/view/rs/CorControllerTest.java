@@ -1,6 +1,6 @@
 package com.study.view.rs;
 
-import com.study.domain.dto.*;
+import com.study.dto.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.*;
 import org.junit.jupiter.params.provider.*;
@@ -99,7 +99,8 @@ class CorControllerTest {
     @Test
     void getById() {
         //GIVEN
-        var expected = repository.values().stream().findFirst().get();
+        var expected = repository.values().stream().findFirst().orElse(null);
+        assert expected != null;
         var id = expected.getId();
         var initialCounter = repository.size();
 
@@ -149,7 +150,7 @@ class CorControllerTest {
     @Test
     void save_Exists() {
         //GIVEN
-        var dto = repository.values().stream().findFirst().get();
+        var dto = repository.values().stream().findFirst().orElse(null);
         var initialCounter = repository.size();
 
         //WHEN
@@ -163,7 +164,8 @@ class CorControllerTest {
     @Test
     void update() {
         //GIVEN
-        var dto = repository.values().stream().findFirst().get();
+        var dto = repository.values().stream().findFirst().orElse(null);
+        assert dto != null;
         dto.setDescricao("nova descricao");
         var initialCounter = repository.size();
 
@@ -195,10 +197,11 @@ class CorControllerTest {
     @Test
     void delete() {
         //GIVEN
-        var dto = repository.values().stream().findFirst().get();
+        var dto = repository.values().stream().findFirst().orElse(null);
         var initialCounter = repository.size();
 
         //WHEN
+        assert dto != null;
         var response = restTemplate.exchange(URL+"/{id}", HttpMethod.DELETE, null, Void.class, dto.getId());
 
         //THEN
