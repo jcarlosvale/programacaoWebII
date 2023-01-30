@@ -20,6 +20,8 @@ import com.study.service.CursoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(path = "/cursos")
 @RequiredArgsConstructor
@@ -50,7 +52,7 @@ public class CursoController {
     }
 
     @PostMapping
-    public ResponseEntity<CursoDTO> save(@RequestBody final CursoDTO cursoDTO){
+    public ResponseEntity<CursoDTO> save(@RequestBody @Valid final CursoDTO cursoDTO){
         if(cursoDTO.getNome().trim().equals("")){
         	log.error("Nome do curso inválido {}", cursoDTO.getNome());
         	return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -62,7 +64,7 @@ public class CursoController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<CursoDTO> update (@PathVariable("id") final int id, @RequestBody final CursoDTO cursoDTO){
+    public ResponseEntity<CursoDTO> update (@PathVariable("id") final int id, @RequestBody @Valid final CursoDTO cursoDTO){
     	log.info("Atualizando curso por id {}", id);
     	cursoService.update(id, cursoDTO);
     	return ResponseEntity.ok(cursoDTO);
