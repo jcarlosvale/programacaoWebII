@@ -12,4 +12,14 @@ public class SchoolConfiguration {
     public Map<Integer, AlunoDto> alunoRepository() {
         return new HashMap<>();
     }
+
+    @Bean
+    public Map<Integer, ProfessorDto> professorRepository() {
+        return new HashMap<>();
+    }
+
+    @Bean
+    public Map<Integer, CursoDto> cursoRepository() {
+        return new HashMap<>();
+    }
 }
