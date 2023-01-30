@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -53,7 +54,7 @@ public class ProfessoresController {
     }
 
     @PostMapping
-    public ResponseEntity<ProfessoresDto> save(@RequestBody final ProfessoresDto professor) {
+    public ResponseEntity<ProfessoresDto> save(@RequestBody @Valid final ProfessoresDto professor) {
         if (service.getById(professor.getId()) != null) {
             log.error("Collection contains id {}", professor.getId());
             return ResponseEntity
