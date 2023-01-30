@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,7 +19,7 @@ public class ProfessorController {
     private final ProfessorService professorService;
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody final ProfessorDto professor){
+    public ResponseEntity<Void> save(@RequestBody @Valid final ProfessorDto professor){
         return professorService.createProfessor(professor);
     }
 
@@ -32,7 +33,7 @@ public class ProfessorController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<ProfessorDto> update(@PathVariable("id") final int id, @RequestBody ProfessorDto professor) {
+    public ResponseEntity<ProfessorDto> update(@PathVariable("id") final int id, @RequestBody @Valid ProfessorDto professor) {
         return professorService.update(id, professor);
     }
 

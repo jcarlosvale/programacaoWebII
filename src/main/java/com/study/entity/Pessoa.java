@@ -1,33 +1,37 @@
-package com.study.domain.dto;
+package com.study.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties
-public class DisciplinaDto {
+public class Pessoa {
 
     @Positive
-    private int id;
+    private Integer id;
 
     @NotBlank
-    @Size(min = 10)
+    @Size(min = 4)
     private String name;
 
-    @Size(max = 30)
-    private String descricao;
+    @NotBlank
+    @Size(min = 1)
+    private String sexo;
 
-    @Size(max = 4)
-    private String cargaHoraria;
+    @Email
+    private String email;
+
+    @CPF
+    private String cpf;
 
 }

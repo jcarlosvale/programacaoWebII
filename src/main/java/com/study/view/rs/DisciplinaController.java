@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.*;
 
 @RestController
@@ -18,7 +19,7 @@ public class DisciplinaController {
     private final DisciplinaService disciplinaService;
 
     @PostMapping
-    public ResponseEntity<Void> createDisciplina(@RequestBody final DisciplinaDto disciplina){
+    public ResponseEntity<Void> createDisciplina(@RequestBody @Valid final DisciplinaDto disciplina){
         return disciplinaService.createDisciplina(disciplina);
     }
 
@@ -32,7 +33,7 @@ public class DisciplinaController {
     }
 
     @PutMapping(path = "/{îd}")
-    public ResponseEntity<DisciplinaDto> update(@PathVariable("id") final int id, @RequestBody DisciplinaDto disciplina) {
+    public ResponseEntity<DisciplinaDto> update(@PathVariable("id") final int id, @RequestBody @Valid DisciplinaDto disciplina) {
         return disciplinaService.update(id, disciplina);
     }
 

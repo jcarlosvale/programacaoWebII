@@ -63,7 +63,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     public ResponseEntity<List<ProfessorDto>> getByPrefix(String prefixo) {
         if(Objects.isNull(prefixo)) return getAll();
         var professores = repository.values().stream()
-                .filter(professor -> professor.getNome().startsWith(prefixo))
+                .filter(professor -> professor.getName().startsWith(prefixo))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(professores);
     }
