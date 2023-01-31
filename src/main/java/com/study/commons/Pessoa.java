@@ -1,4 +1,4 @@
-package com.study.entity;
+package com.study.commons;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -28,10 +28,10 @@ public class Pessoa {
     @Size(min = 1)
     private String sexo;
 
-    @Email
+    @Email(message = "O e-mail inserido está inválido")
     private String email;
 
-    @CPF
+    @CPF(message = "CPF invalido, adicione um CPF que seja válido")
     private String cpf;
 
 }

@@ -1,7 +1,7 @@
 package com.study.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.study.entity.Pessoa;
+import com.study.commons.Pessoa;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
