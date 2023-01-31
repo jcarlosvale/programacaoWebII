@@ -1,35 +1,35 @@
 package com.study.service;
 
 
-import com.study.dto.v2.*;
-import lombok.extern.slf4j.*;
-import org.springframework.stereotype.*;
+import com.study.dto.ProfessorDto;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
 
 @Service
 @Slf4j
 public class ProfessorService {
 
-    public List<ProfessorDtoV2> retrieveAll() {
+    public List<ProfessorDto> retrieveAll() {
         log.info("Listing professors");
-        return List.of(ProfessorDtoV2.builder().id(1).name("Joao").build(), ProfessorDtoV2.builder().id(2).name("Maria").build());
+        return List.of(ProfessorDto.builder().id(1).name("Joao").build(), ProfessorDto.builder().id(2).name("Maria").build());
     }
 
-    public ProfessorDtoV2 getById(int id) {
+    public ProfessorDto getById(int id) {
         log.info("Getting professor id-{}", id);
 
-        return ProfessorDtoV2.builder()
+        return ProfessorDto.builder()
                 .id(id)
                 .name("Name of professor")
                 .build();
     }
 
-    public void save(ProfessorDtoV2 professor) {
+    public void save(ProfessorDto professor) {
         log.info("Saving professor - {}", professor);
     }
 
-    public void update(int id, ProfessorDtoV2 professor) {
+    public void update(int id, ProfessorDto professor) {
         log.info("Updating professor id - {}, data - {}", id, professor);
     }
 

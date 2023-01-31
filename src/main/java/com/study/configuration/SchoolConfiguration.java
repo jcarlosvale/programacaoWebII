@@ -1,19 +1,17 @@
 package com.study.configuration;
 
-import com.study.*;
-import com.study.dto.*;
-import com.study.dto.v2.ProfessorDtoV2;
-import org.springframework.context.annotation.*;
+import com.study.Employee;
+import com.study.dto.AlunoDto;
+import com.study.dto.DisciplinaDto;
+import com.study.dto.ProfessorDto;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 public class SchoolConfiguration {
-
-    @Bean
-    public Map<Integer, CorDto> corRepository() {
-        return new HashMap<>();
-    }
 
     @Bean
     public Employee employee() {
@@ -31,7 +29,7 @@ public class SchoolConfiguration {
     }
 
     @Bean
-    public Map<Integer, ProfessorDtoV2> professorRepository() {
+    public Map<Integer, ProfessorDto> professorRepository() {
         return new HashMap<>();
     }
 
