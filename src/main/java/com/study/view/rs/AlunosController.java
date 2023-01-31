@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,8 +20,7 @@ public class AlunosController {
 
     private final AlunoService service;
 
-
-    //@GetMapping  comentado para evitar conflito de endpoint com request param abaixo
+    @GetMapping
     public ResponseEntity<List<AlunosDto>> getAll() {
         log.info("Listing alunos");
 
@@ -39,18 +37,14 @@ public class AlunosController {
     public ResponseEntity<AlunosDto> getById(@PathVariable("id") final int id) {
         log.info("Getting aluno {}", id);
         var aluno = service.getById(id);
-        if (Objects.isNull(aluno)) {
-            return ResponseEntity
-                    .notFound()
-                    .build();
-        } else {
-            return ResponseEntity
-                    .ok(aluno);
-        }
+
+        return ResponseEntity
+                .ok(aluno);
+
     }
 
     @PostMapping
-    public ResponseEntity<AlunosDto> save(@RequestBody @Valid final AlunosDto aluno) {
+    public ResponseEntity<AlunosDto> save(@RequestBody final AlunosDto aluno) {
         if (service.getById(aluno.getId()) != null) {
             log.error("Collection contains id {}", aluno.getId());
             return ResponseEntity
@@ -66,7 +60,7 @@ public class AlunosController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<AlunosDto> update(@PathVariable("id") final int id, @RequestBody @Valid final AlunosDto alunosDto) {
+    public ResponseEntity<AlunosDto> update(@PathVariable("id") final int id, @RequestBody final AlunosDto alunosDto) {
         log.info("Updating aluno {}", id);
         AlunosDto aluno = service.getById(id);
 

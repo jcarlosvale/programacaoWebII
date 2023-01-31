@@ -14,14 +14,14 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping(path = "/alunos")
+@RequestMapping(path = "/professores")
 @RequiredArgsConstructor
 @Slf4j
 public class ProfessoresController {
 
     private final ProfessorService service;
 
-    //@GetMapping  comentado para evitar conflito de endpoint com request param abaixo
+    @GetMapping
     public ResponseEntity<List<ProfessoresDto>> getAll() {
         log.info("Listing professores");
 
@@ -38,14 +38,10 @@ public class ProfessoresController {
     public ResponseEntity<ProfessoresDto> getById(@PathVariable("id") final int id) {
         log.info("Getting professor {}", id);
         var professor = service.getById(id);
-        if (Objects.isNull(professor)) {
-            return ResponseEntity
-                    .notFound()
-                    .build();
-        } else {
+
             return ResponseEntity
                     .ok(professor);
-        }
+
     }
 
     @PostMapping

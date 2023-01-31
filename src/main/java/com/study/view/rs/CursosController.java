@@ -21,7 +21,7 @@ public class CursosController {
 
     private final CursoService service;
 
-    //@GetMapping  comentado para evitar conflito de endpoint com request param abaixo
+    @GetMapping
     public ResponseEntity<List<CursosDto>> getAll() {
         log.info("Listing cursos");
 
