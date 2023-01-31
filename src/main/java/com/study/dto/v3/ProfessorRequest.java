@@ -1,4 +1,4 @@
-package com.study.dto.v2;
+package com.study.dto.v3;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
@@ -6,18 +6,12 @@ import org.hibernate.validator.constraints.br.*;
 
 import javax.validation.constraints.*;
 
-/**
- * Using Beans Validation
- */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties
-public class ProfessorDtoV2 {
-
-    @Positive
-    private int id;
+public class ProfessorRequest {
 
     @NotBlank(message = "Name must be not empty or null")
     @Size(min = 2, message = "Minimum name length 2 characters")
@@ -28,4 +22,5 @@ public class ProfessorDtoV2 {
 
     @CPF(message = "CPF not valid")
     private String cpf;
+
 }

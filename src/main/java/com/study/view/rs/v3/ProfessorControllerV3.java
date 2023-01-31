@@ -19,10 +19,10 @@ import java.util.*;
 @Slf4j
 public class ProfessorControllerV3 {
 
-    private final ProfessorService service;
+    private final ProfessorServiceV2 service;
 
     @Autowired
-    public ProfessorControllerV3(ProfessorService service) {
+    public ProfessorControllerV3(ProfessorServiceV2 service) {
         this.service = service;
     }
 
