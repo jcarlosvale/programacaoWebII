@@ -1,6 +1,7 @@
 package com.study.service;
 
 import com.study.dto.DisciplinaDto;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

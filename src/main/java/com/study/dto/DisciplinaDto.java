@@ -28,7 +28,6 @@ public class DisciplinaDto {
     @Size(min = 10, message = "Campo deve ter ao menos 10 caracteres")
     private String descricao;
 
-    @NotBlank(message = "Campo não pode ser branco")
-    @Size(min = 2, message = "Campo deve ter ao menos 2 caracteres")
+    @Positive(message = "Campo não pode ser branco")
     private int duracao;
 }
