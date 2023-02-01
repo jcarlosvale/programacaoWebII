@@ -15,10 +15,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties
-public class AlunoDto {
-
-    @Positive
-    private int id;
+public class AlunoRequestDto {
 
     @NotBlank
     @Size(min = 2)

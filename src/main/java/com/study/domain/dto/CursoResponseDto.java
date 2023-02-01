@@ -15,16 +15,13 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties
-public class ProfessorDto {
-    @Positive
+public class CursoResponseDto {
+
     private int id;
 
-    @NotBlank
-    @Size(min = 2)
     private String nome;
 
-    private String titulo;
+    private String descricao;
 
-    @NotBlank
-    private String sexo;
+    private int horas;
 }

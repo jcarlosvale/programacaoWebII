@@ -7,19 +7,18 @@ import java.util.*;
 
 @Configuration
 public class SchoolConfiguration {
-
     @Bean
-    public Map<Integer, AlunoDto> alunoRepository() {
+    public Map<Integer, AlunoRequestDto> alunoRequestDtoMap() {
         return new HashMap<>();
     }
 
     @Bean
-    public Map<Integer, ProfessorDto> professorRepository() {
+    public Map<Integer, ProfessorRequestDto> professorRequestDtoMap() {
         return new HashMap<>();
     }
 
     @Bean
-    public Map<Integer, CursoDto> cursoRepository() {
+    public Map<Integer, CursoRequestDto> cursoRequestDtoMap() {
         return new HashMap<>();
     }
 }

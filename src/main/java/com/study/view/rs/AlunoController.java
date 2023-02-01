@@ -1,6 +1,7 @@
 package com.study.view.rs;
 
-import com.study.domain.dto.AlunoDto;
+import com.study.domain.dto.AlunoRequestDto;
+import com.study.domain.dto.AlunoResponseDto;
 import com.study.service.AlunoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,11 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/alunos")
@@ -24,17 +21,17 @@ public class AlunoController {
     private final AlunoService alunoService;
 
     @PostMapping
-    public ResponseEntity<AlunoDto> save(@RequestBody @Valid final AlunoDto aluno) {
+    public ResponseEntity<AlunoResponseDto> save(@RequestBody @Valid final AlunoRequestDto aluno) {
 
-            alunoService.save(aluno);
+            AlunoResponseDto alunoCreated =  alunoService.save(aluno);
             log.info("Inserted a new aluno {}", aluno);
             return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(aluno);
+                    .body(alunoCreated);
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<AlunoDto> getById(@PathVariable("id") final int id) {
+    public ResponseEntity<AlunoResponseDto> getById(@PathVariable("id") final int id) {
         log.info("Getting aluno {}", id);
         var aluno = alunoService.getById(id);
             return ResponseEntity
@@ -42,7 +39,7 @@ public class AlunoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AlunoDto>> getAll() {
+    public ResponseEntity<List<AlunoResponseDto>> getAll() {
         log.info("Listing alunos");
 
             return ResponseEntity
@@ -50,12 +47,12 @@ public class AlunoController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<AlunoDto> update(@PathVariable("id") final int id, @RequestBody @Valid final AlunoDto aluno) {
+    public ResponseEntity<AlunoResponseDto> update(@PathVariable("id") final int id, @RequestBody @Valid final AlunoRequestDto aluno) {
         log.info("Updating aluno {}", id);
 
-            alunoService.update(id, aluno);
+            AlunoResponseDto alunoReponse =  alunoService.update(id, aluno);
             return ResponseEntity
-                    .ok(aluno);
+                    .ok(alunoReponse);
     }
 
     @DeleteMapping(path = "/{id}")

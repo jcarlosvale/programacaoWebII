@@ -1,7 +1,9 @@
 package com.study.view.rs;
 
-import com.study.domain.dto.CursoDto;
-import com.study.domain.dto.ProfessorDto;
+import com.study.domain.dto.AlunoRequestDto;
+import com.study.domain.dto.AlunoResponseDto;
+import com.study.domain.dto.CursoRequestDto;
+import com.study.domain.dto.CursoResponseDto;
 import com.study.service.CursoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,47 +24,47 @@ public class CursoController {
 
 
     @PostMapping
-    public ResponseEntity<CursoDto> save(@RequestBody @Valid final CursoDto curso) {
+    public ResponseEntity<CursoResponseDto> save(@RequestBody @Valid final CursoRequestDto curso) {
 
-            cursoService.save(curso);
-            log.info("Inserted a new curso {}", curso);
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(curso);
+        CursoResponseDto cursoCreated =  cursoService.save(curso);
+        log.info("Inserted a new curso {}", curso);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(cursoCreated);
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<CursoDto> getById(@PathVariable("id") final int id) {
+    public ResponseEntity<CursoResponseDto> getById(@PathVariable("id") final int id) {
         log.info("Getting curso {}", id);
         var curso = cursoService.getById(id);
-            return ResponseEntity
-                    .ok(curso);
+        return ResponseEntity
+                .ok(curso);
     }
 
     @GetMapping
-    public ResponseEntity<List<CursoDto>> getAll() {
+    public ResponseEntity<List<CursoResponseDto>> getAll() {
         log.info("Listing cursos");
 
-            return ResponseEntity
-                    .ok(cursoService.getAll());
+        return ResponseEntity
+                .ok(cursoService.getAll());
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<CursoDto> update(@PathVariable("id") final int id, @RequestBody @Valid final CursoDto curso) {
+    public ResponseEntity<CursoResponseDto> update(@PathVariable("id") final int id, @RequestBody @Valid final CursoRequestDto curso) {
         log.info("Updating curso {}", id);
 
-            cursoService.update(id, curso);
-            return ResponseEntity
-                    .ok(curso);
+        CursoResponseDto cursoReponse =  cursoService.update(id, curso);
+        return ResponseEntity
+                .ok(cursoReponse);
     }
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") final int id) {
         log.info("Deleting curso {}", id);
 
-            cursoService.delete(id);
-            return ResponseEntity
-                    .noContent()
-                    .build();
+        cursoService.delete(id);
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 }
