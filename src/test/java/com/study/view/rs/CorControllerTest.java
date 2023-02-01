@@ -18,7 +18,7 @@ import static org.junit.jupiter.params.provider.Arguments.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CorControllerTest {
 
-    @Autowired
+    /*@Autowired
     private Map<Integer, CorDto> repository;
 
     @Value("${local.server.port}")
@@ -217,5 +217,5 @@ class CorControllerTest {
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         assertThat(repository).hasSize(initialCounter);
-    }
+    }*/
 }

@@ -8,8 +8,5 @@ import java.util.*;
 @Configuration
 public class SchoolConfiguration {
 
-    @Bean
-    public Map<Integer, CorDto> corRepository() {
-        return new HashMap<>();
-    }
+
 }

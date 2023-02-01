@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,7 +26,7 @@ public class AlunoController {
     private final Map<Integer, AlunoDto> repository = new HashMap<>();
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody final AlunoDto aluno){
+    public ResponseEntity<Void> save(@RequestBody @Valid final AlunoDto aluno){
         if(repository.containsKey(aluno.getId())){
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
@@ -57,7 +58,7 @@ public class AlunoController {
 
     @PutMapping(path = "/{id}")
     public ResponseEntity<AlunoDto> update(@PathParam("id") final int id,
-                                           @RequestBody final AlunoDto alunoNovo){
+                                           @RequestBody @Valid final AlunoDto alunoNovo){
         if(!repository.containsKey(alunoNovo.getId())){
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)

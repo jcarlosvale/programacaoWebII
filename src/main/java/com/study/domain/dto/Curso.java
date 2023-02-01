@@ -1,6 +1,9 @@
 package com.study.domain.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.*;
 
@@ -9,16 +12,16 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties
-public class AlunoDto {
+public class Curso {
     @Positive
     private int id;
 
     @NotBlank
     private String nome;
 
-    @Positive
-    private int matricula;
-
     @NotBlank
-    private String genero;
+    private String descricao;
+
+    @Positive
+    private int duracao;
 }
