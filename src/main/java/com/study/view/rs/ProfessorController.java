@@ -68,10 +68,15 @@ public class ProfessorController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removeProfessor(@PathVariable("id") int id) {
 
-        service.delete(id);
-
-        return ResponseEntity
-                .noContent()
-                .build();
+        try {
+            service.delete(id);
+            return ResponseEntity
+                    .noContent()
+                    .build();
+        } catch (Exception e){
+            return ResponseEntity
+                    .notFound()
+                    .build();
+        }
     }
 }
