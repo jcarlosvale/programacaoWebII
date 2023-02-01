@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @JsonIgnoreProperties
 public class AlunosDto {
+
     @Positive
     private int id;
     @NotBlank
