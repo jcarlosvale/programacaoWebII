@@ -1,6 +1,6 @@
 package com.study.domain.service;
 
-import com.study.domain.dto.ProfessoresDto;
+import com.study.domain.dto.Professores;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -10,16 +10,16 @@ import java.util.List;
 @Service
 public class ProfessorService {
 
-    public List<ProfessoresDto> retrieveAll() {
+    public List<Professores> retrieveAll() {
         log.info("Listing professores");
-        return List.of(new ProfessoresDto(1, "Joao", "Mestre", "M"),
-                ProfessoresDto.builder().id(2).nome("Maria").titulo("Especialista").sexo("F").build());
+        return List.of(new Professores(1, "Joao", "Mestre", "M"),
+                Professores.builder().id(2).nome("Maria").titulo("Especialista").sexo("F").build());
     }
 
-    public ProfessoresDto getById(int id) {
+    public Professores getById(int id) {
         log.info("Getting professor id-{}", id);
 
-        return ProfessoresDto.builder()
+        return Professores.builder()
                 .id(id)
                 .nome("Nome do professor")
                 .titulo("Titulo do professor")
@@ -27,11 +27,11 @@ public class ProfessorService {
                 .build();
     }
 
-    public void save(ProfessoresDto professor) {
+    public void save(Professores professor) {
         log.info("Saving professor - {}", professor);
     }
 
-    public void update(int id, ProfessoresDto professor) {
+    public void update(int id, Professores professor) {
         log.info("Updating professor id - {}, data - {}", id, professor);
     }
 

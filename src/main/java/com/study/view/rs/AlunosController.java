@@ -1,6 +1,6 @@
 package com.study.view.rs;
 
-import com.study.domain.dto.AlunosDto;
+import com.study.domain.dto.Alunos;
 import com.study.domain.service.AlunoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,10 +21,10 @@ public class AlunosController {
     private final AlunoService service;
 
     @GetMapping
-    public ResponseEntity<List<AlunosDto>> getAll() {
+    public ResponseEntity<List<Alunos>> getAll() {
         log.info("Listing alunos");
 
-        List<AlunosDto> listaDeAlunos = service.retrieveAll();
+        List<Alunos> listaDeAlunos = service.retrieveAll();
         if (listaDeAlunos.isEmpty()) {
             return ResponseEntity.ok(List.of());
         } else {
@@ -34,7 +34,7 @@ public class AlunosController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<AlunosDto> getById(@PathVariable("id") final int id) {
+    public ResponseEntity<Alunos> getById(@PathVariable("id") final int id) {
         log.info("Getting aluno {}", id);
         var aluno = service.getById(id);
 
@@ -44,7 +44,7 @@ public class AlunosController {
     }
 
     @PostMapping
-    public ResponseEntity<AlunosDto> save(@RequestBody final AlunosDto aluno) {
+    public ResponseEntity<Alunos> save(@RequestBody final Alunos aluno) {
         if (service.getById(aluno.getId()) != null) {
             log.error("Collection contains id {}", aluno.getId());
             return ResponseEntity
@@ -60,18 +60,18 @@ public class AlunosController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<AlunosDto> update(@PathVariable("id") final int id, @RequestBody final AlunosDto alunosDto) {
+    public ResponseEntity<Alunos> update(@PathVariable("id") final int id, @RequestBody final Alunos alunos) {
         log.info("Updating aluno {}", id);
-        AlunosDto aluno = service.getById(id);
+        Alunos aluno = service.getById(id);
 
         if (aluno == null) {
             return ResponseEntity.notFound().build();
         }
 
-        service.update(id, alunosDto);
+        service.update(id, alunos);
 
         return ResponseEntity
-                .ok(alunosDto);
+                .ok(alunos);
 
     }
 

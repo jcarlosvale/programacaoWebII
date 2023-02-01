@@ -1,6 +1,6 @@
 package com.study.view.rs;
 
-import com.study.domain.dto.CursosDto;
+import com.study.domain.dto.Cursos;
 import com.study.domain.service.CursoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +22,10 @@ public class CursosController {
     private final CursoService service;
 
     @GetMapping
-    public ResponseEntity<List<CursosDto>> getAll() {
+    public ResponseEntity<List<Cursos>> getAll() {
         log.info("Listing cursos");
 
-        List<CursosDto> listaDeCursos = service.retrieveAll();
+        List<Cursos> listaDeCursos = service.retrieveAll();
         if (listaDeCursos.isEmpty()) {
             return ResponseEntity.ok(List.of());
         } else {
@@ -35,7 +35,7 @@ public class CursosController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<CursosDto> getById(@PathVariable("id") final int id) {
+    public ResponseEntity<Cursos> getById(@PathVariable("id") final int id) {
         log.info("Getting curso {}", id);
         var curso = service.getById(id);
         if (Objects.isNull(curso)) {
@@ -49,7 +49,7 @@ public class CursosController {
     }
 
     @PostMapping
-    public ResponseEntity<CursosDto> save(@RequestBody @Valid final CursosDto curso) {
+    public ResponseEntity<Cursos> save(@RequestBody @Valid final Cursos curso) {
         if (service.getById(curso.getId()) != null) {
             log.error("Collection contains id {}", curso.getId());
             return ResponseEntity
@@ -65,9 +65,9 @@ public class CursosController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<CursosDto> update(@PathVariable("id") final int id, @RequestBody @Valid final CursosDto cursoDto) {
+    public ResponseEntity<Cursos> update(@PathVariable("id") final int id, @RequestBody @Valid final Cursos cursoDto) {
         log.info("Updating aluno {}", id);
-        CursosDto curso = service.getById(id);
+        Cursos curso = service.getById(id);
 
         if (curso == null) {
             return ResponseEntity.notFound().build();

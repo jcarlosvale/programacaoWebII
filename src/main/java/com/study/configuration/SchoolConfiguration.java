@@ -9,7 +9,7 @@ import java.util.*;
 public class SchoolConfiguration {
 
     @Bean
-    public Map<Integer, AlunosDto> alunosRepository() {
+    public Map<Integer, Alunos> alunosRepository() {
         return new HashMap<>();
     }
 }

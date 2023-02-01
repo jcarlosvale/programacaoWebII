@@ -1,7 +1,6 @@
 package com.study.domain.service;
 
-import com.study.domain.dto.AlunosDto;
-import com.study.domain.dto.CursosDto;
+import com.study.domain.dto.Cursos;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -11,16 +10,16 @@ import java.util.List;
 @Service
 public class CursoService {
 
-    public List<CursosDto> retrieveAll() {
+    public List<Cursos> retrieveAll() {
         log.info("Listing cursos");
-        return List.of(new CursosDto(1, "Programacao Web II", "API - Rest", "40h"),
-                CursosDto.builder().id(2).nome("Programação Orientada a Objetos II").descricao("Java").duracao("50h").build());
+        return List.of(new Cursos(1, "Programacao Web II", "API - Rest", "40h"),
+                Cursos.builder().id(2).nome("Programação Orientada a Objetos II").descricao("Java").duracao("50h").build());
     }
 
-    public CursosDto getById(int id) {
+    public Cursos getById(int id) {
         log.info("Getting curso id-{}", id);
 
-        return CursosDto.builder()
+        return Cursos.builder()
                 .id(id)
                 .nome("Nome do curso")
                 .descricao("Descrição do curso")
@@ -28,11 +27,11 @@ public class CursoService {
                 .build();
     }
 
-    public void save(CursosDto curso) {
+    public void save(Cursos curso) {
         log.info("Saving curso - {}", curso);
     }
 
-    public void update(int id, CursosDto curso) {
+    public void update(int id, Cursos curso) {
         log.info("Updating curso id - {}, data - {}", id, curso);
     }
 

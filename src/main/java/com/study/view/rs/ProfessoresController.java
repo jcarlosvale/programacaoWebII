@@ -1,6 +1,6 @@
 package com.study.view.rs;
 
-import com.study.domain.dto.ProfessoresDto;
+import com.study.domain.dto.Professores;
 import com.study.domain.service.ProfessorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +22,10 @@ public class ProfessoresController {
     private final ProfessorService service;
 
     @GetMapping
-    public ResponseEntity<List<ProfessoresDto>> getAll() {
+    public ResponseEntity<List<Professores>> getAll() {
         log.info("Listing professores");
 
-        List<ProfessoresDto> ListaDeProfessores = service.retrieveAll();
+        List<Professores> ListaDeProfessores = service.retrieveAll();
         if (ListaDeProfessores.isEmpty()) {
             return ResponseEntity.ok(List.of());
         } else {
@@ -35,7 +35,7 @@ public class ProfessoresController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<ProfessoresDto> getById(@PathVariable("id") final int id) {
+    public ResponseEntity<Professores> getById(@PathVariable("id") final int id) {
         log.info("Getting professor {}", id);
         var professor = service.getById(id);
 
@@ -45,7 +45,7 @@ public class ProfessoresController {
     }
 
     @PostMapping
-    public ResponseEntity<ProfessoresDto> save(@RequestBody @Valid final ProfessoresDto professor) {
+    public ResponseEntity<Professores> save(@RequestBody @Valid final Professores professor) {
         if (service.getById(professor.getId()) != null) {
             log.error("Collection contains id {}", professor.getId());
             return ResponseEntity
@@ -61,9 +61,9 @@ public class ProfessoresController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<ProfessoresDto> update(@PathVariable("id") final int id, @RequestBody @Valid final ProfessoresDto professorDto) {
+    public ResponseEntity<Professores> update(@PathVariable("id") final int id, @RequestBody @Valid final Professores professorDto) {
         log.info("Updating aluno {}", id);
-        ProfessoresDto professor = service.getById(id);
+        Professores professor = service.getById(id);
 
         if (professor == null) {
             return ResponseEntity.notFound().build();

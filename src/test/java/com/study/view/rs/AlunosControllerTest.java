@@ -19,7 +19,7 @@ import static org.junit.jupiter.params.provider.Arguments.*;
 class AlunosControllerTest {
 
     @Autowired
-    private Map<Integer, AlunosDto> repository;
+    private Map<Integer, Alunos> repository;
 
     @Value("${local.server.port}")
     private int port;
@@ -32,10 +32,10 @@ class AlunosControllerTest {
     @BeforeEach
     void setup() {
         URL = "http://localhost:" + port + "/alunos";
-        repository.put(1, AlunosDto.builder().id(1).nome("Miguel").build());
-        repository.put(2, AlunosDto.builder().id(2).nome("Marcio").build());
-        repository.put(3, AlunosDto.builder().id(3).nome("Carla").build());
-        repository.put(4, AlunosDto.builder().id(4).nome("Caroline").build());
+        repository.put(1, Alunos.builder().id(1).nome("Miguel").build());
+        repository.put(2, Alunos.builder().id(2).nome("Marcio").build());
+        repository.put(3, Alunos.builder().id(3).nome("Carla").build());
+        repository.put(4, Alunos.builder().id(4).nome("Caroline").build());
     }
 
     @AfterEach
@@ -49,7 +49,7 @@ class AlunosControllerTest {
         var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.getForEntity(URL, AlunosDto[].class);
+        var response = restTemplate.getForEntity(URL, Alunos[].class);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -63,7 +63,7 @@ class AlunosControllerTest {
         repository.clear();
 
         //WHEN
-        var response = restTemplate.getForEntity(URL, AlunosDto[].class);
+        var response = restTemplate.getForEntity(URL, Alunos[].class);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -79,7 +79,7 @@ class AlunosControllerTest {
         var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.getForEntity(URL, AlunosDto[].class, prefix);
+        var response = restTemplate.getForEntity(URL, Alunos[].class, prefix);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -104,7 +104,7 @@ class AlunosControllerTest {
         var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.getForEntity(URL+ "/{id}", AlunosDto.class, id);
+        var response = restTemplate.getForEntity(URL+ "/{id}", Alunos.class, id);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -118,7 +118,7 @@ class AlunosControllerTest {
         var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.getForEntity(URL+ "/{id}", AlunosDto.class, 999);
+        var response = restTemplate.getForEntity(URL+ "/{id}", Alunos.class, 999);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -129,14 +129,14 @@ class AlunosControllerTest {
     void save() {
         //GIVEN
         var newDto =
-                AlunosDto.builder()
+                Alunos.builder()
                 .id(9999)
                 .nome("nome")
                 .build();
         var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.postForEntity(URL, newDto, AlunosDto.class);
+        var response = restTemplate.postForEntity(URL, newDto, Alunos.class);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -153,7 +153,7 @@ class AlunosControllerTest {
         var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.postForEntity(URL, dto, AlunosDto.class);
+        var response = restTemplate.postForEntity(URL, dto, Alunos.class);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
@@ -169,7 +169,7 @@ class AlunosControllerTest {
 
         //WHEN
         var response = restTemplate.exchange(URL+"/{id}", HttpMethod.PUT, new HttpEntity<>(dto),
-                AlunosDto.class, dto.getId());
+                Alunos.class, dto.getId());
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -180,12 +180,12 @@ class AlunosControllerTest {
     @Test
     void update_NotFound() {
         //GIVEN
-        var request = AlunosDto.builder().build();
+        var request = Alunos.builder().build();
         var initialCounter = repository.size();
 
         //WHEN
         var response = restTemplate.exchange(URL+"/{id}", HttpMethod.PUT,
-                new HttpEntity<>(request), AlunosDto.class, 999);
+                new HttpEntity<>(request), Alunos.class, 999);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
