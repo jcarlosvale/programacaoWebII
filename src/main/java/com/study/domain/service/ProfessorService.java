@@ -1,6 +1,8 @@
 package com.study.domain.service;
 
 import com.study.domain.model.Professores;
+import com.study.domain.repositories.ProfessoresRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -8,26 +10,26 @@ import java.util.List;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class ProfessorService {
+
+    private final ProfessoresRepository repository;
 
     public List<Professores> retrieveAll() {
         log.info("Listing professores");
-        return null;
+        return repository.findAll();
     }
 
     public Professores getById(Long id) {
         log.info("Getting professor id-{}", id);
 
-        return Professores.builder()
-                .id(id)
-                .nome("Nome do professor")
-                .titulo("Titulo do professor")
-                .sexo("Sexo do professor")
-                .build();
+        return repository.getReferenceById(id);
     }
 
     public void save(Professores professor) {
         log.info("Saving professor - {}", professor);
+
+        repository.save(professor);
     }
 
     public void update(Long id, Professores professor) {
@@ -36,5 +38,6 @@ public class ProfessorService {
 
     public void delete(Long id) {
         log.info("Deleting professor id - {}", id);
+        repository.delete(repository.getReferenceById(id));
     }
 }
