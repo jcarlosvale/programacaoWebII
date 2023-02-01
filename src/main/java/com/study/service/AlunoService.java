@@ -29,7 +29,7 @@ public class AlunoService {
 	}
 	
 	public AlunoDTO save(final AlunoDTO aluno) {
-		repository.save(aluno.getId(), aluno);
+		repository.save(mapper.fromResponseDTO(aluno));
 		return aluno;
 	}
 	
