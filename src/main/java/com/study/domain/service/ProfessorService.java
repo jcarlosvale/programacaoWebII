@@ -12,11 +12,10 @@ public class ProfessorService {
 
     public List<Professores> retrieveAll() {
         log.info("Listing professores");
-        return List.of(new Professores(1, "Joao", "Mestre", "M"),
-                Professores.builder().id(2).nome("Maria").titulo("Especialista").sexo("F").build());
+        return null;
     }
 
-    public Professores getById(int id) {
+    public Professores getById(Long id) {
         log.info("Getting professor id-{}", id);
 
         return Professores.builder()
@@ -31,11 +30,11 @@ public class ProfessorService {
         log.info("Saving professor - {}", professor);
     }
 
-    public void update(int id, Professores professor) {
+    public void update(Long id, Professores professor) {
         log.info("Updating professor id - {}, data - {}", id, professor);
     }
 
-    public void delete(int id) {
+    public void delete(Long id) {
         log.info("Deleting professor id - {}", id);
     }
 }

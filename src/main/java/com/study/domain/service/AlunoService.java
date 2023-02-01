@@ -12,11 +12,10 @@ public class AlunoService {
 
     public List<Alunos> retrieveAll() {
         log.info("Listing alunos");
-        return List.of(new Alunos(1, "Joao", "123", "M"),
-                Alunos.builder().id(2).nome("Maria").matricula("456").sexo("F").build());
+        return null;
     }
 
-    public Alunos getById(int id) {
+    public Alunos getById(Long id) {
         log.info("Getting professor id-{}", id);
 
         return Alunos.builder()
@@ -31,11 +30,11 @@ public class AlunoService {
         log.info("Saving aluno - {}", aluno);
     }
 
-    public void update(int id, Alunos aluno) {
+    public void update(Long id, Alunos aluno) {
         log.info("Updating aluno id - {}, data - {}", id, aluno);
     }
 
-    public void delete(int id) {
+    public void delete(Long id) {
         log.info("Deleting aluno id - {}", id);
     }
 }

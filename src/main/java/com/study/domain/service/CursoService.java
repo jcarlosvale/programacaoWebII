@@ -12,11 +12,10 @@ public class CursoService {
 
     public List<Cursos> retrieveAll() {
         log.info("Listing cursos");
-        return List.of(new Cursos(1, "Programacao Web II", "API - Rest", "40h"),
-                Cursos.builder().id(2).nome("Programação Orientada a Objetos II").descricao("Java").duracao("50h").build());
+        return null;
     }
 
-    public Cursos getById(int id) {
+    public Cursos getById(Long id) {
         log.info("Getting curso id-{}", id);
 
         return Cursos.builder()
@@ -31,11 +30,11 @@ public class CursoService {
         log.info("Saving curso - {}", curso);
     }
 
-    public void update(int id, Cursos curso) {
+    public void update(Long id, Cursos curso) {
         log.info("Updating curso id - {}, data - {}", id, curso);
     }
 
-    public void delete(int id) {
+    public void delete(Long id) {
         log.info("Deleting curso id - {}", id);
     }
 }

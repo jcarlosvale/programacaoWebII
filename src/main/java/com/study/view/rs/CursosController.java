@@ -35,7 +35,7 @@ public class CursosController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Cursos> getById(@PathVariable("id") final int id) {
+    public ResponseEntity<Cursos> getById(@PathVariable("id") final Long id) {
         log.info("Getting curso {}", id);
         var curso = service.getById(id);
         if (Objects.isNull(curso)) {
@@ -65,7 +65,7 @@ public class CursosController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<Cursos> update(@PathVariable("id") final int id, @RequestBody @Valid final Cursos cursoDto) {
+    public ResponseEntity<Cursos> update(@PathVariable("id") final Long id, @RequestBody @Valid final Cursos cursoDto) {
         log.info("Updating aluno {}", id);
         Cursos curso = service.getById(id);
 
@@ -81,7 +81,7 @@ public class CursosController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") final int id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") final Long id) {
         log.info("Deleting curso {}", id);
         var curso = service.getById(id);
 

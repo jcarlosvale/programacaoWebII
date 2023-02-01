@@ -34,7 +34,7 @@ public class AlunosController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Alunos> getById(@PathVariable("id") final int id) {
+    public ResponseEntity<Alunos> getById(@PathVariable("id") final Long id) {
         log.info("Getting aluno {}", id);
         var aluno = service.getById(id);
 
@@ -60,7 +60,7 @@ public class AlunosController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<Alunos> update(@PathVariable("id") final int id, @RequestBody final Alunos alunos) {
+    public ResponseEntity<Alunos> update(@PathVariable("id") final Long id, @RequestBody final Alunos alunos) {
         log.info("Updating aluno {}", id);
         Alunos aluno = service.getById(id);
 
@@ -76,7 +76,7 @@ public class AlunosController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") final int id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") final Long id) {
         log.info("Deleting aluno {}", id);
         var aluno = service.getById(id);
 
