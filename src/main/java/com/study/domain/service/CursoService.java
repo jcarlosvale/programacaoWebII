@@ -1,5 +1,7 @@
 package com.study.domain.service;
 
+import com.study.domain.dto.CursosRequest;
+import com.study.domain.mapper.CursoMapper;
 import com.study.domain.model.Cursos;
 import com.study.domain.repositories.CursosRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,8 @@ import java.util.List;
 public class CursoService {
 
     private final CursosRepository repository;
+
+    private final CursoMapper mapper;
 
     public List<Cursos> retrieveAll() {
         log.info("Listing cursos");
@@ -32,8 +36,9 @@ public class CursoService {
         repository.save(curso);
     }
 
-    public void update(Long id, Cursos curso) {
+    public void update(Long id, CursosRequest curso) {
         log.info("Updating curso id - {}, data - {}", id, curso);
+        repository.save(mapper.toEntity(curso));
     }
 
     public void delete(Long id) {

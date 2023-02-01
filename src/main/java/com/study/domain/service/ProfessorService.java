@@ -1,5 +1,8 @@
 package com.study.domain.service;
 
+import com.study.domain.dto.AlunosRequest;
+import com.study.domain.dto.ProfessoresRequest;
+import com.study.domain.mapper.ProfessorMapper;
 import com.study.domain.model.Professores;
 import com.study.domain.repositories.ProfessoresRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +17,8 @@ import java.util.List;
 public class ProfessorService {
 
     private final ProfessoresRepository repository;
+
+    private final ProfessorMapper mapper;
 
     public List<Professores> retrieveAll() {
         log.info("Listing professores");
@@ -32,8 +37,10 @@ public class ProfessorService {
         repository.save(professor);
     }
 
-    public void update(Long id, Professores professor) {
+    public void update(Long id, ProfessoresRequest professor) {
         log.info("Updating professor id - {}, data - {}", id, professor);
+
+        repository.save(mapper.toEntity(professor));
     }
 
     public void delete(Long id) {

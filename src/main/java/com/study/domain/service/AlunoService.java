@@ -1,5 +1,7 @@
 package com.study.domain.service;
 
+import com.study.domain.dto.AlunosRequest;
+import com.study.domain.mapper.AlunoMapper;
 import com.study.domain.model.Alunos;
 import com.study.domain.repositories.AlunosRepository;
 import lombok.AllArgsConstructor;
@@ -17,6 +19,8 @@ public class AlunoService {
 
     private final AlunosRepository repository;
 
+    private final AlunoMapper mapper;
+
     public List<Alunos> retrieveAll() {
         log.info("Listing alunos");
         return repository.findAll();
@@ -33,8 +37,11 @@ public class AlunoService {
         repository.save(aluno);
     }
 
-    public void update(Long id, Alunos aluno) {
+    public void update(Long id, AlunosRequest aluno) {
         log.info("Updating aluno id - {}, data - {}", id, aluno);
+
+        repository.save(mapper.toEntity(aluno));
+
     }
 
     public void delete(Long id) {
