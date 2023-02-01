@@ -3,6 +3,7 @@ package com.study.view.rs;
 import java.util.List;
 import java.util.Objects;
 
+import com.study.domain.dto.response.AlunoResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,7 +32,7 @@ public class AlunoController {
 	private final AlunoService alunoService;
 
     @GetMapping
-    public ResponseEntity<List<AlunoDTO>> getAll(){
+    public ResponseEntity<List<AlunoResponseDTO>> getAll(){
         log.info("Retornando todos os alunos");
         if(alunoService.getAll().isEmpty()) {
         	return ResponseEntity.ok(List.of());
@@ -41,7 +42,7 @@ public class AlunoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AlunoDTO> getById(@PathVariable("id") final int id){
+    public ResponseEntity<AlunoResponseDTO> getById(@PathVariable("id") final int id){
         log.info("Recuperando aluno por id {}", id);
         var aluno = alunoService.getById(id);
         if(Objects.isNull(aluno)) {

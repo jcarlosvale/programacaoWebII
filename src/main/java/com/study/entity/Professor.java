@@ -1,11 +1,10 @@
-package com.study.domain.dto;
+package com.study.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -17,18 +16,21 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties
-public class AlunoDTO {
+@Entity
+@Table(name = "PROFESSOR")
+public class Professor {
 
-    @Positive(message = "O número do id deve ser positivo")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "professor_id")
     private int id;
 
-    @NotBlank(message = "O campo não pode estar vazio")
-    @Size(min=3, message = "Campo a partir de 3 caracteres")
+    @Column(name = "professor_nome")
     private String nome;
 
-    @NotBlank(message = "O campo não pode estar vazio")
-    private String matricula;
+    @Column(name = "professor_titulo")
+    private String titulo;
 
-    @Size(max=1, message = "Digite apenas um caracter")
+    @Column(name = "professor_sexo")
     private String sexo;
 }

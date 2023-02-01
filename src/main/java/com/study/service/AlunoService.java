@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.study.domain.dto.response.AlunoResponseDTO;
+import com.study.mappers.AlunoMapper;
+import com.study.repository.AlunoRepository;
 import org.springframework.stereotype.Service;
 
 import com.study.domain.dto.AlunoDTO;
@@ -14,18 +17,19 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class AlunoService {
 
-	private final Map<Integer, AlunoDTO> repository;
+	private final AlunoRepository repository;
+	private final AlunoMapper mapper;
 		
-	public List<AlunoDTO> getAll(){
-		return new ArrayList<>(repository.values());
+	public List<AlunoResponseDTO> getAll(){
+		return mapper.toResponseDTO(repository.findAll()) ;
 	}
 	
-	public AlunoDTO getById(final int id) {
-		return repository.get(id);
+	public AlunoResponseDTO getById(final int id) {
+		return mapper.toResponseDTO(repository.findById(id));
 	}
 	
 	public AlunoDTO save(final AlunoDTO aluno) {
-		repository.put(aluno.getId(), aluno);
+		repository.save(aluno.getId(), aluno);
 		return aluno;
 	}
 	
