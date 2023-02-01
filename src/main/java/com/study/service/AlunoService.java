@@ -48,11 +48,8 @@ public class AlunoService {
 	}
 	
 	public void delete(final int id) throws Exception {
-		if(repository.findById(id)) {
-			repository.delete(id);
-		} else {
-			throw new Exception("Id não encontrado");
-		}
+		log.info("Deletando aluno id - {}", id);
+		repository.deleteById(id);
 	}
 	
 	
