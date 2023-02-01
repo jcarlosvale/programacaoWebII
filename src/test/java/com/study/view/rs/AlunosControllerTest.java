@@ -1,6 +1,6 @@
 package com.study.view.rs;
 
-import com.study.domain.dto.*;
+import com.study.domain.model.Alunos;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.*;
 import org.junit.jupiter.params.provider.*;

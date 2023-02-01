@@ -1,6 +1,6 @@
 package com.study.domain.service;
 
-import com.study.domain.dto.Professores;
+import com.study.domain.model.Professores;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

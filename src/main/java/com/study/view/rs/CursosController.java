@@ -1,6 +1,6 @@
 package com.study.view.rs;
 
-import com.study.domain.dto.Cursos;
+import com.study.domain.model.Cursos;
 import com.study.domain.service.CursoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

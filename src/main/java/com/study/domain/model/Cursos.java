@@ -1,27 +1,30 @@
-package com.study.domain.dto;
+package com.study.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
+import javax.persistence.*;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties
+@Entity
+@Table(name = "CURSOS")
 public class Cursos {
-    @Positive
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "curso_id")
     private Long id;
-    @NotBlank
+
+    @Column(name = "curso_name", nullable = false)
     private String nome;
-    @NotBlank
+
     private String descricao;
-    @NotBlank
+
     private String duracao;
 
 }

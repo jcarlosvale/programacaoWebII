@@ -1,4 +1,4 @@
-package com.study.domain.dto;
+package com.study.domain.error;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
