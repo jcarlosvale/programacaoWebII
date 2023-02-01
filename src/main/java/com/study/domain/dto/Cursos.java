@@ -16,7 +16,7 @@ import javax.validation.constraints.Positive;
 @JsonIgnoreProperties
 public class Cursos {
     @Positive
-    private int id;
+    private Long id;
     @NotBlank
     private String nome;
     @NotBlank

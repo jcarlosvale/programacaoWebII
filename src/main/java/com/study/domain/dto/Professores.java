@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 public class Professores {
 
     @Positive
-    private int id;
+    private Long id;
     @NotBlank
     @Size(min = 2)
     private String nome;

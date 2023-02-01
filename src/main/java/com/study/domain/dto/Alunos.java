@@ -14,7 +14,7 @@ import javax.validation.constraints.Positive;
 public class Alunos {
 
     @Positive
-    private int id;
+    private Long id;
     @NotBlank
     private String nome;
     @NotBlank
