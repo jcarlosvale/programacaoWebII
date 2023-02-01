@@ -32,10 +32,10 @@ class AlunosControllerTest {
     @BeforeEach
     void setup() {
         URL = "http://localhost:" + port + "/alunos";
-        repository.put(1, Alunos.builder().id(1).nome("Miguel").build());
-        repository.put(2, Alunos.builder().id(2).nome("Marcio").build());
-        repository.put(3, Alunos.builder().id(3).nome("Carla").build());
-        repository.put(4, Alunos.builder().id(4).nome("Caroline").build());
+        repository.put(1, Alunos.builder().id(1L).nome("Miguel").build());
+        repository.put(2, Alunos.builder().id(2L).nome("Marcio").build());
+        repository.put(3, Alunos.builder().id(3L).nome("Carla").build());
+        repository.put(4, Alunos.builder().id(4L).nome("Caroline").build());
     }
 
     @AfterEach
@@ -130,7 +130,7 @@ class AlunosControllerTest {
         //GIVEN
         var newDto =
                 Alunos.builder()
-                .id(9999)
+                .id(9999L)
                 .nome("nome")
                 .build();
         var initialCounter = repository.size();
