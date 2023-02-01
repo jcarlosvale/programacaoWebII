@@ -3,7 +3,6 @@ package com.study.configuration;
 import com.study.Employee;
 import com.study.dto.AlunoDto;
 import com.study.dto.DisciplinaDto;
-import com.study.dto.ProfessorDto;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
