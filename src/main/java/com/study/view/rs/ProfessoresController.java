@@ -1,6 +1,7 @@
 package com.study.view.rs;
 
-import com.study.domain.model.Professores;
+import com.study.domain.dto.ProfessoresRequest;
+import com.study.domain.dto.ProfessoresResponse;
 import com.study.domain.service.ProfessorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,9 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping(path = "/professores")
@@ -22,74 +21,34 @@ public class ProfessoresController {
     private final ProfessorService service;
 
     @GetMapping
-    public ResponseEntity<List<Professores>> getAll() {
-        log.info("Listing professores");
-
-        List<Professores> ListaDeProfessores = service.retrieveAll();
-        if (ListaDeProfessores.isEmpty()) {
-            return ResponseEntity.ok(List.of());
-        } else {
-            return ResponseEntity
-                    .ok(new ArrayList<>(ListaDeProfessores));
-        }
+    public ResponseEntity<List<ProfessoresResponse>> listProfessors() {
+        final List<ProfessoresResponse> professorDtoList = service.retrieveAll();
+        return ResponseEntity.ok(professorDtoList);
     }
 
-    @GetMapping(path = "/{id}")
-    public ResponseEntity<Professores> getById(@PathVariable("id") final Long id) {
-        log.info("Getting professor {}", id);
-        var professor = service.getById(id);
-
-            return ResponseEntity
-                    .ok(professor);
-
+    @GetMapping("/{id}")
+    public ResponseEntity<ProfessoresResponse> getProfessor(@PathVariable("id") Long id) {
+        final ProfessoresResponse professorDto = service.getById(id);
+        return ResponseEntity.ok(professorDto);
     }
 
     @PostMapping
-    public ResponseEntity<Professores> save(@RequestBody @Valid final Professores professor) {
-        if (service.getById(professor.getId()) != null) {
-            log.error("Collection contains id {}", professor.getId());
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .build();
-        } else {
-            service.save(professor);
-            log.info("Inserted a new aluno {}", professor);
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(professor);
-        }
+    public ResponseEntity<ProfessoresResponse> saveProfessor(@RequestBody @Valid final ProfessoresRequest professor) {
+        var response = service.save(professor);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping(path = "/{id}")
-    public ResponseEntity<Professores> update(@PathVariable("id") final Long id, @RequestBody @Valid final Professores professorDto) {
-        log.info("Updating aluno {}", id);
-        Professores professor = service.getById(id);
+    @PutMapping("/{id}")
+    public ResponseEntity<ProfessoresResponse> updateProfessor(@PathVariable("id") Long id,
+                                                               @RequestBody @Valid ProfessoresRequest professor) {
 
-        if (professor == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        service.update(id, professorDto);
-
-        return ResponseEntity
-                .ok(professor);
-
+        var response = service.update(id, professor);
+        return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") final Long id) {
-        log.info("Deleting professor {}", id);
-        var professor = service.getById(id);
-
-        if (Objects.isNull(professor)) {
-            return ResponseEntity
-                    .notFound()
-                    .build();
-        } else {
-            service.delete(id);
-            return ResponseEntity
-                    .noContent()
-                    .build();
-        }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> removeProfessor(@PathVariable("id") Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

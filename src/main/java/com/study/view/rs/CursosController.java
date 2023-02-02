@@ -1,6 +1,9 @@
 package com.study.view.rs;
 
-import com.study.domain.model.Cursos;
+import com.study.domain.dto.AlunosRequest;
+import com.study.domain.dto.AlunosResponse;
+import com.study.domain.dto.CursosRequest;
+import com.study.domain.dto.CursosResponse;
 import com.study.domain.service.CursoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,9 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping(path = "/cursos")
@@ -22,78 +23,34 @@ public class CursosController {
     private final CursoService service;
 
     @GetMapping
-    public ResponseEntity<List<Cursos>> getAll() {
-        log.info("Listing cursos");
-
-        List<Cursos> listaDeCursos = service.retrieveAll();
-        if (listaDeCursos.isEmpty()) {
-            return ResponseEntity.ok(List.of());
-        } else {
-            return ResponseEntity
-                    .ok(new ArrayList<>(listaDeCursos));
-        }
+    public ResponseEntity<List<CursosResponse>> listCursos() {
+        final List<CursosResponse> cursoDtoList = service.retrieveAll();
+        return ResponseEntity.ok(cursoDtoList);
     }
 
-    @GetMapping(path = "/{id}")
-    public ResponseEntity<Cursos> getById(@PathVariable("id") final Long id) {
-        log.info("Getting curso {}", id);
-        var curso = service.getById(id);
-        if (Objects.isNull(curso)) {
-            return ResponseEntity
-                    .notFound()
-                    .build();
-        } else {
-            return ResponseEntity
-                    .ok(curso);
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<CursosResponse> getCurso(@PathVariable("id") Long id) {
+        final CursosResponse cursoDto = service.getById(id);
+        return ResponseEntity.ok(cursoDto);
     }
 
     @PostMapping
-    public ResponseEntity<Cursos> save(@RequestBody @Valid final Cursos curso) {
-        if (service.getById(curso.getId()) != null) {
-            log.error("Collection contains id {}", curso.getId());
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .build();
-        } else {
-            service.save(curso);
-            log.info("Inserted a new curso {}", curso);
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(curso);
-        }
+    public ResponseEntity<CursosResponse> saveCurso(@RequestBody @Valid final CursosRequest curso) {
+        var response = service.save(curso);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping(path = "/{id}")
-    public ResponseEntity<Cursos> update(@PathVariable("id") final Long id, @RequestBody @Valid final Cursos cursoDto) {
-        log.info("Updating aluno {}", id);
-        Cursos curso = service.getById(id);
+    @PutMapping("/{id}")
+    public ResponseEntity<CursosResponse> updateCurso(@PathVariable("id") Long id,
+                                                      @RequestBody @Valid CursosRequest curso) {
 
-        if (curso == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        service.update(id, cursoDto);
-
-        return ResponseEntity
-                .ok(cursoDto);
-
+        var response = service.update(id, curso);
+        return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") final Long id) {
-        log.info("Deleting curso {}", id);
-        var curso = service.getById(id);
-
-        if (Objects.isNull(curso)) {
-            return ResponseEntity
-                    .notFound()
-                    .build();
-        } else {
-            service.delete(id);
-            return ResponseEntity
-                    .noContent()
-                    .build();
-        }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> removeCurso(@PathVariable("id") Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

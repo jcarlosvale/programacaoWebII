@@ -1,16 +1,17 @@
 package com.study.domain.service;
 
 import com.study.domain.dto.AlunosRequest;
+import com.study.domain.dto.AlunosResponse;
 import com.study.domain.mapper.AlunoMapper;
 import com.study.domain.model.Alunos;
 import com.study.domain.repositories.AlunosRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -18,34 +19,50 @@ import java.util.Optional;
 public class AlunoService {
 
     private final AlunosRepository repository;
-
     private final AlunoMapper mapper;
 
-    public List<Alunos> retrieveAll() {
+    public List<AlunosResponse> retrieveAll() {
         log.info("Listing alunos");
-        return repository.findAll();
+        return mapper.toResponse(repository.findAll());
     }
 
-    public Alunos getById(Long id) {
+    public AlunosResponse getById(Long id) {
         log.info("Getting aluno id-{}", id);
-        return repository.getReferenceById(id);
+        var optionalAluno = repository.findById(id);
+
+        if (optionalAluno.isPresent()) {
+            return mapper.toResponse(optionalAluno.get());
+        }
+
+        return new AlunosResponse();
     }
 
-    public void save(Alunos aluno) {
-        log.info("Saving aluno - {}", aluno);
+    public AlunosResponse save(AlunosRequest request) {
+        Objects.requireNonNull(request, "request must not be null");
 
-        repository.save(aluno);
+        log.info("Saving aluno - {}", request);
+
+        return mapper.toResponse(repository.save(mapper.toEntity(request)));
     }
 
-    public void update(Long id, AlunosRequest aluno) {
-        log.info("Updating aluno id - {}, data - {}", id, aluno);
+    public AlunosResponse update(Long id, AlunosRequest request) {
+        Objects.requireNonNull(request, "request must not be null");
 
-        repository.save(mapper.toEntity(aluno));
+        log.info("Updating aluno id - {}, data - {}", id, request);
 
+        var optionalAluno = repository.findById(id);
+
+        optionalAluno.orElseThrow(() -> new EntityNotFoundException("Aluno not found."));
+
+        Alunos entity = mapper.toEntity(request);
+        entity.setId(id);
+
+        repository.save(entity);
+        return mapper.toResponse(entity);
     }
 
     public void delete(Long id) {
         log.info("Deleting aluno id - {}", id);
-        repository.delete(repository.getReferenceById(id));
+        repository.deleteById(id);
     }
 }
