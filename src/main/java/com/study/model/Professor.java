@@ -24,6 +24,11 @@ public class Professor {
 
     private String cpf;
 
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "parceria")
+    private Aluno alunoParceiro;
+
+
+
     /*
     @OneToMany
     private Set<Aluno> tutorados;

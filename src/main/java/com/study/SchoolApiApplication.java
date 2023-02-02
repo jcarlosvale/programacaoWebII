@@ -31,7 +31,7 @@ public class SchoolApiApplication implements CommandLineRunner{
 
 		//var professor  =Professor.builder().name("Jose").build();
 
-		alunoRepository.save(Aluno.builder().name("Joao").tutor(professor).build());
+//		alunoRepository.save(Aluno.builder().name("Joao").tutor(professor).build());
 
 //		System.out.println("******Teste: ");
 //

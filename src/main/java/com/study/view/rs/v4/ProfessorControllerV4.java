@@ -79,7 +79,7 @@ public class ProfessorControllerV4 {
 		for (var aluno: alunos) {
 			System.out.println(aluno.getName());
 			System.out.println("####################");
-			System.out.println(aluno.getTutor());
+			//System.out.println(aluno.getTutor());
 		}
 
         return ResponseEntity
