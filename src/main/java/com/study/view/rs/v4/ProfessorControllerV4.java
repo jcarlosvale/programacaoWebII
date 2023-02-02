@@ -1,9 +1,10 @@
 package com.study.view.rs.v4;
 
 import com.study.dto.v3.*;
+import com.study.repository.*;
 import com.study.service.*;
+import lombok.*;
 import lombok.extern.slf4j.*;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,15 +17,13 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/v4/professores")
+@RequiredArgsConstructor
 @Slf4j
 public class ProfessorControllerV4 {
 
     private final ProfessorService service;
+    private final AlunoRepository repository;
 
-    @Autowired
-    public ProfessorControllerV4(ProfessorService service) {
-        this.service = service;
-    }
 
     @GetMapping
     public ResponseEntity<List<ProfessorResponse>> listProfessors() {
@@ -71,4 +70,23 @@ public class ProfessorControllerV4 {
                 .noContent()
                 .build();
     }
+
+    @GetMapping("/teste")
+    public ResponseEntity<Void> teste() {
+
+        var alunos = repository.findAll();
+
+		for (var aluno: alunos) {
+			System.out.println(aluno.getName());
+			System.out.println("####################");
+			System.out.println(aluno.getTutor());
+		}
+
+        return ResponseEntity
+                .noContent()
+                .build();
+    }
+
+
+
 }

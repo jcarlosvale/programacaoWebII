@@ -21,10 +21,17 @@ public class Aluno {
     @Column(name = "aluno_name", nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="tutor")
     private Professor tutor;
 
+    @Override
+    public String toString() {
+        return "Aluno{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 
     /*
     @ManyToMany
