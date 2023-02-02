@@ -1,5 +1,8 @@
 package com.study.mappers;
 
+
+
+
 import com.study.domain.dto.response.AlunoResponseDTO;
 import com.study.entity.Aluno;
 import org.springframework.stereotype.Component;
@@ -10,7 +13,11 @@ import java.util.stream.Collectors;
 @Component
 public class AlunoMapper {
 
-    public AlunoResponseDTO toResponseDTO(Aluno aluno){ 
+
+     
+
+    public AlunoResponseDTO toResponseDTO (Aluno aluno){
+
         if (aluno == null){
             return null;
         }
@@ -40,5 +47,5 @@ public class AlunoMapper {
         return listaAlunos.stream().map(this :: toResponseDTO).collect(Collectors.toList());
     }
 
-    
+
 }

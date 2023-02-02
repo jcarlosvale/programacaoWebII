@@ -54,7 +54,7 @@ public class AlunoController {
     }
 
     @PostMapping
-    public ResponseEntity<AlunoDTO> save(@RequestBody @Valid final AlunoDTO alunoDTO){
+    public ResponseEntity<AlunoResponseDTO> save(@RequestBody @Valid final AlunoDTO alunoDTO){
         if(alunoDTO.getNome().trim().equals("")){
         	log.error("Nome inválido {}", alunoDTO.getNome());
         	return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
