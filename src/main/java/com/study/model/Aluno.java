@@ -20,6 +20,16 @@ public class Aluno {
     @NotBlank(message = "Name must be not empty or null")
     @Column(name = "aluno_name", nullable = false)
     private String name;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="tutor")
+    private Professor tutor;
+
+
+    /*
+    @ManyToMany
+    private Set<Professor> professores;
+     */
 /*
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tutor")

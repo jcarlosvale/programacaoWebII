@@ -23,4 +23,9 @@ public class Professor {
     private String email;
 
     private String cpf;
+
+    /*
+    @OneToMany
+    private Set<Aluno> tutorados;
+    */
 }
