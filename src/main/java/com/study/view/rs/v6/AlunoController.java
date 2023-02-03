@@ -1,7 +1,8 @@
-package com.study.view.rs.v5;
+package com.study.view.rs.v6;
 
 
 import com.study.dto.v3.*;
+import com.study.dto.v4.*;
 import com.study.service.*;
 import lombok.*;
 import lombok.extern.slf4j.*;
@@ -13,7 +14,7 @@ import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/alunos")
+@RequestMapping("/v2/alunos")
 @Slf4j
 public class AlunoController {
 
@@ -50,5 +51,13 @@ public class AlunoController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(response);
+    }
+
+    @GetMapping(path="/activity")
+    public ResponseEntity<TodoDto> saveRandomTodo() {
+
+        final TodoDto dto = service.generateRandomTodo();
+
+        return ResponseEntity.ok(dto);
     }
 }
