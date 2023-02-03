@@ -21,33 +21,7 @@ public class Aluno {
     @Column(name = "aluno_name", nullable = false)
     private String name;
 
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="parceria")
-    private Professor parceria;
-
-    /*
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="tutor")
-    private Professor tutor;
-
-    @Override
-    public String toString() {
-        return "Aluno{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
-
-    /*
-    @ManyToMany
-    private Set<Professor> professores;
-     */
-/*
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tutor")
     private Professor tutor;
-
- */
-
 }

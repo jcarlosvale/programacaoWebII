@@ -3,7 +3,6 @@ package com.study;
 import com.study.model.*;
 import com.study.repository.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
 
@@ -13,37 +12,42 @@ import javax.transaction.*;
 @RequiredArgsConstructor
 public class SchoolApiApplication implements CommandLineRunner{
 
-	@Autowired
-	AlunoRepository alunoRepository;
-
-	@Autowired
-	ProfessorRepository professorRepository;
+	private final AlunoRepository alunoRepository;
+	private final ProfessorRepository professorRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SchoolApiApplication.class, args);
 	}
 
 	@Override
-	@Transactional
 	public void run(String... args) throws Exception {
+		var professor1 =
+				Professor.builder()
+						.name("Jose")
+						.email("jose@test.com")
+						.cpf("050.418.820-88")
+						.build();
+		var professor2 =
+				Professor.builder()
+						.name("Maia")
+						.email("maria@test.com")
+						.cpf("744.388.770-16")
+						.build();
 
-		var professor = professorRepository.save(Professor.builder().name("Jose").build());
-
-		//var professor  =Professor.builder().name("Jose").build();
-
-//		alunoRepository.save(Aluno.builder().name("Joao").tutor(professor).build());
-
-//		System.out.println("******Teste: ");
-//
-//		var aluno = alunoRepository.findById(1).get();
-//
-//		//for (int i = 0; i < alunos.size(); i++) {
-//			System.out.println(aluno.getName());
-//			System.out.println("####################");
-//			System.out.println(aluno.getTutor());
-//		//}
-
+		professorRepository.save(professor1);
+		professorRepository.save(professor2);
 
 
+		var aluno1 =
+				Aluno.builder()
+						.name("AlunoX")
+						.build();
+		var aluno2 =
+				Aluno.builder()
+						.name("AlunoY")
+						.build();
+
+		alunoRepository.save(aluno1);
+		alunoRepository.save(aluno2);
 	}
 }

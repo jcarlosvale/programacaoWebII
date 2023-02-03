@@ -3,6 +3,8 @@ package com.study.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
+import java.util.*;
 
 @Builder
 @Data
@@ -24,13 +26,6 @@ public class Professor {
 
     private String cpf;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "parceria")
-    private Aluno alunoParceiro;
-
-
-
-    /*
-    @OneToMany
-    private Set<Aluno> tutorados;
-    */
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tutor")
+    private List<Aluno> alunos;
 }
