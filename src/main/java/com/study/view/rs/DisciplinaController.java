@@ -1,6 +1,7 @@
 package com.study.view.rs;
 
-import com.study.dto.DisciplinaDto;
+import com.study.dto.DisciplinaRequestDto;
+import com.study.dto.DisciplinaResponseDto;
 import com.study.service.DisciplinaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,23 +25,23 @@ public class DisciplinaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<DisciplinaDto>> listaDisciplinas() {
+    public ResponseEntity<List<DisciplinaResponseDto>> listaDisciplinas() {
 
-        final List<DisciplinaDto> disciplinaDtoList = service.retrieveAll();
+        final List<DisciplinaResponseDto> disciplinaDtoList = service.retrieveAll();
 
         return ResponseEntity.ok(disciplinaDtoList);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DisciplinaDto> getDisciplina(@PathVariable("id") int id) {
+    public ResponseEntity<DisciplinaResponseDto> getDisciplina(@PathVariable("id") int id) {
 
-        final DisciplinaDto disciplinaDto = service.getById(id);
+        final DisciplinaResponseDto disciplinaDto = service.getById(id);
 
         return ResponseEntity.ok(disciplinaDto);
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveProfessor(@RequestBody @Valid final DisciplinaDto disciplina) {
+    public ResponseEntity<Void> saveProfessor(@RequestBody @Valid final DisciplinaRequestDto disciplina) {
 
         service.save(disciplina);
 
@@ -50,7 +51,7 @@ public class DisciplinaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DisciplinaDto> updateDisciplina(@PathVariable("id") int id, @RequestBody @Valid DisciplinaDto disciplina) {
+    public ResponseEntity<DisciplinaRequestDto> updateDisciplina(@PathVariable("id") int id, @RequestBody @Valid DisciplinaRequestDto disciplina) {
 
         service.update(id, disciplina);
 
@@ -61,10 +62,15 @@ public class DisciplinaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removeDisciplina(@PathVariable("id") int id) {
 
-        service.delete(id);
-
-        return ResponseEntity
-                .noContent()
-                .build();
+        try {
+            service.delete(id);
+            return ResponseEntity
+                    .noContent()
+                    .build();
+        } catch (Exception e){
+            return ResponseEntity
+                    .notFound()
+                    .build();
+        }
     }
 }

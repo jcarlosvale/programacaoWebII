@@ -15,10 +15,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties
-public class DisciplinaDto {
-
-    @Positive(message = "Id deve ser ter um valor positivo")
-    private int id;
+public class DisciplinaRequestDto {
 
     @NotBlank(message = "Campo não pode ser branco")
     @Size(min = 2, message = "Campo deve ter ao menos 2 caracteres")
