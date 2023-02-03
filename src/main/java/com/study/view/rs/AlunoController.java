@@ -1,6 +1,8 @@
 package com.study.view.rs;
 
-import com.study.domain.dto.AlunoDto;
+import com.study.dto.AlunoRequestDto;
+import com.study.dto.AlunoResponseDto;
+import com.study.service.AlunoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /*
 * Projeto criado pelos alunos:
@@ -23,68 +24,45 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class AlunoController {
-    private final Map<Integer, AlunoDto> repository = new HashMap<>();
+    private final AlunoService service;
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody @Valid final AlunoDto aluno){
-        if(repository.containsKey(aluno.getId())){
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .build();
-        }
-
-        repository.put(aluno.getId(), aluno);
+    public ResponseEntity<Void> save(@RequestBody @Valid final AlunoRequestDto aluno){
+        service.save(aluno);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .build();
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<AlunoDto> getById(@PathParam("id") final int id){
-        AlunoDto aluno = repository.get(id);
-
-        if(aluno == null){
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
-        }
+    public ResponseEntity<AlunoResponseDto> getById(@PathParam("id") final int id){
+        AlunoResponseDto aluno = service.getById(id);
         return ResponseEntity.ok(aluno);
     }
 
     @GetMapping
-    public ResponseEntity<List<AlunoDto>> getAll(){
-        return ResponseEntity.ok(new ArrayList<>(repository.values()));
+    public ResponseEntity<List<AlunoResponseDto>> getAll(){
+        return ResponseEntity.ok(service.retrieveAll());
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<AlunoDto> update(@PathParam("id") final int id,
-                                           @RequestBody @Valid final AlunoDto alunoNovo){
-        if(!repository.containsKey(alunoNovo.getId())){
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
-        }
-
-        repository.put(id, alunoNovo);
+    public ResponseEntity<AlunoResponseDto> update(@PathParam("id") final int id,
+                                                   @RequestBody @Valid final AlunoRequestDto alunoNovo){
+        AlunoResponseDto response = service.update(id, alunoNovo);
         return ResponseEntity
-                .ok(alunoNovo);
+                .ok(response);
     }
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity delete(@PathParam("id") final int id){
-        if(!repository.containsKey(id)){
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
-        }
-
-        repository.remove(id);
+        service.delete(id);
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .build();
     }
 
-    @GetMapping
+    //@GetMapping
+    /*
     public ResponseEntity<List<AlunoDto>> getByPrefix(@RequestParam(value = "prefixo", required = true)
                                                       final String prefixo){
         if(Objects.isNull(prefixo)) return getAll();
@@ -96,6 +74,7 @@ public class AlunoController {
         return ResponseEntity
                 .ok(alunos);
     }
+     */
 
 
 }
