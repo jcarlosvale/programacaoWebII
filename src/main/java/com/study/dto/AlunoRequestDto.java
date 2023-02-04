@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 @Data
@@ -15,11 +14,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties
-public class AlunoDto {
-
-    @Positive(message = "Id deve ser ter um valor positivo")
-    private int id;
-
+public class AlunoRequestDto {
     @NotBlank(message = "Campo não pode ser branco")
     @Size(min = 2, message = "Campo deve ter ao menos 2 caracteres")
     private String nome;
@@ -30,5 +25,4 @@ public class AlunoDto {
     @NotBlank(message = "Campo não pode ser branco")
     @Size(max = 1, message = "Campo deve ter ao menos 2 caracteres")
     private String genero;
-
 }

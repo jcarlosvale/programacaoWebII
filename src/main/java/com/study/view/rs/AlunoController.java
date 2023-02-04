@@ -1,6 +1,7 @@
 package com.study.view.rs;
 
-import com.study.dto.AlunoDto;
+import com.study.dto.AlunoRequestDto;
+import com.study.dto.AlunoResponseDto;
 import com.study.service.AlunoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,23 +25,23 @@ public class AlunoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AlunoDto>> listarAlunos() {
+    public ResponseEntity<List<AlunoResponseDto>> listarAlunos() {
 
-        final List<AlunoDto> alunoDtoList = service.retrieveAll();
+        final List<AlunoResponseDto> alunoDtoList = service.retrieveAll();
 
         return ResponseEntity.ok(alunoDtoList);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AlunoDto> getalunos(@PathVariable("id") int id) {
+    public ResponseEntity<AlunoResponseDto> getalunos(@PathVariable("id") int id) {
 
-        final AlunoDto alunoDto = service.getById(id);
+        final AlunoResponseDto alunoDto = service.getById(id);
 
         return ResponseEntity.ok(alunoDto);
     }
 
     @PostMapping
-    public ResponseEntity<Void> savePAluno(@RequestBody @Valid final AlunoDto aluno) {
+    public ResponseEntity<Void> saveAluno(@RequestBody @Valid final AlunoRequestDto aluno) {
 
         service.save(aluno);
 
@@ -50,7 +51,7 @@ public class AlunoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AlunoDto> updateAluno(@PathVariable("id") int id, @RequestBody @Valid AlunoDto aluno) {
+    public ResponseEntity<AlunoRequestDto> updateAluno(@PathVariable("id") int id, @RequestBody @Valid AlunoRequestDto aluno) {
 
         service.update(id, aluno);
 
@@ -61,10 +62,15 @@ public class AlunoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removealuno(@PathVariable("id") int id) {
 
-        service.delete(id);
-
-        return ResponseEntity
-                .noContent()
-                .build();
+        try {
+            service.delete(id);
+            return ResponseEntity
+                    .noContent()
+                    .build();
+        } catch (Exception e){
+            return ResponseEntity
+                    .notFound()
+                    .build();
+        }
     }
 }

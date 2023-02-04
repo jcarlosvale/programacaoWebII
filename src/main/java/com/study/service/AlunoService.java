@@ -1,7 +1,13 @@
 package com.study.service;
 
-import com.study.dto.AlunoDto;
+import com.study.dto.AlunoRequestDto;
+import com.study.dto.AlunoResponseDto;
+import com.study.mapper.AlunoMapper;
+import com.study.model.Aluno;
+import com.study.model.Disciplina;
+import com.study.repository.AlunoRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,33 +16,43 @@ import java.util.List;
 @Slf4j
 public class AlunoService {
 
-    public List<AlunoDto> retrieveAll() {
-        log.info("Lista Alunos");
-        return java.util.List.of(AlunoDto.builder().id(1).nome("Rogerio").genero("Masculino").matricula("123456").build(),
-                AlunoDto.builder().id(2).nome("Bruno").genero("Masculino").matricula("654321").build());
+    private AlunoRepository repository;
+
+    private AlunoMapper mapper;
+
+    @Autowired
+    public AlunoService(AlunoRepository repository, AlunoMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
     }
 
-    public AlunoDto getById(int id) {
+    public List<AlunoResponseDto> retrieveAll() {
+        log.info("Lista Alunos");
+        return mapper.toResponse(repository.findAll());
+    }
+
+    public AlunoResponseDto getById(int id) {
         log.info("Getting Aluno id-{}", id);
 
-        return AlunoDto.builder()
-                .id(2)
-                .nome("Nome aluno")
-                .genero("Genero Aluno")
-                .matricula("Matricula Aluno")
-                .build();
+        return mapper.toResponse(repository.findById(id).get());
     }
 
-    public void save(AlunoDto aluno) {
+    public void save(AlunoRequestDto aluno) {
+
         log.info("Salvando aluno - {}", aluno);
+        repository.save(mapper.toEntity(aluno));
     }
 
-    public void update(int id, AlunoDto aluno) {
-        log.info("alterando Aluno id - {}, data - {}", id, aluno);
+    public void update(int id, AlunoRequestDto alunoRequest) {
+        log.info("alterando Aluno id - {}, data - {}", id, alunoRequest);
+        Aluno aluno = mapper.toEntity(alunoRequest);
+        aluno.setId(id);
+        repository.save(aluno);
     }
 
     public void delete(int id) {
         log.info("Deleting Aluno id - {}", id);
+        repository.deleteById(id);
     }
 
 }

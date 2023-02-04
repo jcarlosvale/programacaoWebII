@@ -12,18 +12,18 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "DISCIPLINAS")
-public class Disciplina {
+@Table(name = "ALUNOS")
+public class Aluno {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "disciplina_id")
     private int id;
 
-    @Column(name = "professor_nome")
+    @Column(name = "disciplina_nome")
     private String nome;
 
-    private String descricao;
+    private String matricula;
 
-    private int duracao;
+    private String genero;
 }

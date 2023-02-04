@@ -2,10 +2,7 @@ package com.study.mapper;
 
 import com.study.dto.DisciplinaRequestDto;
 import com.study.dto.DisciplinaResponseDto;
-import com.study.dto.ProfessorRequestDto;
-import com.study.dto.ProfessorResponseDto;
 import com.study.model.Disciplina;
-import com.study.model.Professor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
