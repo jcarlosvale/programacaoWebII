@@ -1,5 +1,6 @@
 package com.study.service;
 
+import com.study.dto.DisciplinaResponse;
 import com.study.dto.v3.*;
 import com.study.mapper.*;
 import com.study.model.*;
@@ -18,6 +19,7 @@ public class ProfessorService {
 
     private final ProfessorRepository repository;
     private final ProfessorMapper mapper;
+    private final DisciplinaMapper disciplinaMapper;
 
 
     public List<ProfessorResponse> retrieveAll() {
@@ -68,4 +70,10 @@ public class ProfessorService {
         repository.deleteById(id);
     }
 
+    public DisciplinaResponse getProfessorDisciplina(int professorId) {
+        Optional<Professor> optionalProfessor = repository.findById(professorId);
+        optionalProfessor.orElseThrow(() -> new EntityNotFoundException("Not found professor " + professorId));
+        Disciplina disciplina = optionalProfessor.get().getDisciplina();
+        return disciplinaMapper.toResponse(disciplina);
+    }
 }

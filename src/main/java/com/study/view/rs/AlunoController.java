@@ -2,6 +2,8 @@ package com.study.view.rs;
 
 import com.study.dto.AlunoRequestDto;
 import com.study.dto.AlunoResponseDto;
+import com.study.dto.v3.AlunoRequest;
+import com.study.dto.v3.AlunoResponse;
 import com.study.service.AlunoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +29,7 @@ public class AlunoController {
     private final AlunoService service;
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody @Valid final AlunoRequestDto aluno){
+    public ResponseEntity<Void> save(@RequestBody @Valid final AlunoRequest aluno){
         service.save(aluno);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -35,20 +37,20 @@ public class AlunoController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<AlunoResponseDto> getById(@PathParam("id") final int id){
-        AlunoResponseDto aluno = service.getById(id);
+    public ResponseEntity<AlunoResponse> getById(@PathParam("id") final int id){
+        AlunoResponse aluno = service.getById(id);
         return ResponseEntity.ok(aluno);
     }
 
     @GetMapping
-    public ResponseEntity<List<AlunoResponseDto>> getAll(){
+    public ResponseEntity<List<AlunoResponse>> getAll(){
         return ResponseEntity.ok(service.retrieveAll());
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<AlunoResponseDto> update(@PathParam("id") final int id,
-                                                   @RequestBody @Valid final AlunoRequestDto alunoNovo){
-        AlunoResponseDto response = service.update(id, alunoNovo);
+    public ResponseEntity<AlunoResponse> update(@PathParam("id") final int id,
+                                                   @RequestBody @Valid final AlunoRequest alunoNovo){
+        AlunoResponse response = service.update(id, alunoNovo);
         return ResponseEntity
                 .ok(response);
     }

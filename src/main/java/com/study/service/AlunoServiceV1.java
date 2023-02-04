@@ -1,14 +1,13 @@
 package com.study.service;
 
+
 import com.study.dto.v3.*;
-import com.study.dto.v4.*;
 import com.study.mapper.*;
 import com.study.model.*;
 import com.study.repository.*;
 import lombok.*;
 import lombok.extern.slf4j.*;
 import org.springframework.stereotype.*;
-import org.springframework.web.client.*;
 
 import javax.persistence.*;
 import javax.transaction.*;
@@ -18,13 +17,11 @@ import java.util.*;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class AlunoService {
+public class AlunoServiceV1 {
 
     private final AlunoMapper mapper;
     private final AlunoRepository repository;
     private final ProfessorRepository professorRepository;
-
-    private final RestTemplate restTemplate;
 
     public List<AlunoResponse> retrieveAll() {
         log.info("Listing alunos");
@@ -87,27 +84,5 @@ public class AlunoService {
         List<Aluno> listOfEntities = repository.findAlunosByTutor(professor);
 
         return mapper.toResponse(listOfEntities);
-    }
-
-    public TodoDto generateRandomTodo() {
-        return restTemplate
-                .getForEntity("https://www.boredapi.com/api/activity", TodoDto.class)
-                .getBody();
-    }
-
-    public AlunoResponse update(int id, AlunoRequest request) {
-        Optional<Aluno> alunoOptional = repository.findById(id);
-        alunoOptional.orElseThrow(() -> new EntityNotFoundException("Aluno not found."));
-
-        Aluno aluno = mapper.toEntity(request);
-        aluno.setId(id);
-
-        repository.save(aluno);
-        return mapper.toResponse(aluno);
-    }
-
-    public void delete(int id) {
-        log.info("Deleting professor id - {}", id);
-        repository.deleteById(id);
     }
 }

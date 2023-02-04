@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.br.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.*;
 
 @Builder
 @Data
@@ -27,4 +28,10 @@ public class Professor {
 
     @CPF
     private String cpf;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tutor")
+    private List<Aluno> alunos;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "titular")
+    private Disciplina disciplina;
 }

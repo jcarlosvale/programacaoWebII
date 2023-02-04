@@ -1,12 +1,9 @@
 package com.study.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-
+import javax.validation.constraints.*;
 @Builder
 @Data
 @AllArgsConstructor
@@ -18,12 +15,16 @@ public class Aluno {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "aluno_id")
-    private int id;
+    private Integer id;
 
-    @Column(name = "aluno_name")
+    @NotBlank(message = "Name must be not empty or null")
+    @Column(name = "aluno_name", nullable = false)
     private String name;
-    
-    private int matricula;
 
-    private String genero;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tutor")
+    private Professor tutor;
+
+
+
 }
