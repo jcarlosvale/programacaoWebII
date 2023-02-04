@@ -2,23 +2,29 @@ package com.study.service;
 
 import com.study.domain.dto.AlunoRequestDto;
 import com.study.domain.dto.AlunoResponseDto;
+import com.study.domain.dto.TutorResponse;
 import com.study.mapper.AlunoMapper;
 import com.study.model.AlunoModel;
 import com.study.repository.AlunoRepository;
+import com.study.repository.ProfessorRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
+@Slf4j
 @Service
 public class AlunoService {
 
     //private final Map<Integer, AlunoRequestDto> repository;
     private final AlunoRepository repository;
+    private final ProfessorRepository professorRepository;
     private final AlunoMapper mapper;
 
     public AlunoResponseDto save(final AlunoRequestDto aluno) {
@@ -63,5 +69,37 @@ public class AlunoService {
     public void delete(final int id) {
 
         repository.deleteById(id);
+    }
+
+    @Transactional
+    public TutorResponse updateTutor(int idAluno, int idProfessor) {
+
+        log.info("Updating tutor aluno-id: {}, professor-id: {}", idAluno, idProfessor);
+
+        //find entities
+        var alunoOptional = repository.findById(idAluno);
+        var professorOptional = professorRepository.findById(idProfessor);
+
+        //validate is not empty
+        var aluno = alunoOptional.orElseThrow(() -> new EntityNotFoundException("Aluno not found"));
+        var professor = professorOptional.orElseThrow(() -> new EntityNotFoundException("Professor not found"));
+
+        //Update
+        aluno.setTutor(professor);
+        repository.save(aluno);
+
+        return mapper.toResponse(professor);
+    }
+
+    public List<AlunoResponseDto> getTutoradosByProfessorId(int idProfessor) {
+
+        log.info("Getting tutorados by professor-id: {}", idProfessor);
+
+        var professorOptional = professorRepository.findById(idProfessor);
+        var professor = professorOptional.orElseThrow(() -> new EntityNotFoundException("Professor not found"));
+
+        List<AlunoModel> listOfEntities = repository.findAlunosByTutor(professor);
+
+        return mapper.toResponse(listOfEntities);
     }
 }

@@ -1,9 +1,6 @@
 package com.study.view.rs;
 
-import com.study.domain.dto.AlunoRequestDto;
-import com.study.domain.dto.AlunoResponseDto;
-import com.study.domain.dto.CursoRequestDto;
-import com.study.domain.dto.CursoResponseDto;
+import com.study.domain.dto.*;
 import com.study.service.CursoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -66,5 +63,14 @@ public class CursoController {
         return ResponseEntity
                 .noContent()
                 .build();
+    }
+
+    @PatchMapping("/{id}/tutor/{idProfessor}")
+    public ResponseEntity<TitularResponse> updateTitular(@PathVariable("id") int idCurso, @PathVariable("idProfessor") int idProfessor) {
+        final var response = cursoService.updateTitular(idCurso, idProfessor);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(response);
     }
 }

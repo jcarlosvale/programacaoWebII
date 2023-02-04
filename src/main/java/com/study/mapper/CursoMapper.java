@@ -1,13 +1,13 @@
 package com.study.mapper;
 
-import com.study.domain.dto.AlunoRequestDto;
-import com.study.domain.dto.AlunoResponseDto;
-import com.study.domain.dto.CursoRequestDto;
-import com.study.domain.dto.CursoResponseDto;
+import com.study.domain.dto.*;
 import com.study.model.AlunoModel;
 import com.study.model.CursoModel;
+import com.study.model.ProfessorModel;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,12 +28,18 @@ public class CursoMapper {
 
         if (Objects.isNull(entity)) return null;
 
-        return  CursoResponseDto.builder()
+        var response =  CursoResponseDto.builder()
                 .id(entity.getId())
                 .nome(entity.getNome())
                 .descricao(entity.getDescricao())
                 .horas(entity.getHoras())
                 .build();
+
+        if (Objects.nonNull(entity.getTitular())) {
+            response.setTitular(entity.getTitular().getNome());
+        }
+
+        return response;
     }
 
     public CursoModel toEntity(CursoRequestDto request) {
@@ -46,5 +52,18 @@ public class CursoMapper {
                     .horas(request.getHoras())
                     .build();
         }
+    }
+
+    public TitularResponse toResponse(ProfessorModel entity) {
+
+        Objects.requireNonNull(entity, "entity must not be null");
+
+        var formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss");
+
+        return TitularResponse.builder()
+                .titular(entity.getNome())
+                .atualizacao(formatter.format(LocalDateTime.now()))
+                .build();
+
     }
 }

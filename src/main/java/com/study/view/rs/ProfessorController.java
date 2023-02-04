@@ -1,9 +1,8 @@
 package com.study.view.rs;
 
-import com.study.domain.dto.AlunoRequestDto;
-import com.study.domain.dto.AlunoResponseDto;
-import com.study.domain.dto.ProfessorRequestDto;
-import com.study.domain.dto.ProfessorResponseDto;
+import com.study.domain.dto.*;
+import com.study.service.AlunoService;
+import com.study.service.CursoService;
 import com.study.service.ProfessorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +20,10 @@ import java.util.List;
 public class ProfessorController {
 
     private final ProfessorService professorService;
+
+    private final AlunoService alunoService;
+
+    private final CursoService cursoService;
 
     @PostMapping
     public ResponseEntity<ProfessorResponseDto> save(@RequestBody @Valid final ProfessorRequestDto professor) {
@@ -65,5 +68,21 @@ public class ProfessorController {
         return ResponseEntity
                 .noContent()
                 .build();
+    }
+
+    @GetMapping("/{id}/tutorados")
+    public ResponseEntity<List<AlunoResponseDto>> getTutorados(@PathVariable("id") int id) {
+
+        final var response = alunoService.getTutoradosByProfessorId(id);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}/curso-titular")
+    public ResponseEntity<CursoResponseDto> getCursoTitular(@PathVariable("id") int id) {
+
+        final var response = cursoService.getTitularByProfessorId(id);
+
+        return ResponseEntity.ok(response);
     }
 }

@@ -27,4 +27,8 @@ public class CursoModel {
     private String descricao;
 
     private int horas;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "titular", unique = true)
+    private ProfessorModel titular;
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Builder
@@ -26,4 +27,10 @@ public class ProfessorModel {
     private String titulo;
 
    private String sexo;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tutor")
+    private List<AlunoModel> alunos;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "titular")
+    private CursoModel curso;
 }

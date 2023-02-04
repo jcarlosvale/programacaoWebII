@@ -1,6 +1,7 @@
 package com.study.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,4 +22,7 @@ public class AlunoResponseDto {
     private String nome;
     private String matricula;
     private String sexo;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String tutor;
 }

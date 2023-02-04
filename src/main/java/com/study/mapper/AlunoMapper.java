@@ -2,9 +2,13 @@ package com.study.mapper;
 
 import com.study.domain.dto.AlunoRequestDto;
 import com.study.domain.dto.AlunoResponseDto;
+import com.study.domain.dto.TutorResponse;
 import com.study.model.AlunoModel;
+import com.study.model.ProfessorModel;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,12 +29,18 @@ public class AlunoMapper {
 
         if (Objects.isNull(entity)) return null;
 
-        return  AlunoResponseDto.builder()
+        var response =  AlunoResponseDto.builder()
                 .id(entity.getId())
                 .nome(entity.getNome())
                 .matricula(entity.getMatricula())
                 .sexo(entity.getSexo())
                 .build();
+
+        if (Objects.nonNull(entity.getTutor())) {
+            response.setTutor(entity.getTutor().getNome());
+        }
+
+        return response;
     }
 
     public AlunoModel toEntity(AlunoRequestDto request) {
@@ -43,5 +53,18 @@ public class AlunoMapper {
                     .sexo(request.getSexo())
                     .build();
         }
+    }
+
+    public TutorResponse toResponse(ProfessorModel entity) {
+
+        Objects.requireNonNull(entity, "entity must not be null");
+
+        var formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss");
+
+        return TutorResponse.builder()
+                .tutor(entity.getNome())
+                .atualizacao(formatter.format(LocalDateTime.now()))
+                .build();
+
     }
 }

@@ -26,4 +26,8 @@ public class AlunoModel {
     private String matricula;
 
     private String sexo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tutor")
+    private ProfessorModel tutor;
 }
