@@ -14,7 +14,7 @@ public class SchoolConfiguration {
     }
     
     @Bean
-    public Map<Integer, CursoDTO> cursoRepository() {
+    public Map<Integer, DisciplinaDTO> cursoRepository() {
         return new HashMap<>();
     }
     

@@ -33,4 +33,6 @@ public class Professor {
 
     @Column(name = "professor_sexo")
     private String sexo;
+    @OneToOne (Fetch = FetchType.LAZY, mappedBy = "titular")
+    private Disciplina disciplina;
 }

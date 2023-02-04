@@ -18,4 +18,5 @@ public class CursoResponseDTO {
     private String nome;
     private String descricao;
     private String cargaHoraria;
+    private ProfessorResponseDTO professor;
 }

@@ -6,30 +6,32 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.study.domain.dto.CursoDTO;
+import com.study.domain.dto.DisciplinaDTO;
+import com.study.mappers.CursoMapper;
+import com.study.repository.DisciplinaRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class CursoService {
-
-	private final Map<Integer, CursoDTO> repository;
+public class DisciplinaService {
+private final DisciplinaRepository disciplinaRepository;
+private final CursoMapper mapper;
+	
 		
-	public List<CursoDTO> getAll(){
-		return new ArrayList<>(repository.values());
+	public List<DisciplinaDTO> getAll(){
 	}
 	
-	public CursoDTO getById(final int id) {
+	public DisciplinaDTO getById(final int id) {
 		return repository.get(id);
 	}
 	
-	public CursoDTO save(final CursoDTO curso) {
+	public DisciplinaDTO save(final DisciplinaDTO curso) {
 		repository.put(curso.getId(), curso);
 		return curso;
 	}
 	
-	public CursoDTO update(final int id, final CursoDTO curso) {
+	public DisciplinaDTO update(final int id, final DisciplinaDTO curso) {
 		repository.put(id, curso);
 		return curso;
 	}

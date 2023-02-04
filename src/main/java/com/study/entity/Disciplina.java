@@ -16,7 +16,7 @@ import javax.persistence.*;
 @JsonIgnoreProperties
 @Entity
 @Table(name = "CURSO")
-public class Curso {
+public class Disciplina {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,4 +31,8 @@ public class Curso {
 
     @Column(name = "curso_carga_horaria", nullable = false)
     private String cargaHoraria;
+    @OneToOne (fetch = FetchType.LAZY)
+    @JoinColumn (name = "titular")
+    private Professor titular;
+  
 }

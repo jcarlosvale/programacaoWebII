@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties
-public class CursoDTO {
+public class DisciplinaDTO {
 
     @Positive(message = "O número do id deve ser positivo")
     private int id;

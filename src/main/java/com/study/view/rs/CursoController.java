@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.study.domain.dto.CursoDTO;
-import com.study.service.CursoService;
+import com.study.domain.dto.DisciplinaDTO;
+import com.study.service.DisciplinaService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,10 +28,10 @@ import javax.validation.Valid;
 @Slf4j
 public class CursoController {
 
-	private final CursoService cursoService;
+	private final DisciplinaService cursoService;
 
     @GetMapping
-    public ResponseEntity<List<CursoDTO>> getAll(){
+    public ResponseEntity<List<DisciplinaDTO>> getAll(){
         log.info("Retornando todos os cursos");
         if(cursoService.getAll().isEmpty()) {
         	return ResponseEntity.ok(List.of());
@@ -41,7 +41,7 @@ public class CursoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CursoDTO> getById(@PathVariable("id") final int id){
+    public ResponseEntity<DisciplinaDTO> getById(@PathVariable("id") final int id){
         log.info("Recuperando o curso por id {}", id);
         var aluno = cursoService.getById(id);
         if(Objects.isNull(cursoService)) {
@@ -52,7 +52,7 @@ public class CursoController {
     }
 
     @PostMapping
-    public ResponseEntity<CursoDTO> save(@RequestBody @Valid final CursoDTO cursoDTO){
+    public ResponseEntity<DisciplinaDTO> save(@RequestBody @Valid final DisciplinaDTO cursoDTO){
         if(cursoDTO.getNome().trim().equals("")){
         	log.error("Nome do curso inválido {}", cursoDTO.getNome());
         	return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -64,7 +64,7 @@ public class CursoController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<CursoDTO> update (@PathVariable("id") final int id, @RequestBody @Valid final CursoDTO cursoDTO){
+    public ResponseEntity<DisciplinaDTO> update (@PathVariable("id") final int id, @RequestBody @Valid final DisciplinaDTO cursoDTO){
     	log.info("Atualizando curso por id {}", id);
     	cursoService.update(id, cursoDTO);
     	return ResponseEntity.ok(cursoDTO);
