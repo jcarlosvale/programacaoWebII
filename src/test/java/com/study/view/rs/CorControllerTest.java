@@ -1,6 +1,7 @@
 package com.study.view.rs;
 
 import com.study.domain.dto.*;
+import com.study.dto.response.CorDto;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.*;
 import org.junit.jupiter.params.provider.*;

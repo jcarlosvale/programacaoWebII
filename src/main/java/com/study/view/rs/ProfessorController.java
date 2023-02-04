@@ -1,6 +1,6 @@
 package com.study.view.rs;
 
-import com.study.domain.dto.ProfessorDto;
+import com.study.dto.response.ProfessorResponse;
 import com.study.service.professor.ProfessorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,21 +19,21 @@ public class ProfessorController {
     private final ProfessorService professorService;
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody @Valid final ProfessorDto professor){
+    public ResponseEntity<Void> save(@RequestBody @Valid final ProfessorResponse professor){
         return professorService.createProfessor(professor);
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<ProfessorDto> getById(@PathVariable ("id") final int id){
+    public ResponseEntity<ProfessorResponse> getById(@PathVariable ("id") final int id){
         return professorService.getById(id);
     }
 
-    public ResponseEntity<List<ProfessorDto>> getAll(){
+    public ResponseEntity<List<ProfessorResponse>> getAll(){
         return professorService.getAll();
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<ProfessorDto> update(@PathVariable("id") final int id, @RequestBody @Valid ProfessorDto professor) {
+    public ResponseEntity<ProfessorResponse> update(@PathVariable("id") final int id, @RequestBody @Valid ProfessorResponse professor) {
         return professorService.update(id, professor);
     }
 
@@ -43,7 +43,7 @@ public class ProfessorController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<ProfessorDto>> getByPrefix(@RequestParam(value = "prefixo", required = false) final String prefixo){
+    public ResponseEntity<List<ProfessorResponse>> getByPrefix(@RequestParam(value = "prefixo", required = false) final String prefixo){
         return professorService.getByPrefix(prefixo);
     }
 }

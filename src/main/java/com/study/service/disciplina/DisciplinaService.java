@@ -1,17 +1,17 @@
 package com.study.service.disciplina;
 
-import com.study.domain.dto.DisciplinaDto;
+import com.study.dto.response.DisciplinaResponse;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface DisciplinaService {
 
-    ResponseEntity<Void> createDisciplina(DisciplinaDto disciplina);
-    ResponseEntity<DisciplinaDto> getById(int id);
-    ResponseEntity<List<DisciplinaDto>> getAll();
-    ResponseEntity<DisciplinaDto> update(int id, DisciplinaDto disciplina);
+    ResponseEntity<Void> createDisciplina(DisciplinaResponse disciplina);
+    ResponseEntity<DisciplinaResponse> getById(int id);
+    ResponseEntity<List<DisciplinaResponse>> getAll();
+    ResponseEntity<DisciplinaResponse> update(int id, DisciplinaResponse disciplina);
     ResponseEntity<Void> delete(int id);
-    ResponseEntity<List<DisciplinaDto>> getByPrefix(String prefixo);
+    ResponseEntity<List<DisciplinaResponse>> getByPrefix(String prefixo);
 
 }

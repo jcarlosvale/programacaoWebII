@@ -1,6 +1,6 @@
 package com.study.service.professor.impl;
 
-import com.study.domain.dto.ProfessorDto;
+import com.study.dto.response.ProfessorResponse;
 import com.study.service.professor.ProfessorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 @Service
 public class ProfessorServiceImpl implements ProfessorService {
 
-    private final Map<Integer, ProfessorDto> repository = new HashMap<>();
+    private final Map<Integer, ProfessorResponse> repository = new HashMap<>();
 
     @Override
-    public ResponseEntity<Void> createProfessor(ProfessorDto professor) {
+    public ResponseEntity<Void> createProfessor(ProfessorResponse professor) {
         if(repository.containsKey(professor.getId())){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -24,8 +24,8 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     @Override
-    public ResponseEntity<ProfessorDto> getById(int id) {
-        ProfessorDto professor = repository.get(id);
+    public ResponseEntity<ProfessorResponse> getById(int id) {
+        ProfessorResponse professor = repository.get(id);
         if(Objects.isNull(professor)){
             return ResponseEntity.notFound().build();
         }
@@ -33,7 +33,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     @Override
-    public ResponseEntity<List<ProfessorDto>> getAll() {
+    public ResponseEntity<List<ProfessorResponse>> getAll() {
         if(repository.isEmpty()){
             return ResponseEntity.ok(List.of());
         }
@@ -41,7 +41,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     @Override
-    public ResponseEntity<ProfessorDto> update(int id, ProfessorDto professor) {
+    public ResponseEntity<ProfessorResponse> update(int id, ProfessorResponse professor) {
         if (!repository.containsKey(professor.getId())) {
             return ResponseEntity.notFound().build();
         }
@@ -51,7 +51,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 
     @Override
     public ResponseEntity<Void> delete(int id) {
-        ProfessorDto professor = repository.get(id);
+        ProfessorResponse professor = repository.get(id);
         if(Objects.isNull(professor)){
             return ResponseEntity.notFound().build();
         }
@@ -60,7 +60,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     @Override
-    public ResponseEntity<List<ProfessorDto>> getByPrefix(String prefixo) {
+    public ResponseEntity<List<ProfessorResponse>> getByPrefix(String prefixo) {
         if(Objects.isNull(prefixo)) return getAll();
         var professores = repository.values().stream()
                 .filter(professor -> professor.getName().startsWith(prefixo))

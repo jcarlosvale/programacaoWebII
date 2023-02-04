@@ -1,9 +1,12 @@
 package com.study.view.rs;
 
-import com.study.domain.dto.AlunoDto;
+import com.study.dto.request.AlunoRequest;
+import com.study.dto.response.AlunoResponse;
+import com.study.dto.response.TutorResponse;
 import com.study.service.aluno.AlunoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,31 +22,38 @@ public class AlunoController {
     private final AlunoService alunoService;
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody @Valid final AlunoDto aluno){
-       return alunoService.createAluno(aluno);
+    public ResponseEntity<AlunoResponse> save(@RequestBody @Valid final AlunoRequest aluno){
+
+        AlunoResponse response = alunoService.createAluno(aluno);
+
+       return ResponseEntity
+               .status(HttpStatus.CREATED)
+               .body(response);
     }
 
-    @GetMapping(path = "/{id}")
-    public ResponseEntity<AlunoDto> getById(@PathVariable ("id") final int id){
-        return alunoService.getById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<AlunoResponse> getById(@PathVariable ("id") final int id) {
+        AlunoResponse response = alunoService.getById(id);
+
+        return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<List<AlunoDto>> getAll(){
-        return alunoService.getAll();
+    @GetMapping
+    public ResponseEntity<List<AlunoResponse>> getAll(){
+
+        List<AlunoResponse> response = alunoService.getAll();
+
+        return ResponseEntity.ok(response);
     }
 
-    @PutMapping(path = "/{îd}")
-    public ResponseEntity<AlunoDto> update(@PathVariable("id") final int id, @RequestBody @Valid AlunoDto aluno) {
-      return alunoService.update(id, aluno);
-    }
+    @GetMapping("/{id}/tutor/{idProfessor}")
+    public ResponseEntity<TutorResponse> updateTitular(@PathVariable("id") int idAluno, @PathVariable("idProfessor") int idProfessor){
 
-    @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") final int id){
-        return alunoService.delete(id);
-    }
+        TutorResponse response =
+                alunoService.updateTutor(idAluno, idProfessor);
 
-    @GetMapping()
-    public ResponseEntity<List<AlunoDto>> getByPrefix(@RequestParam(value = "prefixo", required = false) final String prefixo){
-        return alunoService.getByPrefix(prefixo);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(response);
     }
 }
