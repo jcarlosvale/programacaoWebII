@@ -31,4 +31,7 @@ public class Professor {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "tutor")
     private List<Aluno> alunos;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "titular")
+    private Disciplina disciplina;
 }

@@ -32,4 +32,15 @@ public class GlobalExceptionHandler {
                         .message(exception.getMessage())
                         .build());
     }
+
+    @ExceptionHandler(value = IllegalStateException.class)
+    public ResponseEntity<ErrorMessage> handleIllegalStateException(final IllegalStateException exception) {
+
+        log.error(exception.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(ErrorMessage.builder()
+                        .message(exception.getMessage())
+                        .build());
+    }
 }
