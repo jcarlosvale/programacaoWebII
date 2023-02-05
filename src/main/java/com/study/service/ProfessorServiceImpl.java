@@ -68,6 +68,12 @@ public class ProfessorServiceImpl implements ProfessorService{
                 profRepository.put(prof.getId(), prof);
             });
         }else{
+            /* 
+            profRepository.forEach((key,value) -> {
+                key.intValue();
+                value.getNome()
+            });
+            */
             profRepository.values().forEach(prof -> {
                 listProf.forEach(prof2 -> { 
                     if(!prof.getNome().equals(prof2.getNome())){

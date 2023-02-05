@@ -12,6 +12,7 @@ import com.study.domain.dto.ProfessorDto;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@EnableJpaRepositories("com.study.Repository")
 public class ProfessorConfiguration {
  
 /* @Bean
