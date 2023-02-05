@@ -1,4 +1,4 @@
-package com.study.view.rs;
+package com.study.Controller.rs;
 
 import java.util.ArrayList;
 import java.util.List;

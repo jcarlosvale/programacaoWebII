@@ -1,4 +1,4 @@
-package com.study.domain.dto;
+package com.study.Dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

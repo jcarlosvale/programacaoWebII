@@ -1,4 +1,4 @@
-package com.study.domain.dto;
+package com.study.Dto;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;

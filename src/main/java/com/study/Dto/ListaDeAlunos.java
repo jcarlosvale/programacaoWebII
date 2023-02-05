@@ -1,4 +1,4 @@
-package com.study.domain.Structure;
+package com.study.Dto;
 import com.study.domain.dto.*;
 import java.util.*;
 

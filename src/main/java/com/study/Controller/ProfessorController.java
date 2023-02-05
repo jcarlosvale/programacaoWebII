@@ -1,4 +1,4 @@
-package com.study.view;
+package com.study.Controller;
 
 import java.util.ArrayList;
 import java.util.Collection;

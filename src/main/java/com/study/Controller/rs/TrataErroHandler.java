@@ -1,4 +1,4 @@
-package com.study.view.rs;
+package com.study.Controller.rs;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

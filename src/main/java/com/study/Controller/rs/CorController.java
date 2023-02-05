@@ -1,4 +1,4 @@
-package com.study.view.rs;
+package com.study.Controller.rs;
 
 import com.study.domain.dto.*;
 import lombok.*;
