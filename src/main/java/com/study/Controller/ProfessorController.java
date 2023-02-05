@@ -1,4 +1,4 @@
-package com.study.Controller;
+package com.study.controller;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,7 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.study.domain.dto.ProfessorDto;
+
+import com.study.dto.ProfessorResponse;
 import com.study.service.ProfessorService;
 
 import lombok.RequiredArgsConstructor;
@@ -19,13 +20,12 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping(path = "/professores")
 public class ProfessorController {
-
     
     @Autowired
     private final ProfessorService profService;
     
     @PostMapping(path="/save")
-    public ResponseEntity<ProfessorDto> save(@RequestBody @Valid final ProfessorDto professor) {
+    public ResponseEntity<ProfessorResponse> save(@RequestBody @Valid final ProfessorResponse professor) {
         if (profService.save(professor)) {
             return ResponseEntity
                     .status(HttpStatus.CREATED)
@@ -39,13 +39,13 @@ public class ProfessorController {
     }
 
     @GetMapping(path="/")
-    public ResponseEntity<Collection<ProfessorDto>> getAll() {
-        return ResponseEntity.ok( new ArrayList<ProfessorDto>(profService.getAll()));
+    public ResponseEntity<Collection<ProfessorResponse>> getAll() {
+        return ResponseEntity.ok(new ArrayList<ProfessorResponse>(profService.getAll()));
         }
 
 
         @PostMapping(path="/addAll")
-        public ResponseEntity<List<ProfessorDto>> addAll(@RequestBody @Valid final List<ProfessorDto> lstProf ) {
+        public ResponseEntity<List<ProfessorResponse>> addAll(@RequestBody @Valid final List<ProfessorResponse> lstProf ) {
             try{
             profService.addAll(lstProf);
             return ResponseEntity

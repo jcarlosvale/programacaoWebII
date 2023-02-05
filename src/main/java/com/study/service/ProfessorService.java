@@ -1,12 +1,12 @@
-package com.study.Service;
+package com.study.service;
 
 import java.util.Collection;
 import java.util.List;
 
-import com.study.domain.dto.ProfessorDto;
+import com.study.dto.ProfessorResponse;
 
 public interface ProfessorService {
-    public Boolean save(ProfessorDto prof);
-    public Collection<ProfessorDto> getAll();
-    public List<ProfessorDto> addAll(List<ProfessorDto> listProf); 
+    public Boolean save(ProfessorResponse prof);
+    public Collection<ProfessorResponse> getAll();
+    public List<ProfessorResponse> addAll(List<ProfessorResponse> listProf); 
 }

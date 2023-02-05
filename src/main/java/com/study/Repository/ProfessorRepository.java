@@ -1,10 +1,7 @@
-package com.study.Repository;
+package com.study.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import com.study.Entity.ProfessorEntity;
-import org.springframework.stereotype.Repository;
+import com.study.model.*;
+import org.springframework.data.jpa.repository.*;
 
-@Repository
-public interface ProfessorRepository extends JpaRepository<ProfessorEntity, Integer> {
-    
+public interface ProfessorRepository extends JpaRepository<Professor, Integer> {
 }

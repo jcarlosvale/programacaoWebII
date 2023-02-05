@@ -1,4 +1,4 @@
-package com.study.Service;
+package com.study.service;
 import java.util.Collection;
 /*
  * {
@@ -25,21 +25,19 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Service;
+import com.study.dto.ProfessorResponse;
 
-import com.study.domain.dto.ProfessorDto;
-
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RequiredArgsConstructor
 @Service
 public class ProfessorServiceImpl implements ProfessorService{
    
-    private final Map<Integer, ProfessorDto> profRepository;
+    /*TODO: ver com o professor pq não aceitou FINAL */
+    private Map<Integer, ProfessorResponse> profRepository;
     
     @Override
-    public Boolean save(ProfessorDto prof){
+    public Boolean save(ProfessorResponse prof){
         if (profRepository.containsKey(prof.getId())){
             log.error("Já existe o id {} na coleção!", prof.getId());
             return false;   
@@ -52,7 +50,7 @@ public class ProfessorServiceImpl implements ProfessorService{
     }
 
     @Override
-    public Collection<ProfessorDto> getAll(){
+    public Collection<ProfessorResponse> getAll(){
         if(profRepository.size() == 0){
             return List.of();
         }else{
@@ -62,7 +60,7 @@ public class ProfessorServiceImpl implements ProfessorService{
     }
 
     @Override
-    public List<ProfessorDto> addAll(List<ProfessorDto> listProf){
+    public List<ProfessorResponse> addAll(List<ProfessorResponse> listProf){
         if(profRepository.size() == 0){
             listProf.forEach(prof -> {
                 profRepository.put(prof.getId(), prof);
@@ -70,7 +68,7 @@ public class ProfessorServiceImpl implements ProfessorService{
         }else{
             profRepository.values().forEach(prof -> {
                 listProf.forEach(prof2 -> { 
-                    if(!prof.getNome().equals(prof2.getNome())){
+                    if(!prof.getName().equals(prof2.getName())){
                         profRepository.put(prof2.getId(), prof2);
                     }
                 });
@@ -78,7 +76,6 @@ public class ProfessorServiceImpl implements ProfessorService{
 
         }
         return listProf;
-        
-    }
     
+    }
 }
