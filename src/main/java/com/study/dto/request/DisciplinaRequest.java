@@ -13,5 +13,6 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties
 public class DisciplinaRequest {
 
+    private int id;
 
 }

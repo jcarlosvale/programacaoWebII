@@ -28,6 +28,9 @@ public class Professor {
 
     private String cpf;
 
+    @Column(nullable = false)
+    private String titulo;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "tutor")
     private List<Aluno> alunos;
 }

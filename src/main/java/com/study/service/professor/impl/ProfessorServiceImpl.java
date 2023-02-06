@@ -1,70 +1,68 @@
 package com.study.service.professor.impl;
 
+import com.study.dto.mapper.ProfessorMapper;
+import com.study.dto.request.ProfessorRequest;
 import com.study.dto.response.ProfessorResponse;
+import com.study.entity.Professor;
+import com.study.repository.ProfessorRepository;
 import com.study.service.professor.ProfessorService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class ProfessorServiceImpl implements ProfessorService {
 
-    private final Map<Integer, ProfessorResponse> repository = new HashMap<>();
+    private final ProfessorRepository repository;
+
+    private final ProfessorMapper mapper;
 
     @Override
-    public ResponseEntity<Void> createProfessor(ProfessorResponse professor) {
-        if(repository.containsKey(professor.getId())){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    public ProfessorResponse createProfessor(ProfessorRequest request) {
+        Objects.requireNonNull(request, "A requisição não pode ser null");
+
+        return mapper.toResponse(repository.save(mapper.toEntity(request)));
+    }
+
+    @Override
+    public ProfessorResponse getById(int id) {
+        Optional<Professor> optionalProfessor = repository.findById(id);
+
+        if (optionalProfessor.isPresent()) {
+            return mapper.toResponse(optionalProfessor.get());
         }
-        repository.put(professor.getId(), professor);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+
+        return new ProfessorResponse();
     }
 
     @Override
-    public ResponseEntity<ProfessorResponse> getById(int id) {
-        ProfessorResponse professor = repository.get(id);
-        if(Objects.isNull(professor)){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(professor);
+    public List<ProfessorResponse> getAll() {
+        return mapper.toResponse((repository.findAll()));
     }
 
     @Override
-    public ResponseEntity<List<ProfessorResponse>> getAll() {
-        if(repository.isEmpty()){
-            return ResponseEntity.ok(List.of());
-        }
-        return ResponseEntity.ok(new ArrayList<>(repository.values()));
+    public ProfessorResponse update(int id, ProfessorRequest request) {
+        Objects.requireNonNull(request, "A requisição não pode ser null");
+
+        Optional<Professor> optionalProfessor = repository.findById(id);
+        optionalProfessor.orElseThrow(() -> new EntityNotFoundException("Professor não encontrado"));
+
+        Professor entity = mapper.toEntity(request);
+        entity.setId(id);
+
+        repository.save(entity);
+
+        return mapper.toResponse(entity);
     }
 
     @Override
-    public ResponseEntity<ProfessorResponse> update(int id, ProfessorResponse professor) {
-        if (!repository.containsKey(professor.getId())) {
-            return ResponseEntity.notFound().build();
-        }
-        repository.put(id, professor);
-        return ResponseEntity.ok(professor);
+    public void delete(int id) {
+        repository.deleteById(id);
     }
 
-    @Override
-    public ResponseEntity<Void> delete(int id) {
-        ProfessorResponse professor = repository.get(id);
-        if(Objects.isNull(professor)){
-            return ResponseEntity.notFound().build();
-        }
-        repository.remove(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @Override
-    public ResponseEntity<List<ProfessorResponse>> getByPrefix(String prefixo) {
-        if(Objects.isNull(prefixo)) return getAll();
-        var professores = repository.values().stream()
-                .filter(professor -> professor.getName().startsWith(prefixo))
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(professores);
-    }
 }
