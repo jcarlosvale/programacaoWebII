@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Entity;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -29,7 +30,6 @@ public class DisciplinaService {
     private final DisciplinaRepository repository;
     private final DisciplinaMapper mapper;
     private final ProfessoresRepository professorRepository;
-
     private final ProfessorMapper professorMapper;
 
     public List<DisciplinasResponse> retrieveAll() {
