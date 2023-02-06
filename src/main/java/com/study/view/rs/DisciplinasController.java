@@ -2,6 +2,7 @@ package com.study.view.rs;
 
 import com.study.domain.dto.DisciplinasRequest;
 import com.study.domain.dto.DisciplinasResponse;
+import com.study.domain.dto.ProfessoresResponse;
 import com.study.domain.service.DisciplinaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,14 @@ import java.util.List;
 public class DisciplinasController {
 
     private final DisciplinaService service;
+
+    @GetMapping("/pagination")
+    public ResponseEntity<List<DisciplinasResponse>> pageable(@RequestParam(defaultValue = "0") Integer pageNo,
+                                                             @RequestParam(defaultValue = "1") Integer pageSize) {
+        final var response = service.getPage(pageNo, pageSize);
+
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping
     public ResponseEntity<List<DisciplinasResponse>> listCursos() {
@@ -50,5 +59,15 @@ public class DisciplinasController {
     public ResponseEntity<Void> removeCurso(@PathVariable("id") Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/titular/{idProfessor}")
+    public ResponseEntity<ProfessoresResponse> updateTitular(@PathVariable("id") Long idDisciplina,
+                                                             @PathVariable("idProfessor") Long idProfessor) {
+        final var response = service.updateTitular(idDisciplina, idProfessor);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(response);
     }
 }

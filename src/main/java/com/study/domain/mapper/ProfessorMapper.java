@@ -30,6 +30,7 @@ public class ProfessorMapper {
                 .nome(entity.getNome())
                 .titulo(entity.getTitulo())
                 .sexo(entity.getSexo())
+                .disciplinas(entity.getDisciplinas())
                 .build();
     }
 
@@ -41,6 +42,7 @@ public class ProfessorMapper {
                     .nome(request.getNome())
                     .titulo(request.getTitulo())
                     .sexo(request.getSexo())
+                    .disciplinas(request.getDisciplinas())
                     .build();
         }
     }

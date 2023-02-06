@@ -30,6 +30,7 @@ public class DisciplinaMapper {
                 .nome(entity.getNome())
                 .descricao(entity.getDescricao())
                 .duracao(entity.getDuracao())
+                .titular(entity.getTitular())
                 .build();
     }
 
@@ -41,6 +42,7 @@ public class DisciplinaMapper {
                     .nome(request.getNome())
                     .descricao(request.getDescricao())
                     .duracao(request.getDuracao())
+                    .titular(request.getTitular())
                     .build();
         }
     }
