@@ -4,7 +4,6 @@ import com.study.dto.v3.*;
 import com.study.mapper.*;
 import com.study.model.*;
 import com.study.repository.*;
-import com.study.repository.projection.*;
 import lombok.*;
 import lombok.extern.slf4j.*;
 import org.springframework.stereotype.*;
@@ -15,7 +14,7 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ProfessorService {
+public class ProfessorServiceV3 {
 
     private final ProfessorRepository repository;
     private final ProfessorMapper mapper;
@@ -67,10 +66,6 @@ public class ProfessorService {
 
         log.info("Deleting professor id - {}", id);
         repository.deleteById(id);
-    }
-
-    public ProfessorDtoProjection getDisciplinaByProfessorId(int id) {
-        return repository.getDisciplinaFromProfessorById(id);
     }
 
 }
