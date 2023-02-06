@@ -12,19 +12,23 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "CURSOS")
-public class Cursos {
+@Table(name = "DISCIPLINAS")
+public class Disciplinas {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "curso_id")
+    @Column(name = "disciplina_id")
     private Long id;
 
-    @Column(name = "curso_name", nullable = false)
+    @Column(name = "disciplina_name", nullable = false)
     private String nome;
 
     private String descricao;
 
     private String duracao;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "titular")
+    private Professores titular;
 
 }

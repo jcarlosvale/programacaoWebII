@@ -1,10 +1,10 @@
 package com.study.domain.service;
 
-import com.study.domain.dto.CursosRequest;
-import com.study.domain.dto.CursosResponse;
-import com.study.domain.mapper.CursoMapper;
-import com.study.domain.model.Cursos;
-import com.study.domain.repositories.CursosRepository;
+import com.study.domain.dto.DisciplinasRequest;
+import com.study.domain.dto.DisciplinasResponse;
+import com.study.domain.mapper.DisciplinaMapper;
+import com.study.domain.model.Disciplinas;
+import com.study.domain.repositories.DisciplinaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,17 +16,17 @@ import java.util.Objects;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CursoService {
+public class DisciplinaService {
 
-    private final CursosRepository repository;
-    private final CursoMapper mapper;
+    private final DisciplinaRepository repository;
+    private final DisciplinaMapper mapper;
 
-    public List<CursosResponse> retrieveAll() {
+    public List<DisciplinasResponse> retrieveAll() {
         log.info("Listing cursos");
         return mapper.toResponse(repository.findAll());
     }
 
-    public CursosResponse getById(Long id) {
+    public DisciplinasResponse getById(Long id) {
         log.info("Getting curso id-{}", id);
         var optionalCurso = repository.findById(id);
 
@@ -34,10 +34,10 @@ public class CursoService {
             return mapper.toResponse(optionalCurso.get());
         }
 
-        return new CursosResponse();
+        return new DisciplinasResponse();
     }
 
-    public CursosResponse save(CursosRequest request) {
+    public DisciplinasResponse save(DisciplinasRequest request) {
         Objects.requireNonNull(request, "request must not be null");
 
         log.info("Saving curso - {}", request);
@@ -45,7 +45,7 @@ public class CursoService {
         return mapper.toResponse(repository.save(mapper.toEntity(request)));
     }
 
-    public CursosResponse update(Long id, CursosRequest request) {
+    public DisciplinasResponse update(Long id, DisciplinasRequest request) {
         Objects.requireNonNull(request, "request must not be null");
 
         log.info("Updating curso id - {}, data - {}", id, request);
@@ -54,7 +54,7 @@ public class CursoService {
 
         optionalCurso.orElseThrow(() -> new EntityNotFoundException("Curso not found."));
 
-        Cursos entity = mapper.toEntity(request);
+        Disciplinas entity = mapper.toEntity(request);
         entity.setId(id);
 
         repository.save(entity);

@@ -1,8 +1,8 @@
 package com.study.domain.mapper;
 
-import com.study.domain.dto.CursosRequest;
-import com.study.domain.dto.CursosResponse;
-import com.study.domain.model.Cursos;
+import com.study.domain.dto.DisciplinasRequest;
+import com.study.domain.dto.DisciplinasResponse;
+import com.study.domain.model.Disciplinas;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,8 +11,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-public class CursoMapper {
-    public List<CursosResponse> toResponse(List<Cursos> listOfCursos) {
+public class DisciplinaMapper {
+    public List<DisciplinasResponse> toResponse(List<Disciplinas> listOfCursos) {
 
         if (Objects.isNull(listOfCursos)) return new ArrayList<>();
 
@@ -21,11 +21,11 @@ public class CursoMapper {
                 .collect(Collectors.toList());
     }
 
-    public CursosResponse toResponse(Cursos entity) {
+    public DisciplinasResponse toResponse(Disciplinas entity) {
 
         if (Objects.isNull(entity)) return null;
 
-        return CursosResponse.builder()
+        return DisciplinasResponse.builder()
                 .id(entity.getId())
                 .nome(entity.getNome())
                 .descricao(entity.getDescricao())
@@ -33,11 +33,11 @@ public class CursoMapper {
                 .build();
     }
 
-    public Cursos toEntity(CursosRequest request) {
+    public Disciplinas toEntity(DisciplinasRequest request) {
         if (Objects.isNull(request)) {
             return null;
         } else {
-            return Cursos.builder()
+            return Disciplinas.builder()
                     .nome(request.getNome())
                     .descricao(request.getDescricao())
                     .duracao(request.getDuracao())

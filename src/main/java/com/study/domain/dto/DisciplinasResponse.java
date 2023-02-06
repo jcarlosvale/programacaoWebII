@@ -1,6 +1,7 @@
 package com.study.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.study.domain.model.Professores;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,15 +14,12 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties
-public class CursosRequest {
+public class DisciplinasResponse {
 
-    @NotBlank(message = "Nome must be not empty or null")
+    private Long id;
     private String nome;
-
-    @NotBlank(message = "Descrição must be not empty or null")
     private String descricao;
-
-    @NotBlank(message = "Duração must be not empty or null")
     private String duracao;
+    private Professores titular;
 
 }

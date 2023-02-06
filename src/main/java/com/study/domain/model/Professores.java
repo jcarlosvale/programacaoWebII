@@ -26,4 +26,7 @@ public class Professores {
     private String titulo;
 
     private String sexo;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "titular")
+    private Disciplinas disciplinas;
 }

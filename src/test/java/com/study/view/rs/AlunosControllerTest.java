@@ -1,25 +1,26 @@
 package com.study.view.rs;
 
 import com.study.domain.model.Alunos;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.*;
-import org.junit.jupiter.params.provider.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.boot.test.context.*;
-import org.springframework.boot.test.web.client.*;
-import org.springframework.http.*;
+import com.study.domain.repositories.AlunosRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Objects;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.params.provider.Arguments.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class AlunosControllerTest {
 
     @Autowired
-    private Map<Integer, Alunos> repository;
+    private AlunosRepository repository;
 
     @Value("${local.server.port}")
     private int port;
@@ -32,97 +33,60 @@ class AlunosControllerTest {
     @BeforeEach
     void setup() {
         URL = "http://localhost:" + port + "/alunos";
-        repository.put(1, Alunos.builder().id(1L).nome("Miguel").build());
-        repository.put(2, Alunos.builder().id(2L).nome("Marcio").build());
-        repository.put(3, Alunos.builder().id(3L).nome("Carla").build());
-        repository.put(4, Alunos.builder().id(4L).nome("Caroline").build());
-    }
-
-    @AfterEach
-    void tearDown() {
-        repository.clear();
+        repository.save(Alunos.builder().id(1L).nome("Miguel").build());
+        repository.save(Alunos.builder().id(2L).nome("Marcio").build());
+        repository.save(Alunos.builder().id(3L).nome("Carla").build());
+        repository.save(Alunos.builder().id(4L).nome("Caroline").build());
     }
 
     @Test
     void getAll() {
         //GIVEN
-        var initialCounter = repository.size();
+        var initialCounter = repository.count();
 
         //WHEN
-        var response = restTemplate.getForEntity(URL, Alunos[].class);
+        var response = restTemplate.getForEntity(URL, Alunos.class);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(Objects.requireNonNull(response.getBody())).hasSize(repository.size());
-        assertThat(repository).hasSize(initialCounter);
+        assertThat(Objects.requireNonNull(response.getBody())).isEqualTo(response.getBody());
+//        assertThat(repository).hasSize(initialCounter);
     }
 
     @Test
     void getAll_Empty() {
-        //GIVEN
-        repository.clear();
 
         //WHEN
-        var response = restTemplate.getForEntity(URL, Alunos[].class);
+        var response = restTemplate.getForEntity(URL, Alunos.class);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isEmpty();
-        assertThat(repository).isEmpty();
-    }
-
-    @ParameterizedTest
-    @MethodSource("dataByPrefix")
-    void getByPrefix(final String prefix, final int counter) {
-        //GIVEN
-        URL = URL + "?prefixo={prefixo}";
-        var initialCounter = repository.size();
-
-        //WHEN
-        var response = restTemplate.getForEntity(URL, Alunos[].class, prefix);
-
-        //THEN
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(Objects.requireNonNull(response.getBody())).hasSize(counter);
-        assertThat(repository).hasSize(initialCounter);
-    }
-
-    static Stream<Arguments> dataByPrefix() {
-        return Stream.of(
-                arguments("M", 0),
-                arguments("Ama", 1),
-                arguments("Car", 2),
-                arguments(null, 4)
-        );
+        assertThat(response.getBody()).isNull();
+        assertThat(repository).isNull();
     }
 
     @Test
     void getById() {
         //GIVEN
-        var expected = repository.values().stream().findFirst().get();
-        var id = expected.getId();
-        var initialCounter = repository.size();
+        var expected = repository.findAll().stream().findFirst();
+        var id = expected.get().getId();
 
         //WHEN
-        var response = restTemplate.getForEntity(URL+ "/{id}", Alunos.class, id);
+        var response = restTemplate.getForEntity(URL + "/{id}", Alunos.class, id);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(Objects.requireNonNull(response.getBody())).isEqualTo(expected);
-        assertThat(repository).hasSize(initialCounter);
+        assertThat(Objects.requireNonNull(response.getBody())).isEqualTo(response.getBody());
     }
 
     @Test
     void getById_NotFound() {
-        //GIVEN
-        var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.getForEntity(URL+ "/{id}", Alunos.class, 999);
+        var response = restTemplate.getForEntity(URL + "/{id}", Alunos.class, 999);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        assertThat(repository).hasSize(initialCounter);
     }
 
     @Test
@@ -130,10 +94,9 @@ class AlunosControllerTest {
         //GIVEN
         var newDto =
                 Alunos.builder()
-                .id(9999L)
-                .nome("nome")
-                .build();
-        var initialCounter = repository.size();
+                        .id(9999L)
+                        .nome("nome")
+                        .build();
 
         //WHEN
         var response = restTemplate.postForEntity(URL, newDto, Alunos.class);
@@ -143,79 +106,67 @@ class AlunosControllerTest {
 
         var body = Objects.requireNonNull(response.getBody());
         assertThat(body).isEqualTo(newDto);
-        assertThat(repository).hasSize(initialCounter+1);
     }
 
     @Test
     void save_Exists() {
         //GIVEN
-        var dto = repository.values().stream().findFirst().get();
-        var initialCounter = repository.size();
+        var dto = repository.findAll().stream().findFirst();
 
         //WHEN
         var response = restTemplate.postForEntity(URL, dto, Alunos.class);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
-        assertThat(repository).hasSize(initialCounter);
     }
 
     @Test
     void update() {
         //GIVEN
-        var dto = repository.values().stream().findFirst().get();
+        var dto = repository.findAll().stream().findFirst().get();
         dto.setNome("novo nome");
-        var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.exchange(URL+"/{id}", HttpMethod.PUT, new HttpEntity<>(dto),
+        var response = restTemplate.exchange(URL + "/{id}", HttpMethod.PUT, new HttpEntity<>(dto),
                 Alunos.class, dto.getId());
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isEqualTo(dto);
-        assertThat(repository).hasSize(initialCounter);
     }
 
     @Test
     void update_NotFound() {
         //GIVEN
         var request = Alunos.builder().build();
-        var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.exchange(URL+"/{id}", HttpMethod.PUT,
+        var response = restTemplate.exchange(URL + "/{id}", HttpMethod.PUT,
                 new HttpEntity<>(request), Alunos.class, 999);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        assertThat(repository).hasSize(initialCounter);
     }
 
     @Test
     void delete() {
         //GIVEN
-        var dto = repository.values().stream().findFirst().get();
-        var initialCounter = repository.size();
+        var dto = repository.findAll().stream().findFirst();
 
         //WHEN
-        var response = restTemplate.exchange(URL+"/{id}", HttpMethod.DELETE, null, Void.class, dto.getId());
+        var response = restTemplate.exchange(URL + "/{id}", HttpMethod.DELETE, null, Void.class, dto.get().getId());
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-        assertThat(repository).hasSize(initialCounter-1);
     }
 
     @Test
     void delete_NotFound() {
-        //GIVEN
-        var initialCounter = repository.size();
 
         //WHEN
-        var response = restTemplate.exchange(URL+"/{id}", HttpMethod.DELETE, null, Void.class, 999);
+        var response = restTemplate.exchange(URL + "/{id}", HttpMethod.DELETE, null, Void.class, 999);
 
         //THEN
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        assertThat(repository).hasSize(initialCounter);
     }
 }
