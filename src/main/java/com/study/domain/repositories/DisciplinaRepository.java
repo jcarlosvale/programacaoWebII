@@ -23,8 +23,8 @@ public interface DisciplinaRepository extends JpaRepository<Disciplinas, Long> {
     @Query(nativeQuery = true, value = SELECT_BY_ID)
     Optional<Disciplinas> findByIdNativeQuery(@Param("id") int id);
 
-    String SELECT_BY_TITULAR =
-            "select d from Disciplina as d where d.titular = :titular";
-    @Query(value = SELECT_BY_TITULAR)
+//    String SELECT_BY_TITULAR =
+//            "select d from Disciplina as d where d.titular = :titular";
+//    @Query(value = SELECT_BY_TITULAR)
     Optional<Disciplinas> findByTitular(@Param("titular") Professores professor);
 }
