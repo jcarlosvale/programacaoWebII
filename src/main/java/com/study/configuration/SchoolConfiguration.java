@@ -1,6 +1,5 @@
 package com.study.configuration;
 
-import com.study.*;
 import com.study.dto.*;
 import org.springframework.context.annotation.*;
 import org.springframework.web.client.*;
