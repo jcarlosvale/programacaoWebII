@@ -70,4 +70,11 @@ public class DisciplinasController {
                 .status(HttpStatus.CREATED)
                 .body(response);
     }
+
+    @GetMapping(value = "/professores/{idProfessor}/disciplina")
+    public ResponseEntity<DisciplinasResponse> getDisciplinaByProgessor(@PathVariable Long idProfessor){
+        var disciplina = service.getDisciplinaByProfessorId(idProfessor);
+
+        return ResponseEntity.status(HttpStatus.OK).body(disciplina);
+    }
 }

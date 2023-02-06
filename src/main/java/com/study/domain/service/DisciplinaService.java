@@ -4,6 +4,7 @@ import com.study.domain.dto.DisciplinasRequest;
 import com.study.domain.dto.DisciplinasResponse;
 import com.study.domain.dto.ProfessoresResponse;
 import com.study.domain.mapper.DisciplinaMapper;
+import com.study.domain.mapper.ProfessorMapper;
 import com.study.domain.model.Disciplinas;
 import com.study.domain.repositories.DisciplinaRepository;
 import com.study.domain.repositories.ProfessoresRepository;
@@ -28,6 +29,8 @@ public class DisciplinaService {
     private final DisciplinaRepository repository;
     private final DisciplinaMapper mapper;
     private final ProfessoresRepository professorRepository;
+
+    private final ProfessorMapper professorMapper;
 
     public List<DisciplinasResponse> retrieveAll() {
         log.info("Listing cursos");
@@ -75,7 +78,7 @@ public class DisciplinaService {
         repository.deleteById(id);
     }
 
-    public ProfessoresResponse updateTitular(Long idDisciplina, Long idProfessor) {
+    public ProfessoresResponse updateTitular(Long idDisciplina, Long idProfessor) { //Patch
 
         log.info("Updating titular disciplina-id: {}, professor-id: {}", idDisciplina, idProfessor);
 
@@ -101,10 +104,10 @@ public class DisciplinaService {
         disciplina.setTitular(professor);
         repository.save(disciplina);
 
-        return mapper.toResponse(professor);
+        return professorMapper.toResponse(professor);
     }
 
-    public DisciplinasResponse getDisciplinaByProfessorId(Long idProfessor) {
+    public DisciplinasResponse getDisciplinaByProfessorId(Long idProfessor) { // Get Disciplina por Professor
 
         log.info("Getting disciplina by professor-id: {}", idProfessor);
 
