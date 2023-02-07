@@ -67,8 +67,6 @@ public class AlunoServiceImpl implements AlunoService {
 
     }
 
-//    branch -> santanderes
-
     @Override
     @Transactional
     public TutorResponse updateTutor(int id, int idProfessor) {

@@ -1,14 +1,11 @@
 package com.study.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
 
 @Data
 @Builder
@@ -17,17 +14,15 @@ import javax.validation.constraints.Size;
 @JsonIgnoreProperties
 public class DisciplinaResponse {
 
-    @Positive
     private int id;
 
-    @NotBlank
-    @Size(min = 10)
     private String name;
 
-    @Size(max = 30)
-    private String descricao;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String titular;
 
-    @Size(max = 4)
-    private String cargaHoraria;
+    private int cargaHoraria;
+
+    private String descricao;
 
 }

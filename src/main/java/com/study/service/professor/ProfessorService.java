@@ -2,7 +2,6 @@ package com.study.service.professor;
 
 import com.study.dto.request.ProfessorRequest;
 import com.study.dto.response.ProfessorResponse;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
