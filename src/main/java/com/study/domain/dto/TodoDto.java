@@ -1,6 +1,8 @@
 package com.study.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,9 +13,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties
-public class TutorResponse {
+public class TodoDto {
 
-    private String tutor;
+    @JsonProperty(value="activity")
+    private String description;
 
-    private String atualizacao;
 }

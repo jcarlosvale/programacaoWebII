@@ -2,6 +2,7 @@ package com.study.view.rs;
 
 import com.study.domain.dto.AlunoRequestDto;
 import com.study.domain.dto.AlunoResponseDto;
+import com.study.domain.dto.TodoDto;
 import com.study.domain.dto.TutorResponse;
 import com.study.service.AlunoService;
 import lombok.RequiredArgsConstructor;
@@ -73,6 +74,14 @@ public class AlunoController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(response);
+    }
+    
+    @GetMapping(path="/activity")
+    public ResponseEntity<TodoDto> saveRandomTodo() {
+
+        final TodoDto dto = alunoService.generateRandomTodo();
+
+        return ResponseEntity.ok(dto);
     }
 /*
     @GetMapping

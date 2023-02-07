@@ -1,21 +1,24 @@
 package com.study.service;
 
+import java.util.List;
+
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
 import com.study.domain.dto.AlunoRequestDto;
 import com.study.domain.dto.AlunoResponseDto;
+import com.study.domain.dto.TodoDto;
 import com.study.domain.dto.TutorResponse;
 import com.study.mapper.AlunoMapper;
 import com.study.model.AlunoModel;
 import com.study.repository.AlunoRepository;
 import com.study.repository.ProfessorRepository;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
-import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -26,6 +29,7 @@ public class AlunoService {
     private final AlunoRepository repository;
     private final ProfessorRepository professorRepository;
     private final AlunoMapper mapper;
+    private final RestTemplate restTemplate;
 
     public AlunoResponseDto save(final AlunoRequestDto aluno) {
 
@@ -101,5 +105,11 @@ public class AlunoService {
         List<AlunoModel> listOfEntities = repository.findAlunosByTutor(professor);
 
         return mapper.toResponse(listOfEntities);
+    }
+    
+    public TodoDto generateRandomTodo() {
+        return restTemplate
+                .getForEntity("https://www.boredapi.com/api/activity", TodoDto.class)
+                .getBody();
     }
 }
