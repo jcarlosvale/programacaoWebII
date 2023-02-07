@@ -28,7 +28,7 @@ public class Disciplinas {
     private String duracao;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "titular_id")
+    @JoinColumn(name = "titular_id", unique = true)
     private Professores titular;
 
 }
