@@ -26,7 +26,4 @@ public class ProfessoresRequest {
     @NotBlank(message = "Sexo must be not empty or null")
     private String sexo;
 
-    @NotBlank(message = "Disciplina must be not empty or null")
-    private Disciplinas disciplinas;
-
 }

@@ -27,4 +27,8 @@ public class Alunos {
 
     private String sexo;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tutor")
+    private Professores tutor;
+
 }

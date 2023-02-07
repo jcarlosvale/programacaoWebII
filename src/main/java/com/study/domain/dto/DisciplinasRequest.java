@@ -25,7 +25,4 @@ public class DisciplinasRequest {
     @NotBlank(message = "Duração must be not empty or null")
     private String duracao;
 
-    @NotBlank(message = "Professor must be not empty or null")
-    private Professores titular;
-
 }

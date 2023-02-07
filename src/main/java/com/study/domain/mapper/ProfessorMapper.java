@@ -25,13 +25,19 @@ public class ProfessorMapper {
 
         if (Objects.isNull(entity)) return null;
 
-        return  ProfessoresResponse.builder()
+        var response =  ProfessoresResponse.builder()
                 .id(entity.getId())
                 .nome(entity.getNome())
                 .titulo(entity.getTitulo())
                 .sexo(entity.getSexo())
-                .disciplinas(entity.getDisciplinas())
+                .disciplinas(entity.getDisciplinas().getNome())
                 .build();
+
+        if (Objects.nonNull(entity.getDisciplinas())) {
+            response.setDisciplinas(entity.getDisciplinas().getNome());
+        }
+
+        return response;
     }
 
     public Professores toEntity(ProfessoresRequest request) {
@@ -42,7 +48,6 @@ public class ProfessorMapper {
                     .nome(request.getNome())
                     .titulo(request.getTitulo())
                     .sexo(request.getSexo())
-                    .disciplinas(request.getDisciplinas())
                     .build();
         }
     }

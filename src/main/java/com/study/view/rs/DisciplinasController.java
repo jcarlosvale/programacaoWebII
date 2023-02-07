@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/cursos")
+@RequestMapping(path = "/disciplinas")
 @RequiredArgsConstructor
 @Slf4j
 public class DisciplinasController {
@@ -25,26 +25,27 @@ public class DisciplinasController {
     public ResponseEntity<List<DisciplinasResponse>> pageable(@RequestParam(defaultValue = "0") Integer pageNo,
                                                              @RequestParam(defaultValue = "1") Integer pageSize) {
         final var response = service.getPage(pageNo, pageSize);
-
         return ResponseEntity.ok(response);
     }
 
     @GetMapping
-    public ResponseEntity<List<DisciplinasResponse>> listCursos() {
-        final List<DisciplinasResponse> cursoDtoList = service.retrieveAll();
-        return ResponseEntity.ok(cursoDtoList);
+    public ResponseEntity<List<DisciplinasResponse>> listDisciplinas() {
+        final var response = service.retrieveAll();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DisciplinasResponse> getCurso(@PathVariable("id") Long id) {
-        final DisciplinasResponse cursoDto = service.getById(id);
-        return ResponseEntity.ok(cursoDto);
+        final var response = service.getById(id);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
-    public ResponseEntity<DisciplinasResponse> saveCurso(@RequestBody @Valid final DisciplinasRequest curso) {
-        var response = service.save(curso);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public ResponseEntity<DisciplinasResponse> saveCurso(@RequestBody @Valid final DisciplinasRequest request) {
+        final var response = service.save(request);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(response);
     }
 
     @PutMapping("/{id}")

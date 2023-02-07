@@ -5,11 +5,13 @@ import com.study.domain.dto.AlunosResponse;
 import com.study.domain.mapper.AlunoMapper;
 import com.study.domain.model.Alunos;
 import com.study.domain.repositories.AlunosRepository;
+import com.study.domain.repositories.ProfessoresRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,6 +22,7 @@ public class AlunoService {
 
     private final AlunosRepository repository;
     private final AlunoMapper mapper;
+    private final ProfessoresRepository professorRepository;
 
     public List<AlunosResponse> retrieveAll() {
         log.info("Listing alunos");
@@ -30,21 +33,28 @@ public class AlunoService {
         log.info("Getting aluno id-{}", id);
         var optionalAluno = repository.findById(id);
 
-        if (optionalAluno.isPresent()) {
-            return mapper.toResponse(optionalAluno.get());
-        }
+        var entity = optionalAluno.orElseThrow(() -> new EntityNotFoundException("Aluno not found"));
 
-        return new AlunosResponse();
+        return mapper.toResponse(entity);
     }
 
+    @Transactional
     public AlunosResponse save(AlunosRequest request) {
         Objects.requireNonNull(request, "request must not be null");
 
         log.info("Saving aluno - {}", request);
 
-        return mapper.toResponse(repository.save(mapper.toEntity(request)));
+        var entity =
+                Alunos.builder()
+                        .nome(request.getNome())
+                        .build();
+
+        repository.save(entity);
+
+        return mapper.toResponse(entity);
     }
 
+    @Transactional
     public AlunosResponse update(Long id, AlunosRequest request) {
         Objects.requireNonNull(request, "request must not be null");
 
@@ -64,5 +74,17 @@ public class AlunoService {
     public void delete(Long id) {
         log.info("Deleting aluno id - {}", id);
         repository.deleteById(id);
+    }
+
+    public List<AlunosResponse> getTutoradosByProfessorId(Long idProfessor) {
+
+        log.info("Getting tutorados by professor-id: {}", idProfessor);
+
+        var professorOptional = professorRepository.findById(idProfessor);
+        var professor = professorOptional.orElseThrow(() -> new EntityNotFoundException("Professor not found"));
+
+        List<Alunos> listOfEntities = repository.findAlunosByTutor(professor);
+
+        return mapper.toResponse(listOfEntities);
     }
 }

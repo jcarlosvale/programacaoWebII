@@ -1,7 +1,12 @@
 package com.study.view.rs;
 
+import com.study.domain.dto.AlunosResponse;
+import com.study.domain.dto.DisciplinasResponse;
 import com.study.domain.dto.ProfessoresRequest;
 import com.study.domain.dto.ProfessoresResponse;
+import com.study.domain.repositories.projection.ProfessorDtoProjection;
+import com.study.domain.service.AlunoService;
+import com.study.domain.service.DisciplinaService;
 import com.study.domain.service.ProfessorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +24,8 @@ import java.util.List;
 public class ProfessoresController {
 
     private final ProfessorService service;
+    private final AlunoService alunoService;
+    private final DisciplinaService disciplinaService;
 
     @GetMapping
     public ResponseEntity<List<ProfessoresResponse>> listProfessors() {
@@ -35,7 +42,9 @@ public class ProfessoresController {
     @PostMapping
     public ResponseEntity<ProfessoresResponse> saveProfessor(@RequestBody @Valid final ProfessoresRequest professor) {
         var response = service.save(professor);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(response);
     }
 
     @PutMapping("/{id}")
@@ -51,4 +60,24 @@ public class ProfessoresController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/{id}/tutorados")
+    public ResponseEntity<List<AlunosResponse>> getTutorados(@PathVariable("id") Long id) {
+        final var response = alunoService.getTutoradosByProfessorId(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}/disciplina")
+    public ResponseEntity<DisciplinasResponse> getDisciplina(@PathVariable("id") Long id) {
+        final var response = disciplinaService.getDisciplinaByProfessorId(id);
+        return ResponseEntity.ok(response);
+    }
+
+//    @GetMapping("/{id}/projection")
+//    public ResponseEntity<ProfessorDtoProjection> getDisciplinaByProfessorProjection(@PathVariable("id") Long id) {
+//
+//        final var response = service.getById(id);
+//
+//        return ResponseEntity.ok(response);
+//    }
 }

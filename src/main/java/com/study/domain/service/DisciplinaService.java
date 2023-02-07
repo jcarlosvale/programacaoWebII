@@ -30,22 +30,21 @@ public class DisciplinaService {
     private final DisciplinaRepository repository;
     private final DisciplinaMapper mapper;
     private final ProfessoresRepository professorRepository;
-    private final ProfessorMapper professorMapper;
 
     public List<DisciplinasResponse> retrieveAll() {
         log.info("Listing cursos");
-        return mapper.toResponse(repository.findAll());
+        final var listOfEntities = repository.listAll();
+        return  mapper.toResponse(listOfEntities);
     }
 
     public DisciplinasResponse getById(Long id) {
         log.info("Getting curso id-{}", id);
-        var optionalCurso = repository.findById(id);
+        var entity =
+                repository
+                        .findByIdNativeQuery(id)
+                        .orElseThrow(() -> new EntityNotFoundException("Disciplina not found"));
 
-        if (optionalCurso.isPresent()) {
-            return mapper.toResponse(optionalCurso.get());
-        }
-
-        return new DisciplinasResponse();
+        return mapper.toResponse(entity);
     }
 
     @Transactional
@@ -54,9 +53,17 @@ public class DisciplinaService {
 
         log.info("Saving curso - {}", request);
 
-        return mapper.toResponse(repository.save(mapper.toEntity(request)));
+        var entity =
+                Disciplinas.builder()
+                        .nome(request.getNome())
+                        .build();
+
+        repository.save(entity);
+
+        return mapper.toResponse(entity);
     }
 
+    @Transactional
     public DisciplinasResponse update(Long id, DisciplinasRequest request) {
         Objects.requireNonNull(request, "request must not be null");
 
@@ -104,7 +111,7 @@ public class DisciplinaService {
         disciplina.setTitular(professor);
         repository.save(disciplina);
 
-        return professorMapper.toResponse(professor);
+        return mapper.toResponse(disciplina.getTitular());
     }
 
     public DisciplinasResponse getDisciplinaByProfessorId(Long idProfessor) { // Get Disciplina por Professor

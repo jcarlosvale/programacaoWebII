@@ -1,6 +1,7 @@
 package com.study.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.study.domain.model.Professores;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +21,8 @@ public class DisciplinasResponse {
     private String nome;
     private String descricao;
     private String duracao;
-    private Professores titular;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String titular;
 
 }
