@@ -1,25 +1,18 @@
 package com.study.configuration;
 
-import com.study.domain.dto.*;
-import org.springframework.context.annotation.*;
+import java.util.HashMap;
+import java.util.Map;
 
-import java.util.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.study.dto.response.AlunoResponse;
 
 @Configuration
 public class SchoolConfiguration {
 
     @Bean
-    public Map<Integer, AlunoDTO> alunoRepository() {
-        return new HashMap<>();
-    }
-    
-    @Bean
-    public Map<Integer, DisciplinaDTO> cursoRepository() {
-        return new HashMap<>();
-    }
-    
-    @Bean
-    public Map<Integer, ProfessorDTO> professorRepository() {
+    public Map<Integer, AlunoResponse> corRepository() {
         return new HashMap<>();
     }
 }

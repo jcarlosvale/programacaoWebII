@@ -1,6 +1,5 @@
 package com.study.domain.dto;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
@@ -19,15 +19,14 @@ import java.util.stream.Collectors;
 public class ErrorResponse {
 
     private String message;
-    private Collection<ErrorMessage> erros;
+    private Collection<ErrorMessage> errors;
 
-    public static ErrorResponse createFromValidation(MethodArgumentNotValidException methodArgumentNotValidException){
-        var violations =
-                methodArgumentNotValidException
-                        .getFieldErrors()
-                        .stream()
-                        .map(cv -> new ErrorMessage(cv.getField(), cv.getDefaultMessage()))
-                        .collect(Collectors.toList());
+    public static ErrorResponse createFromValidation(MethodArgumentNotValidException exception) {
+        List<ErrorMessage> violations = exception
+                .getFieldErrors()
+                .stream()
+                .map(error -> new ErrorMessage(error.getField(), error.getDefaultMessage()))
+                .collect(Collectors.toList());
         return new ErrorResponse("Validation Errors", violations);
     }
 }

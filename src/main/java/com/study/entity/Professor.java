@@ -1,38 +1,38 @@
 package com.study.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import java.util.List;
 
-@Data
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties
 @Entity
-@Table(name = "PROFESSOR")
+@Table(name = "PROFESSORES")
 public class Professor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "professor_id")
-    private int id;
+    private Integer id;
 
-    @Column(name = "professor_nome")
-    private String nome;
+    @Column(name = "professor_name", nullable = false)
+    private String name;
 
-    @Column(name = "professor_titulo")
+    private String email;
+
+    private String cpf;
+
+    @Column(nullable = false)
     private String titulo;
 
-    @Column(name = "professor_sexo")
-    private String sexo;
-    @OneToOne (Fetch = FetchType.LAZY, mappedBy = "titular")
-    private Disciplina disciplina;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tutor")
+    private List<Aluno> alunos;
+
+
 }

@@ -1,50 +1,21 @@
 package com.study.service;
 
 import java.util.List;
-import com.study.domain.dto.response.AlunoResponseDTO;
-import com.study.mappers.AlunoMapper;
-import com.study.repository.AlunoRepository;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
+import com.study.dto.request.AlunoRequest;
+import com.study.dto.response.AlunoResponse;
+import com.study.dto.response.TutorResponse;
 
-@RequiredArgsConstructor
-@Service
-@Slf4j
-public class AlunoService {
+public interface AlunoService {
 
-	private final AlunoRepository repository;
-	private final AlunoMapper mapper;
+	AlunoResponse createAluno(AlunoRequest request);
 
-	public List<AlunoResponseDTO> getAll() {
-		return mapper.toResponseDTO(repository.findAll());
-	}
+	AlunoResponse getById(int id);
 
-	public AlunoResponseDTO getById(final int id) {
-		log.info("Retornando aluno por id{}", id);
+	List<AlunoResponse> getAll();
 
-		var optionalAluno = repository.findById(id);
+	TutorResponse updateTutor(int id, int idProfessor);
 
-		if (optionalAluno.isPresent()) {
-			return mapper.toResponseDTO(optionalAluno.get());
-		}
-		return new AlunoResponseDTO();
-	}
-
-	public AlunoResponseDTO save(final AlunoResponseDTO aluno) {
-		repository.save(mapper.fromResponseDTO(aluno));
-		return aluno;
-	}
-
-	public AlunoResponseDTO update(final AlunoResponseDTO aluno) {
-		repository.save(mapper.fromResponseDTO(aluno));
-		return aluno;
-	}
-
-	public void delete(final int id) throws Exception {
-		log.info("Deletando aluno id - {}", id);
-		repository.deleteById(id);
-	}
+	List<AlunoResponse> getTutoradosByProfessorId(Integer id);
 
 }

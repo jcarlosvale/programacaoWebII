@@ -1,7 +1,9 @@
-package com.study.domain.dto;
+package com.study.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.study.dto.commons.PessoaDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,10 +14,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties
-public class ErrorMessage {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String field;
+public class AlunoResponse extends PessoaDTO {
+
+    private String matricula;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String message;
+    private String tutor;
+
 }

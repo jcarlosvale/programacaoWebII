@@ -1,6 +1,5 @@
 package com.study.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,26 +7,30 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties
 @Entity
-@Table(name = "ALUNO")
+@Table(name = "ALUNOS")
 public class Aluno {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "aluno_id")
-    private int id;
+    @Column(name = "id")
+    private Integer id;
 
-    @Column(name = "aluno_nome", nullable = false)
-    private String nome;
+    @Column(name = "name", nullable = false)
+    private String name;
 
-    @Column(name = "aluno_matricula", nullable = false)
-    private String matricula;
+    @Column(nullable = false, unique = true)
+    private String email;
 
-    @Column(name = "aluno_sexo", nullable = false)
-    private String sexo;
+    @Column(nullable = false, unique = true)
+    private String cpf;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tutor")
+    private Professor tutor;
+
 }

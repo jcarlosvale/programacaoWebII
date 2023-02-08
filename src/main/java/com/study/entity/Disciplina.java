@@ -1,6 +1,5 @@
 package com.study.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,31 +7,29 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-
-@Data
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties
 @Entity
-@Table(name = "CURSO")
+@Table(name = "DISCIPLINAS")
 public class Disciplina {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "curso_id")
-    private int id;
+    @Column(name = "disciplina_id")
+    private Integer id;
 
-    @Column(name = "curso_nome", nullable = false)
-    private String nome;
+    @Column(name = "disciplina_name", nullable = false)
+    private String name;
 
-    @Column(name = "curso_descricao", nullable = false)
+    @Column(name = "carga_horaria", nullable = false)
+    private Integer cargaHoraria;
+
     private String descricao;
 
-    @Column(name = "curso_carga_horaria", nullable = false)
-    private String cargaHoraria;
-    @OneToOne (fetch = FetchType.LAZY)
-    @JoinColumn (name = "titular")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "titular", unique = true)
     private Professor titular;
-  
+
 }
