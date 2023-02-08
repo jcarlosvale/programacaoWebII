@@ -1,10 +1,15 @@
-package com.study.dto.v3;
+package com.study.dto;
 
-import com.fasterxml.jackson.annotation.*;
-import lombok.*;
-import org.hibernate.validator.constraints.br.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Data
 @Builder

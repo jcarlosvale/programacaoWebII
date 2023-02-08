@@ -1,5 +1,6 @@
 package com.study.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,10 +10,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AlunoResponseDto {
+@JsonIgnoreProperties
+public class TutorResponse {
 
-    private int id;
-    private String nome;
-    private int matricula;
-    private String genero;
+    private String tutor;
+
+    private String atualizacao;
 }

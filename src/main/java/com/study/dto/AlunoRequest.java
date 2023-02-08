@@ -6,20 +6,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties
-public class DisciplinaResponse {
+public class AlunoRequest {
 
-    private int id;
-
-    private String nome;
-
-    private String descricao;
-
-    private int duracao;
-
-    private ProfessorResponse titular;
+    @NotBlank(message = "Name must be not empty or null")
+    private String name;
 }

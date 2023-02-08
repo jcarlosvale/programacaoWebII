@@ -42,5 +42,6 @@ public class DisciplinaService {
             oldTitular.setDisciplina(null);
             professorRepository.save(oldTitular);
         }
+        return mapper.toResponse(disciplina);
     }
 }

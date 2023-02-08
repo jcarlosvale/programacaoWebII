@@ -6,9 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
@@ -16,18 +14,21 @@ import javax.validation.constraints.Positive;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties
+@Entity
+@Table(name = "DISCIPLINAS")
 public class Disciplina {
-    @Positive
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "disciplina_id")
     private int id;
 
-    @NotBlank
+    @Column(name = "disciplina_nome")
     private String nome;
 
-    @NotBlank
+    @Column(name = "descricao")
     private String descricao;
 
-    @Positive
+    @Column(name = "duracao")
     private int duracao;
 
     @OneToOne(fetch = FetchType.LAZY)

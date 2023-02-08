@@ -1,9 +1,9 @@
 package com.study.view.rs;
 
-import com.study.dto.AlunoRequestDto;
-import com.study.dto.AlunoResponseDto;
-import com.study.dto.v3.AlunoRequest;
-import com.study.dto.v3.AlunoResponse;
+import com.study.dto.AlunoRequest;
+import com.study.dto.AlunoResponse;
+import com.study.dto.TodoDto;
+import com.study.dto.TutorResponse;
 import com.study.service.AlunoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,20 +63,31 @@ public class AlunoController {
                 .build();
     }
 
-    //@GetMapping
-    /*
-    public ResponseEntity<List<AlunoDto>> getByPrefix(@RequestParam(value = "prefixo", required = true)
-                                                      final String prefixo){
-        if(Objects.isNull(prefixo)) return getAll();
+    @PatchMapping(path = "/{id}/tutor/{id-tutor}")
+    public ResponseEntity<TutorResponse> updateTutor(
+            @PathParam("id") int alunoId, @PathParam("id-tutor") int tutorId) {
+        TutorResponse response = service.updateTutor(alunoId, tutorId);
+        return ResponseEntity.ok().body(response);
+    }
 
-        var alunos = repository.values().stream()
-                .filter(aluno -> aluno.getNome().startsWith(prefixo))
-                .collect(Collectors.toList());
+    @GetMapping(path="/activity")
+    public ResponseEntity<TodoDto> saveRandomTodo() {
+        final TodoDto dto = service.generateRandomTodo();
+
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping(params= "prefixo")
+    public ResponseEntity<List<AlunoResponse>> getByPrefix(@RequestParam(value = "prefixo", required = true)
+                                                      final String prefixo) {
+        if (Objects.isNull(prefixo)) return getAll();
+//
+//        var alunos = repository.values().stream()
+//                .filter(aluno -> aluno.getNome().startsWith(prefixo))
+//                .collect(Collectors.toList());
 
         return ResponseEntity
-                .ok(alunos);
+                .ok(List.of(new AlunoResponse()));
     }
-     */
-
 
 }

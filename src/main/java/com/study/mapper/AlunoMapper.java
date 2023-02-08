@@ -1,6 +1,8 @@
 package com.study.mapper;
 
-import com.study.dto.v3.*;
+import com.study.dto.AlunoRequest;
+import com.study.dto.AlunoResponse;
+import com.study.dto.TutorResponse;
 import com.study.model.*;
 import org.springframework.stereotype.*;
 
@@ -53,7 +55,11 @@ public class AlunoMapper {
     }
 
     public Aluno toEntity(AlunoRequest alunoRequest) {
-        // TODO: IMPLEMENTAR MAPPER
-        return new Aluno();
+
+        Objects.requireNonNull(alunoRequest, "entity must not be null");
+
+        return Aluno.builder()
+                .name(alunoRequest.getName())
+                .build();
     }
 }

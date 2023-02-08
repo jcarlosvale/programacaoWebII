@@ -1,7 +1,9 @@
 package com.study.service;
 
-import com.study.dto.v3.*;
-import com.study.dto.v4.*;
+import com.study.dto.AlunoRequest;
+import com.study.dto.AlunoResponse;
+import com.study.dto.TodoDto;
+import com.study.dto.TutorResponse;
 import com.study.mapper.*;
 import com.study.model.*;
 import com.study.repository.*;
@@ -23,8 +25,8 @@ public class AlunoService {
     private final AlunoMapper mapper;
     private final AlunoRepository repository;
     private final ProfessorRepository professorRepository;
-
     private final RestTemplate restTemplate;
+
 
     public List<AlunoResponse> retrieveAll() {
         log.info("Listing alunos");

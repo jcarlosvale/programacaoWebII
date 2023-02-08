@@ -1,8 +1,7 @@
 package com.study.mapper;
 
-
-
-import com.study.dto.v3.*;
+import com.study.dto.ProfessorRequest;
+import com.study.dto.ProfessorResponse;
 import com.study.model.*;
 import org.springframework.stereotype.*;
 
