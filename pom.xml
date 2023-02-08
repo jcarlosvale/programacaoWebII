@@ -47,6 +47,10 @@
 			<scope>test</scope>
 		</dependency>
 
+<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 		<!-- Swagger UI -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
