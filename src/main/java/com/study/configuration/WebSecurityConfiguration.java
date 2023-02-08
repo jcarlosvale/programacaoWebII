@@ -1,5 +1,6 @@
 package com.study.configuration;
 
+import ch.qos.logback.core.encoder.EchoEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,13 +17,14 @@ public class WebSecurityConfiguration {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+
         auth.inMemoryAuthentication()
                 .withUser("professor")
-                .password("1234")
+                .password(passwordEncoder().encode("1234"))
                 .authorities("ROLE_PROFESSOR")
                 .and()
                 .withUser("aluno")
-                .password("1234")
+                .password(passwordEncoder().encode("1234"))
                 .authorities("ROLE_ALUNO");
 
     }
