@@ -16,30 +16,33 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfiguration {
 
     @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.inMemoryAuthentication()
                 .withUser("professor")
-                .password(passwordEncoder().encode("1234"))
+                .password(passwordEncoder.encode("1234"))
                 .authorities("ROLE_PROFESSOR")
                 .and()
                 .withUser("aluno")
-                .password(passwordEncoder().encode("1234"))
+                .password(passwordEncoder.encode("1234"))
                 .authorities("ROLE_ALUNO");
 
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/swagger-ui/**")
-                .permitAll();
+                .antMatchers("/h2-console/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .httpBasic();
 
         return http.build();
     }
