@@ -39,6 +39,10 @@ public class WebSecurityConfiguration {
                 .authorizeRequests()
                 .antMatchers("/h2-console/**")
                 .permitAll()
+
+                .antMatchers("/professores/**")
+                .hasAuthority("ROLE_PROFESSOR")
+
                 .anyRequest()
                 .authenticated()
                 .and()
