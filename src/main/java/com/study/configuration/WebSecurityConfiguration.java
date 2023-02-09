@@ -34,7 +34,7 @@ public class WebSecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/v2/api-docs**", "/configuration/**", "/swagger*/**", "/webjars/**")
+                .antMatchers("/v2/api-docs**", "/configuration/**", "/swagger*/**", "/webjars/**", "/h2-console/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

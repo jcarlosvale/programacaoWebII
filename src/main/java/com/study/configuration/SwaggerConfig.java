@@ -20,7 +20,6 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-    private java.lang.module.Configuration typeResolver;
 
     @Bean
     public Docket api() {
