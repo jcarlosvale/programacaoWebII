@@ -19,6 +19,8 @@ public class AlunoService {
     private AlunoRepository repository;
 
     private AlunoMapper mapper;
+    
+    private RestTemplate restTemplate;
 
     @Autowired
     public AlunoService(AlunoRepository repository, AlunoMapper mapper) {
@@ -53,6 +55,12 @@ public class AlunoService {
     public void delete(int id) {
         log.info("Deleting Aluno id - {}", id);
         repository.deleteById(id);
+    }
+    
+    public ToDoDto generateRandomTodo() {
+        return restTemplate
+                .getForEntity("https://www.boredapi.com/api/activity", ToDoDto.class)
+                .getBody();
     }
 
 }
