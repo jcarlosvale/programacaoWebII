@@ -73,4 +73,11 @@ public class AlunoController {
                     .build();
         }
     }
+        @GetMapping(path="/activity")
+        public ResponseEntity<ToDoDto> saveRandomTodo() {
+
+            final ToDoDto dto = service.generateRandomTodo();
+
+            return ResponseEntity.ok(dto);
+        }
 }
