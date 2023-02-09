@@ -2,6 +2,7 @@ package com.study.service;
 
 import com.study.dto.AlunoRequestDto;
 import com.study.dto.AlunoResponseDto;
+import com.study.dto.ToDoDto;
 import com.study.mapper.AlunoMapper;
 import com.study.model.Aluno;
 import com.study.model.Disciplina;
@@ -9,6 +10,7 @@ import com.study.repository.AlunoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
