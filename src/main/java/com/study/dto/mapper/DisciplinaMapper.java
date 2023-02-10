@@ -1,10 +1,13 @@
 package com.study.dto.mapper;
 
-import com.study.dto.request.DisciplinaRequest;
 import com.study.dto.response.DisciplinaResponse;
+import com.study.dto.response.TitularResponse;
 import com.study.entity.Disciplina;
+import com.study.entity.Professor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,11 +27,14 @@ public class DisciplinaMapper {
     public DisciplinaResponse toResponse(Disciplina entity) {
         if (Objects.isNull(entity)) return null;
 
+        DateTimeFormatter formatter =
+                DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss");
+
         DisciplinaResponse response = DisciplinaResponse.builder()
                 .id(entity.getId())
                 .name(entity.getName())
                 .cargaHoraria(entity.getCargaHoraria())
-                .descricao(entity.getDescricao())
+                .dateTime(formatter.format(entity.getDateTime()))
                 .build();
 
         if (Objects.nonNull(entity.getTitular())) {
@@ -38,15 +44,17 @@ public class DisciplinaMapper {
         return response;
     }
 
-    public Disciplina toEntity(DisciplinaRequest request) {
-        if (Objects.isNull(request)) return null;
+    public TitularResponse toResponse(Professor entity) {
 
-        return Disciplina.builder()
-                .name(request.getName())
-                .cargaHoraria(request.getCargaHoraria())
-                .descricao(request.getDescricao())
+        if (Objects.isNull(entity)) return null;
+
+        DateTimeFormatter formatter =
+                DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss");
+
+        return TitularResponse.builder()
+                .titular(entity.getName())
+                .atualizacao(formatter.format(LocalDateTime.now()))
                 .build();
     }
-
 
 }

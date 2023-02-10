@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Builder
 @Data
@@ -26,7 +27,8 @@ public class Disciplina {
     @Column(name = "carga_horaria", nullable = false)
     private Integer cargaHoraria;
 
-    private String descricao;
+    @Column(name="data_atualizacao", nullable = false)
+    private LocalDateTime dateTime;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "titular", unique = true)

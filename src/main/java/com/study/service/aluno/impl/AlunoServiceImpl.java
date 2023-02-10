@@ -1,5 +1,6 @@
 package com.study.service.aluno.impl;
 
+import com.study.dto.commons.TodoDto;
 import com.study.dto.mapper.AlunoMapper;
 import com.study.dto.request.AlunoRequest;
 import com.study.dto.response.AlunoResponse;
@@ -12,6 +13,7 @@ import com.study.service.aluno.AlunoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
@@ -26,6 +28,8 @@ public class AlunoServiceImpl implements AlunoService {
     private final AlunoMapper mapper;
 
     private final AlunoRepository repository ;
+
+    private final RestTemplate restTemplate;
 
     private final ProfessorRepository professorRepository;
 
@@ -92,7 +96,6 @@ public class AlunoServiceImpl implements AlunoService {
 
     @Override
     public List<AlunoResponse> getTutoradosByProfessorId(Integer id) {
-
         Optional<Professor> findProfessor = professorRepository.findById(id);
 
         Professor professor =
@@ -103,6 +106,12 @@ public class AlunoServiceImpl implements AlunoService {
         List<Aluno> alunos = repository.findAlunosByTutor(professor);
 
         return mapper.toResponse(alunos);
+    }
 
+    @Override
+    public TodoDto generateRandomTodo() {
+        return restTemplate
+                .getForEntity("https://www.boredapi.com/api/activity", TodoDto.class)
+                .getBody();
     }
 }

@@ -1,5 +1,6 @@
 package com.study.view.rs;
 
+import com.study.dto.commons.TodoDto;
 import com.study.dto.request.AlunoRequest;
 import com.study.dto.response.AlunoResponse;
 import com.study.dto.response.TutorResponse;
@@ -19,12 +20,12 @@ import java.util.*;
 @Slf4j
 public class AlunoController {
 
-    private final AlunoService alunoService;
+    private final AlunoService service;
 
     @PostMapping
     public ResponseEntity<AlunoResponse> save(@RequestBody @Valid final AlunoRequest aluno){
 
-        AlunoResponse response = alunoService.createAluno(aluno);
+        AlunoResponse response = service.createAluno(aluno);
 
        return ResponseEntity
                .status(HttpStatus.CREATED)
@@ -33,7 +34,7 @@ public class AlunoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<AlunoResponse> getById(@PathVariable ("id") final int id) {
-        AlunoResponse response = alunoService.getById(id);
+        AlunoResponse response = service.getById(id);
 
         return ResponseEntity.ok(response);
     }
@@ -41,7 +42,7 @@ public class AlunoController {
     @GetMapping
     public ResponseEntity<List<AlunoResponse>> getAll(){
 
-        List<AlunoResponse> response = alunoService.getAll();
+        List<AlunoResponse> response = service.getAll();
 
         return ResponseEntity.ok(response);
     }
@@ -50,10 +51,18 @@ public class AlunoController {
     public ResponseEntity<TutorResponse> updateTitular(@PathVariable("id") int idAluno, @PathVariable("idProfessor") int idProfessor){
 
         TutorResponse response =
-                alunoService.updateTutor(idAluno, idProfessor);
+                service.updateTutor(idAluno, idProfessor);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(response);
+    }
+
+    @GetMapping(path="/activity")
+    public ResponseEntity<TodoDto> saveRandomTodo() {
+
+        TodoDto dto = service.generateRandomTodo();
+
+        return ResponseEntity.ok(dto);
     }
 }

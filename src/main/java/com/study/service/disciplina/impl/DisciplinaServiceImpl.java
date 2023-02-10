@@ -3,7 +3,9 @@ package com.study.service.disciplina.impl;
 import com.study.dto.mapper.DisciplinaMapper;
 import com.study.dto.request.DisciplinaRequest;
 import com.study.dto.response.DisciplinaResponse;
+import com.study.dto.response.TitularResponse;
 import com.study.entity.Disciplina;
+import com.study.entity.Professor;
 import com.study.repository.DisciplinaRepository;
 import com.study.repository.ProfessorRepository;
 import com.study.service.disciplina.DisciplinaService;
@@ -53,23 +55,49 @@ public class DisciplinaServiceImpl implements DisciplinaService {
     }
 
     @Override
-    public DisciplinaResponse update(int id, DisciplinaRequest request) {
-        Objects.requireNonNull(request, "A requisição não pode ser null");
+    public TitularResponse update(int id, int idProfessor) {
+        Disciplina disciplina =
+                repository
+                        .findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException("Disciplina não encontrada!"));
 
-        Optional<Disciplina> optionalProfessor = repository.findById(id);
-        optionalProfessor.orElseThrow(() -> new EntityNotFoundException("Disciplina não encontrado"));
+        Professor professor =
+                professorRepository
+                        .findById(idProfessor)
+                        .orElseThrow(() -> new EntityNotFoundException("Professor não encontrado"));
 
-        Disciplina entity = mapper.toEntity(request);
-        entity.setId(id);
+        Optional<Disciplina> query =
+                repository.findByTitular(professor);
 
-        repository.save(entity);
+        query.ifPresent(d -> {
+            throw new IllegalStateException("Professor must have at most one Disciplina as titular");
+        });
 
-        return mapper.toResponse(entity);
+        disciplina.setTitular(professor);
+        repository.save(disciplina);
+
+        return mapper.toResponse(professor);
     }
 
     @Override
     public void delete(int id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public DisciplinaResponse getDisciplinaByProfessorId(int id) {
+        Professor professor =
+                professorRepository.findById(id)
+                        .orElseThrow(() ->
+                                new EntityNotFoundException("Professor não encontrado")
+                        );
+
+        Disciplina disciplina
+                = repository.findByTitular(professor)
+                .orElseThrow(() -> new EntityNotFoundException("Disciplina não encontrada")
+                );
+
+        return mapper.toResponse(disciplina);
     }
 
 }

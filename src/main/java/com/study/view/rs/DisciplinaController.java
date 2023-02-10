@@ -2,6 +2,7 @@ package com.study.view.rs;
 
 import com.study.dto.request.DisciplinaRequest;
 import com.study.dto.response.DisciplinaResponse;
+import com.study.dto.response.TitularResponse;
 import com.study.service.disciplina.DisciplinaService;
 import com.study.service.professor.ProfessorService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,6 @@ import java.util.*;
 public class DisciplinaController {
 
     private final DisciplinaService service;
-    private final ProfessorService professorService;
 
     @PostMapping
     public ResponseEntity<DisciplinaResponse> createDisciplina(@RequestBody @Valid final DisciplinaRequest request){
@@ -42,10 +42,13 @@ public class DisciplinaController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{îd}")
-    public ResponseEntity<DisciplinaResponse> update(@PathVariable("id") final int id, @RequestBody @Valid DisciplinaRequest request) {
-        DisciplinaResponse response = service.update(id, request);
-        return ResponseEntity.ok(response);
+    @PatchMapping("/{id}/titular/{idProfessor}")
+    public ResponseEntity<TitularResponse> updateTitular(@PathVariable("id") int id, @PathVariable("idProfessor") int idProfessor) {
+        final TitularResponse response = service.update(id, idProfessor);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(response);
     }
 
     @DeleteMapping("/{id}")
