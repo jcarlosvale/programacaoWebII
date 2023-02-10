@@ -6,11 +6,19 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Getter //Ver com o professor pq tive que colocar os Getters and Setters na mão
-@Setter
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonIgnoreProperties
 public class ProfessorRequest {
 
     @NotBlank(message = "Name must be not empty or null")
@@ -22,4 +30,6 @@ public class ProfessorRequest {
 
     @CPF(message = "CPF not valid")
     private String cpf;
+
+    private String sexo;
 }

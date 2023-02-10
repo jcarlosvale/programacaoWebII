@@ -1,4 +1,4 @@
-package com.study.model;
+package com.study.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,9 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,18 +20,26 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "ALUNOS")
-public class Aluno {
+@Table(name="DISCIPLINAS")
+public class DisciplinaEntity {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "aluno_id")
-    private Integer id;
+    @Column(name="DISCIPL_ID")
+    private int id;
 
-    @NotBlank(message = "Name must be not empty or null")
-    @Column(name = "aluno_name", nullable = false)
-    private String name;
+    @Column(name="NOME")
+    private String nome;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tutor")
-    private Professor tutor;
+    @Column(name="DESCRICAO")
+    private String descricao;
+
+    @Column(name="DURACAO_EM_H")
+    private int duracao;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "titular", unique = true)
+    private ProfessorEntity titular;
+
+
 }

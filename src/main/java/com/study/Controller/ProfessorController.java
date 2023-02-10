@@ -2,7 +2,6 @@ package com.study.controller;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -11,13 +10,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.study.dto.ProfessorRequest;
 import com.study.dto.ProfessorResponse;
 import com.study.service.ProfessorService;
 
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(path = "/professores")
 public class ProfessorController {
     
@@ -25,26 +25,18 @@ public class ProfessorController {
     private final ProfessorService profService;
     
     @PostMapping(path="/save")
-    public ResponseEntity<ProfessorResponse> save(@RequestBody @Valid final ProfessorResponse professor) {
-        if (profService.save(professor)) {
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(professor);
+    public ResponseEntity<ProfessorResponse> save(@RequestBody @Valid final ProfessorRequest professor) {
+        var response = profService.save(professor);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }
-        else {
-            return ResponseEntity
-            .status(HttpStatus.CONFLICT)
-            .build();
-        }
-    }
+    
 
     @GetMapping(path="/")
     public ResponseEntity<Collection<ProfessorResponse>> getAll() {
         return ResponseEntity.ok(new ArrayList<ProfessorResponse>(profService.getAll()));
         }
 
-
-        @PostMapping(path="/addAll")
+      /*@PostMapping(path="/addAll")
         public ResponseEntity<List<ProfessorResponse>> addAll(@RequestBody @Valid final List<ProfessorResponse> lstProf ) {
             try{
             profService.addAll(lstProf);
@@ -57,7 +49,7 @@ public class ProfessorController {
                 .build();
             }
                 
-        }
+        } */
 
 
 

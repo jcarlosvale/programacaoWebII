@@ -1,5 +1,5 @@
 package com.study.service;
-import java.util.Collection;
+import java.util.ArrayList;
 /*
  * {
     "id": 1,
@@ -23,59 +23,58 @@ import java.util.Collection;
 }
  */
 import java.util.List;
-import java.util.Map;
-import org.springframework.stereotype.Service;
-import com.study.dto.ProfessorResponse;
+import java.util.Objects;
 
+import org.springframework.stereotype.Service;
+
+import com.study.dto.ProfessorRequest;
+import com.study.dto.ProfessorResponse;
+import com.study.mapper.ProfessorMapper;
+import com.study.repository.ProfessorRepository;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class ProfessorServiceImpl implements ProfessorService{
-   
-    /*TODO: ver com o professor pq não aceitou FINAL */
-    private Map<Integer, ProfessorResponse> profRepository;
+
+    private final ProfessorRepository profRepository;
+    private final ProfessorMapper profMapper;
     
     @Override
-    public Boolean save(ProfessorResponse prof){
-        if (profRepository.containsKey(prof.getId())){
-            log.error("Já existe o id {} na coleção!", prof.getId());
-            return false;   
-        }else{
-            profRepository.put(prof.getId(), prof);
-            log.info("Inserido um novo professor {}", prof);
-            return true;
-        }
+    public ProfessorResponse save(ProfessorRequest professor){
 
-    }
+            Objects.requireNonNull(professor, "Request cannot be null!");
+            log.info("Saving Professor - {}", professor);
+            return profMapper.toResponse(profRepository.save(profMapper.toEntity(professor)));
+        }
+    
 
     @Override
-    public Collection<ProfessorResponse> getAll(){
-        if(profRepository.size() == 0){
-            return List.of();
-        }else{
-            return profRepository.values();
-        }
+    public List<ProfessorResponse> getAll(){
+        log.info("Listing Professors...");    
+        return profMapper.toResponse(profRepository.findAll());
+    }
+    
+    @Override
+    public List<ProfessorResponse> addAll(List<ProfessorRequest> listProf){
         
-    }
+        List<ProfessorResponse> lstRet = new ArrayList<>();
 
-    @Override
-    public List<ProfessorResponse> addAll(List<ProfessorResponse> listProf){
-        if(profRepository.size() == 0){
-            listProf.forEach(prof -> {
-                profRepository.put(prof.getId(), prof);
-            });
-        }else{
-            profRepository.values().forEach(prof -> {
-                listProf.forEach(prof2 -> { 
-                    if(!prof.getName().equals(prof2.getName())){
-                        profRepository.put(prof2.getId(), prof2);
-                    }
-                });
-            });
-
+        Objects.requireNonNull(listProf, "All list of Professors cannot be null!");
+        log.info("Adding a list ofProfessors....");
+        listProf.forEach( prof ->  {
+            lstRet.add(profMapper.toResponse(profMapper.toEntity(prof)));    
+        });
+        return lstRet;
         }
-        return listProf;
-    
-    }
+
+
+        @Override
+        public ProfessorResponse getById(Integer id){
+            var prof = profRepository.findById(id).get();
+            return profMapper.toResponse(prof);
+        }
 }

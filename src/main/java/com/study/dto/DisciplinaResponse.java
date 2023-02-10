@@ -13,17 +13,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties
-public class AlunoResponse {
-
-    private int id;
-
+public class DisciplinaResponse {
+    
     private String nome;
-    private String email;
-    private String cpf;
-    private int idade;
-    private String matricula;
-    private String sexo;
-
+    private String descricao;
+    private int duracao;
+    
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String tutor;
+    private String titular;
+
 }
