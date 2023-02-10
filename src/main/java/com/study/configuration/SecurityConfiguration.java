@@ -35,6 +35,10 @@ public class SecurityConfiguration {
         .hasAuthority("ROLE_PROFESSOR")
         .anyRequest()
         .authenticated()
+        .antMatchers("/alunos/**")
+        .hasAuthority("ROLE_ALUNO")
+        .anyRequest()
+        .authenticated()
         .and()
         .httpBasic();
 return http.build();
