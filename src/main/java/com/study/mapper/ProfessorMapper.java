@@ -21,6 +21,16 @@ public class ProfessorMapper {
         return listOfProfessors.stream().map(this::toResponse).collect(Collectors.toList());
     }
 
+    public List<ProfessorResponse> requestToResponse(List<ProfessorRequest> lstProf) {
+
+        if (Objects.isNull(lstProf)) return new ArrayList<>();
+        List<ProfessorResponse> profs = new ArrayList<>();
+        lstProf.stream().collect(Collectors.toList()).forEach(professor -> {
+            profs.add(this.toResponse(this.toEntity(professor)));
+        });
+        return profs;
+    }
+
     public ProfessorResponse toResponse(ProfessorEntity entity) {
 
         if (Objects.isNull(entity)) return null;

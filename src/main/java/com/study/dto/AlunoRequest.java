@@ -3,7 +3,7 @@ package com.study.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+
 
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -30,7 +30,6 @@ public class AlunoRequest {
     @CPF(message = "Invalid CPF!")
     private String cpf;
 
-    @Size(min = 16, max = 70, message = "Idade must be between 16 and 70 years old!")
     private int idade;
 
     @NotBlank(message = "Matricula must be not null!")

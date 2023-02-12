@@ -1,5 +1,6 @@
 package com.study.service;
 import java.util.ArrayList;
+
 /*
  * {
     "id": 1,
@@ -25,9 +26,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.study.dto.ProfessorRequest;
+import com.study.entity.ProfessorEntity;
 import com.study.dto.ProfessorResponse;
 import com.study.mapper.ProfessorMapper;
 import com.study.repository.ProfessorRepository;
@@ -44,6 +48,7 @@ public class ProfessorServiceImpl implements ProfessorService{
     private final ProfessorMapper profMapper;
     
     @Override
+    @Transactional
     public ProfessorResponse save(ProfessorRequest professor){
 
             Objects.requireNonNull(professor, "Request cannot be null!");
@@ -51,30 +56,34 @@ public class ProfessorServiceImpl implements ProfessorService{
             return profMapper.toResponse(profRepository.save(profMapper.toEntity(professor)));
         }
     
-
     @Override
+    @Transactional
     public List<ProfessorResponse> getAll(){
         log.info("Listing Professors...");    
         return profMapper.toResponse(profRepository.findAll());
     }
     
     @Override
+    @Transactional
     public List<ProfessorResponse> addAll(List<ProfessorRequest> listProf){
         
-        List<ProfessorResponse> lstRet = new ArrayList<>();
+        List<ProfessorEntity> lstRet = new ArrayList<>();
+        //HashMap<ProfessorEntity, Integer> myMap = new HashMap<ProfessorEntity, Integer>();
 
         Objects.requireNonNull(listProf, "All list of Professors cannot be null!");
         log.info("Adding a list ofProfessors....");
         listProf.forEach( prof ->  {
-            lstRet.add(profMapper.toResponse(profMapper.toEntity(prof)));    
+            lstRet.add(profMapper.toEntity(prof));
+            //myMap.put(profMapper.toEntity(prof), profMapper.toEntity(prof).getId());    
         });
-        return lstRet;
+        profRepository.saveAll(lstRet);
+        return profMapper.toResponse(lstRet);
         }
 
-
-        @Override
-        public ProfessorResponse getById(Integer id){
-            var prof = profRepository.findById(id).get();
-            return profMapper.toResponse(prof);
-        }
+    @Override
+    @Transactional
+    public ProfessorResponse getById(Integer id){
+        var prof = profRepository.findById(id).get();
+        return profMapper.toResponse(prof);
+    }
 }

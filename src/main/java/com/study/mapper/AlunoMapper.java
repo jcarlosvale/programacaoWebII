@@ -43,18 +43,7 @@ public class AlunoMapper {
         return (AlunoResponse) response;
     }
 
-   /*  public TutorResponse toTutorResponse(ProfessorEntity entity) {
-
-        Objects.requireNonNull(entity, "entity must not be null");
-
-        var formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss");
-
-        return TutorResponse.builder()
-                .tutor(entity.getName())
-                .atualizacao(formatter.format(LocalDateTime.now()))
-                .build();
-
-    } */
+ 
 
     public AlunoEntity toEntity(AlunoResponse aluno) {
         if (Objects.isNull(aluno)) {
