@@ -29,6 +29,6 @@ public class DisciplinaRequest {
     @Max(255)
     private int duracao;
 
-    private ProfessorResponse titularProfResponse;
+    private ProfessorResponse titularProf;
 
 }

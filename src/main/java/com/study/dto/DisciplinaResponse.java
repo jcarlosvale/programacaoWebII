@@ -2,7 +2,7 @@ package com.study.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.study.entity.ProfessorEntity;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +22,6 @@ public class DisciplinaResponse {
     private int duracao;
     
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private ProfessorEntity titular;
+    private String titular;
 
 }

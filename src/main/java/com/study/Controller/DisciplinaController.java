@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,8 +38,8 @@ public class DisciplinaController {
         return ResponseEntity.ok(new ArrayList<DisciplinaResponse>(disciplinaService.getAll()));
     }
 
-    @PostMapping(path = "/updateTitular")
-    public DisciplinaResponse updateTitular(@PathVariable final Integer idDisciplina, @PathVariable final Integer idTitular){
-        return disciplinaService.updateTitular(idDisciplina, idTitular);
+    @PatchMapping(path = "/savetitular/{id_disciplina}/{id_titular}")
+    public DisciplinaResponse updateTitular(@PathVariable @Valid final Integer id_disciplina, @PathVariable @Valid final Integer id_titular){
+        return disciplinaService.updateTitular(id_disciplina, id_titular);
     }
 }

@@ -32,26 +32,21 @@ public class DisciplinaMapper {
                 .duracao(entity.getDuracao())
                 .build();
         if (Objects.nonNull(entity.getTitular())) {
-            ((DisciplinaResponse) response).setTitular(entity.getTitular());
+            ((DisciplinaResponse) response).setTitular(entity.getTitular().getName());
         }
 
         return (DisciplinaResponse) response;
     }
 
-
     public DisciplinaEntity toEntity(DisciplinaResponse disciplina) {
         if (Objects.isNull(disciplina)) {
             return null;
         } else {
-            var response = DisciplinaEntity.builder()
+            return DisciplinaEntity.builder()
             .nome(disciplina.getNome())
             .descricao(disciplina.getDescricao())
             .duracao(disciplina.getDuracao())
             .build();
-            if (Objects.nonNull(disciplina.getTitular())) {
-                response.setTitular(disciplina.getTitular());
-            }
-            return response;
         }
     }
 }

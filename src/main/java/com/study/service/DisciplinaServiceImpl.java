@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.study.dto.DisciplinaResponse;
 import com.study.mapper.DisciplinaMapper;
@@ -19,9 +20,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DisciplinaServiceImpl implements DisciplinaService{
 
+    @Autowired
     private final DisciplinaRepository disciplinaRepository;
-    private final DisciplinaMapper disciplinaMapper;
+    
+    @Autowired
     private final ProfessorRepository professorRepository;
+    
+    private final DisciplinaMapper disciplinaMapper;
+    
     
     @Override
     @Transactional
